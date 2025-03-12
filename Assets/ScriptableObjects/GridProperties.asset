@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89ef27df0b263324b83fdeebe72275fa, type: 3}
+  m_Name: GridProperties
+  m_EditorClassIdentifier: 
+  grid:
+    width: 3
+    height: 3
+  width: 3
+  height: 3
+  gridSpriteOffset: 0
+  elementSize: 133.66667
+  gridOffset: {x: -133.66666, y: -133.66666}
+  gridPlaygroundCenter: {x: 225.80002, y: 200.5, z: 0}
+  customGridSo: {fileID: 11400000, guid: 1b3f297621d599d4baa157c56b56874d, type: 2}
