@@ -13,12 +13,11 @@ MonoBehaviour:
   m_Name: GridProperties
   m_EditorClassIdentifier: 
   grid:
-    width: 3
-    height: 3
-  width: 3
-  height: 3
-  gridSpriteOffset: 0
-  elementSize: 133.66667
-  gridOffset: {x: -133.66666, y: -133.66666}
-  gridPlaygroundCenter: {x: 225.80002, y: 200.5, z: 0}
+    width: 9
+    height: 9
+  width: 9
+  height: 9
+  elementSize: 0.43796703
+  gridOffset: {x: -1.7518681, y: -1.7518681}
+  gridPlaygroundCenter: {x: 0, y: -0.105653346, z: 90}
   customGridSo: {fileID: 11400000, guid: 1b3f297621d599d4baa157c56b56874d, type: 2}

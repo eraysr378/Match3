@@ -9,10 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d44a2de4be6b43a2a418112f7f01fc32, type: 3}
-  m_Name: CustomGrid
+  m_Script: {fileID: 11500000, guid: d57dcee07bf442beac10b915f9359b79, type: 3}
+  m_Name: ActivatableCellFactory
   m_EditorClassIdentifier: 
-  customGrid:
-    height: 3
-    width: 3
-    data: 010000000000000003000000000000000100000004000000010000000000000003000000
+  prefab: {fileID: -3878920638801830140, guid: 45220d495a7b3da45a5550eb63aea534, type: 3}

@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalCellFactory: {fileID: 11400000, guid: d44b0da2ea9847548aec7cf7bf6dc995, type: 2}
   obstacleCellFactory: {fileID: 11400000, guid: 78e6ce00914279e4492450d7ca3ac6c3, type: 2}
+  activatableCellFactory: {fileID: 11400000, guid: 46acd88415ffffe4c8c44c355877b4c0, type: 2}

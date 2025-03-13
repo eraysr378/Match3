@@ -11,4 +11,5 @@ public enum CellType
     CircleNormalCell,
     TriangleNormalCell,
     ObstacleCell,
+    ActivatableCell,
 }

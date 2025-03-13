@@ -28,15 +28,7 @@ namespace Cells
 
         public void Swap(Cell other)
         {
-            int saveRow = Row;
-            int saveCol = Col;
-            Vector3 savePosition = transform.position;
-            SetRow(other.Row);
-            SetCol(other.Col);
-            transform.position = other.transform.position;
-            other.SetRow(saveRow);
-            other.SetCol(saveCol);
-            other.transform.position = savePosition;
+
         }
 
 

@@ -1,9 +1,10 @@
+using Managers;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Cells
 {
-    public abstract class Cell : MonoBehaviour, IPointerDownHandler,IPointerUpHandler,IPointerEnterHandler
+    public abstract class Cell : MonoBehaviour,IPointerDownHandler, IPointerUpHandler,IPointerEnterHandler,IPointerClickHandler
     {
         [SerializeField] protected SpriteRenderer visual;
         protected CellType cellType;
@@ -21,7 +22,12 @@ namespace Cells
             transform.localScale = Vector3.one * elementSize;
             transform.SetParent(parent);
         }
-        
+
+        public void SetPosition(int row, int col)
+        {
+            _row = row;
+            _col = col;
+        }
         public void SetRow(int row) => _row = row;
         public void SetCol(int col)  => _col = col;
         public void SetCellType(CellType cellType) => this.cellType = cellType;
@@ -34,17 +40,22 @@ namespace Cells
         {
             EventManager.OnPointerDownCell?.Invoke(this);
         }
-
+        
         public void OnPointerUp(PointerEventData eventData)
         {
             EventManager.OnPointerUpCell?.Invoke(this);
         }
-
+        
         public void OnPointerEnter(PointerEventData eventData)
         {
             EventManager.OnPointerEnterCell?.Invoke(this);
         }
 
 
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            EventManager.OnPointerClickedCell?.Invoke(this);
+
+        }
     }
 }

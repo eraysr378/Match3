@@ -1,5 +1,6 @@
 using Cells;
 using Factories;
+using Managers;
 using ScriptableObjects;
 using UnityEngine;
 
@@ -9,14 +10,14 @@ namespace GridRelated
     {
         [SerializeField] private GeneralCellFactory generalCellFactory;
         [SerializeField] private GridPropertiesSo propertiesSo;
-        [SerializeField] private RectTransform gridPlayground;
-        [SerializeField] private SpriteRenderer gridPlaygroundSpriteRenderer;
+        [SerializeField] private RectTransform playground;
+        [SerializeField] private SpriteRenderer borderSpriteRenderer;
         [SerializeField] private Transform gridParent;
-        [SerializeField] private CellFactory cellFactory;
 
-        public void Awake()
+        public void Start()
         {
             Init();
+            EventManager.OnGridInitialized?.Invoke(propertiesSo.grid);
         }
 
         private void Init()
@@ -34,7 +35,7 @@ namespace GridRelated
         private void AdjustGridSize( )
         {
             Vector3[] corners = new Vector3[4];
-            gridPlayground.GetWorldCorners(corners);
+            playground.GetWorldCorners(corners);
             float gridPlaygroundWidth = corners[2].x - corners[0].x; // Top-right x - Bottom-left x
             float gridPlaygroundHeight = corners[1].y - corners[0].y; // Top-left y - Bottom-left y
 
@@ -52,14 +53,9 @@ namespace GridRelated
 
             propertiesSo.gridOffset.x = -(totalGridWidth / 2) + (propertiesSo.elementSize / 2);
             propertiesSo.gridOffset.y = -(totalGridHeight / 2) + (propertiesSo.elementSize / 2);
-
-            // The cubes put on top of each other, the one at the top look taller than the other so the offset should be calculated
-            float heightOffset = propertiesSo.elementSize / 5;
-            // After applying offset, the size will grow towards down and up so we should adjust the position on y
-            float posOffsetY = propertiesSo.elementSize / 12;
-            // Adjust the playground sprite size and position
-            gridPlaygroundSpriteRenderer.size = new Vector2(totalGridWidth + propertiesSo.gridSpriteOffset, totalGridHeight + heightOffset + propertiesSo.gridSpriteOffset);
-            gridPlaygroundSpriteRenderer.transform.position = new Vector3(propertiesSo.gridPlaygroundCenter.x, propertiesSo.gridPlaygroundCenter.y + posOffsetY, gridPlaygroundSpriteRenderer.transform.position.z);
+            
+            borderSpriteRenderer.size = new Vector2(totalGridWidth+propertiesSo.elementSize/8, totalGridHeight+propertiesSo.elementSize/8);
+            borderSpriteRenderer.transform.position = new Vector3(propertiesSo.gridPlaygroundCenter.x, propertiesSo.gridPlaygroundCenter.y , borderSpriteRenderer.transform.position.z);
         }
         private void CreateGridElements()
         {
@@ -80,24 +76,24 @@ namespace GridRelated
                     }
                 }
             }
-            else
-            {
-                for (int row = 0; row < propertiesSo.height; row++)
-                {
-                    for (int col = 0; col < propertiesSo.width; col++)
-                    {
-                        Cell createdCell = cellFactory.CreateCell(CellType.SquareNormalCell);
-                        Vector2 pos = GridUtility.GridPositionToWorldPosition(row,col,createdCell
-                            ,propertiesSo.gridPlaygroundCenter
-                            ,propertiesSo.gridOffset
-                            ,propertiesSo.elementSize);
-                        createdCell.Init(row,col,pos,propertiesSo.elementSize,gridParent);
-
-                        propertiesSo.grid.SetCell(row, col, createdCell);
-
-                    }
-                }
-            }
+            // else
+            // {
+            //     for (int row = 0; row < propertiesSo.height; row++)
+            //     {
+            //         for (int col = 0; col < propertiesSo.width; col++)
+            //         {
+            //             Cell createdCell = cellFactory.CreateCell(CellType.SquareNormalCell);
+            //             Vector2 pos = GridUtility.GridPositionToWorldPosition(row,col,createdCell
+            //                 ,propertiesSo.gridPlaygroundCenter
+            //                 ,propertiesSo.gridOffset
+            //                 ,propertiesSo.elementSize);
+            //             createdCell.Init(row,col,pos,propertiesSo.elementSize,gridParent);
+            //
+            //             propertiesSo.grid.SetCell(row, col, createdCell);
+            //
+            //         }
+            //     }
+            // }
         }
 
 

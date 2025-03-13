@@ -16,7 +16,7 @@ namespace ScriptableObjects
             {
                 case CellType.SquareNormalCell: return blueSprite;
                 case CellType.CircleNormalCell: return redSprite;
-                case CellType.TriangleNormalCell: return greenSprite;
+                // case CellType.TriangleNormalCell: return greenSprite;
                 default: return null;
             }
         }

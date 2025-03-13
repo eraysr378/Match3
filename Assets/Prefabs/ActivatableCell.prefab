@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3505925727837937053
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 136684101467879553, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+      propertyPath: m_Color.b
+      value: 0.90978813
+      objectReference: {fileID: 0}
+    - target: {fileID: 136684101467879553, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 136684101467879553, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8632239336245859992, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+      propertyPath: m_Name
+      value: ActivatableCell
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188604277759040350, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188604277759040350, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188604277759040350, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188604277759040350, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188604277759040350, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188604277759040350, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188604277759040350, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188604277759040350, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188604277759040350, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9188604277759040350, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8632239336245859992, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: -3878920638801830140}
+  m_SourcePrefab: {fileID: 100100000, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+--- !u!212 &3549423269813773596 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 136684101467879553, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+  m_PrefabInstance: {fileID: 3505925727837937053}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5146579935602166533 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8632239336245859992, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+  m_PrefabInstance: {fileID: 3505925727837937053}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-3878920638801830140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5146579935602166533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11b317c2b6e8465a8badb7ad7c4ba93c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visual: {fileID: 3549423269813773596}

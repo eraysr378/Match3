@@ -9,7 +9,6 @@ namespace ScriptableObjects
         public Grid grid;
         public int width;
         public int height;
-        public float gridSpriteOffset;
         public float elementSize;
         public Vector2 gridOffset;
         public Vector3 gridPlaygroundCenter;
