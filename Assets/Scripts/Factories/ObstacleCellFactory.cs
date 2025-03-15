@@ -7,6 +7,7 @@ namespace Factories
     public class ObstacleCellFactory : CellFactory
     {
         [SerializeField] private ObstacleCell prefab;
+        
         public override Cell CreateCell(CellType cellType)
         {
             ObstacleCell obstacleCell = Instantiate(prefab);
@@ -14,4 +15,5 @@ namespace Factories
             return obstacleCell;
         }
     }
+
 }

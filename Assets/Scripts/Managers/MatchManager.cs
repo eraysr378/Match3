@@ -8,8 +8,6 @@ namespace Managers
 {
     public class MatchManager : MonoBehaviour
     {
-        private List<Cell> _matchList = new List<Cell>();
-
         private Grid _grid;
 
         public void Initialize(Grid grid)
@@ -17,127 +15,152 @@ namespace Managers
             _grid = grid;
         }
 
-        public bool CheckAndHandleMatch(Cell cell)
+        public void OnEnable()
         {
-            if (cell is not IMatchable) return false;
-            bool rval = false;
+            EventManager.OnFillCompleted += OnFillCompleted;
+        }
+        public void OnDisable()
+        {
+            EventManager.OnFillCompleted -= OnFillCompleted;
+        }
 
-            if (CheckIsMatch(cell.Row, cell.Col))
+        private void OnFillCompleted()
+        {
+            if (ClearAllValidMatches())
             {
-                _matchList = GetMatchingCells(cell.Row, cell.Col);
-                foreach (var matchCell in _matchList)
+                EventManager.OnValidMatchCleared?.Invoke();
+            }
+        }
+        
+        public bool ClearAllValidMatches()
+        {
+            bool anyMatchFound = false;
+            for (int row = 0; row < _grid.Height; row++)
+            {
+                for (int col = 0; col < _grid.Width; col++)
                 {
-                    Destroy(matchCell.gameObject);
+                    Cell cell = _grid.GetCell(row, col);
+                    if (cell is IMatchable)
+                    {
+                        List<Cell> matchList = GetMatch(cell);
+                        if (matchList != null)
+                        {
+                            for (int i = 0; i < matchList.Count; i++)
+                            {
+                                matchList[i].DestroyCell();
+                                anyMatchFound = true;
+                            }
+                        }
+                    }
                 }
+            }
 
-                rval = true;
+            return anyMatchFound;
+        }
+
+        public List<Cell> GetMatch(Cell cell)
+        {
+            if (cell is not IMatchable) return null;
+            List<Cell> matchingCells = new List<Cell>();
+            List<Cell> verticalCells;
+
+            List<Cell> horizontalCells = GetHorizontalMatch(cell);
+            horizontalCells.Add(cell);
+
+            if (horizontalCells.Count >= 3)
+            {
+                matchingCells.AddRange(horizontalCells);
+                foreach (var horizontalCell in horizontalCells)
+                {
+                    verticalCells = GetVerticalMatch(horizontalCell);
+                    if (verticalCells.Count < 2)
+                    {
+                        verticalCells.Clear();
+                    }
+                    else
+                    {
+                        matchingCells.AddRange(verticalCells);
+                        break;
+                    }
+                }
             }
             
+            if (matchingCells.Count >= 3)
+            {
+                return matchingCells;
+            }
+            horizontalCells.Clear();
+            verticalCells = GetVerticalMatch(cell );
+            verticalCells.Add(cell);
 
-            return rval;
+            if (verticalCells.Count >= 3)
+            {
+                matchingCells.AddRange(verticalCells);
+                foreach (var verticalCell in verticalCells)
+                {
+                    horizontalCells = GetHorizontalMatch(verticalCell);
+                    if (horizontalCells.Count < 2)
+                    {
+                        horizontalCells.Clear();
+                    }
+                    else
+                    {
+                        matchingCells.AddRange(horizontalCells);
+                        break;
+                    }
+                }
+            }
+            if (matchingCells.Count >= 3)
+            {
+                return matchingCells;
+            }
+
+            return null;
         }
 
-        public bool HandleMatch(Cell cell)
+        private List<Cell> GetVerticalMatch(Cell cell)
         {
-            return false;
+            List<Cell> verticalCells = new List<Cell>();
+            CellType cellType = cell.GetCellType();
+            for (int row = cell.Row - 1; row >= 0; row--)
+            {
+                Cell cellBelow = _grid.GetCell(row, cell.Col);
+                if (cellBelow is not IMatchable || cellBelow.GetCellType() != cellType)
+                    break;
+                
+                verticalCells.Add(cellBelow);
+            }
+
+            for (int row = cell.Row + 1; row < _grid.Height; row++)
+            {
+                Cell cellAbove = _grid.GetCell(row, cell.Col);
+                if (cellAbove is not IMatchable || cellAbove.GetCellType() != cellType)
+                    break;
+                
+                verticalCells.Add(cellAbove);
+            }
+            return verticalCells;
         }
 
-        public bool CheckIsMatch(int row, int col)
+        private List<Cell> GetHorizontalMatch(Cell cell)
         {
-            int count = 1;
-
-            CellType matchingCellType = _grid.GetCell(row, col).GetCellType();
-            for (int i = col + 1; i < _grid.Width; i++)
+            List<Cell> horizontalCells = new List<Cell>();
+            CellType cellType = cell.GetCellType();
+            for (int col = cell.Col - 1; col >= 0; col--)
             {
-                if (_grid.GetCell(row, i).GetCellType() != matchingCellType)
-                {
+                Cell cellLeft = _grid.GetCell(cell.Row, col);
+                if (cellLeft is not IMatchable || cellLeft.GetCellType() != cellType)
                     break;
-                }
-                count++;
+                horizontalCells.Add(cellLeft);
             }
-
-            for (int i = col - 1; i >= 0; i--)
+            for (int col = cell.Col +1; col < _grid.Width; col++)
             {
-                if (_grid.GetCell(row, i).GetCellType() != matchingCellType)
-                {
+                Cell cellRight = _grid.GetCell(cell.Row, col);
+                if (cellRight is not IMatchable || cellRight.GetCellType() != cellType)
                     break;
-                }
-                count++;
+                horizontalCells.Add(cellRight);
             }
-
-            for (int i = row - 1; i >= 0; i--)
-            {
-                if (_grid.GetCell(i, col).GetCellType() != matchingCellType)
-                {
-                    break;
-                }
-                count++;
-            }
-
-            for (int i = row + 1; i < _grid.Height; i++)
-            {
-                if (_grid.GetCell(i, col).GetCellType() != matchingCellType)
-                {
-                    break;
-                }
-                count++;
-            }
-
-            return count >= 3;
-        }
-
-        private void CheckMatchRecursively(int row, int col, CellType matchingCellType)
-        {
-            Cell cell = _grid.GetCell(row, col);
-            if (cell == null)
-            {
-                return;
-            }
-            if (cell.IsChecked())
-            {
-                return;
-            }
-
-            cell.Check();
-
-            if (cell.TryGetComponent<IMatchable>(out var matchableCell) && cell.GetCellType() == matchingCellType)
-            {
-                _matchList.Add(cell);
-                // Check below
-                if (row > 0)
-                {
-                    CheckMatchRecursively(row - 1, col, matchingCellType);
-                }
-
-                // Check above
-                if (row < _grid.Width - 1)
-                {
-                    CheckMatchRecursively(row + 1, col, matchingCellType);
-                }
-
-                // Check left
-                if (col > 0)
-                {
-                    CheckMatchRecursively(row, col - 1, matchingCellType);
-                }
-
-                // Check right
-                if (col < _grid.Height - 1)
-                {
-                    CheckMatchRecursively(row, col + 1, matchingCellType);
-                }
-            }
-        }
-
-        public List<Cell> GetMatchingCells(int row, int col)
-        {
-            CellType type = _grid.GetCell(row, col).GetCellType();
-
-            _matchList.Clear();
-            _grid.UncheckAll();
-
-            CheckMatchRecursively(row, col, type);
-            return _matchList;
+            return horizontalCells;
         }
     }
 }

@@ -7,7 +7,6 @@ namespace Managers
 {
     public class SwapManager : MonoBehaviour
     {
-        public event Action<Cell,Cell> OnSwapCompleted;
         private bool _canSwap = true;
         private Grid _grid;
         private Cell _swappedFirstCell;
@@ -17,6 +16,8 @@ namespace Managers
         {
             _grid = grid;
         }
+
+
 
         public void Swap(Cell firstCell, Cell secondCell)
         {
@@ -44,7 +45,7 @@ namespace Managers
             _canSwap = true;
             if (!isReverting)
             {
-                OnSwapCompleted?.Invoke(_swappedFirstCell,_swappedSecondCell);
+                EventManager.OnSwapCompleted?.Invoke(_swappedFirstCell,_swappedSecondCell);
             }
         }
 

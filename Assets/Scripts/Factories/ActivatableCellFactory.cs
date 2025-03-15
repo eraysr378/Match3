@@ -8,6 +8,7 @@ namespace Factories
     public class ActivatableCellFactory : CellFactory
     {
         [SerializeField] private ActivatableCell prefab;
+
         public override Cell CreateCell(CellType cellType)
         {
             ActivatableCell activatableCell = Instantiate(prefab);

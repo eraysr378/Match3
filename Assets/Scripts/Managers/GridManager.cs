@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Cells;
 using Interfaces;
 using UnityEngine;
@@ -11,6 +10,8 @@ namespace Managers
         private SwapManager SwapManager { get; set; }
         private MatchManager MatchManager { get; set; }
         private ActivationManager ActivationManager { get; set; }
+        private FillManager FillManager { get; set; }
+        private FallManager FallManager { get; set; }
 
         private Cell _firstSelectedCell;
         private Cell _secondSelectedCell;
@@ -18,32 +19,64 @@ namespace Managers
 
         private void Awake()
         {
+            SwapManager = GetComponent<SwapManager>();
+            MatchManager = GetComponent<MatchManager>();
+            ActivationManager = GetComponent<ActivationManager>();
+            FillManager = GetComponent<FillManager>();
+            FallManager  = GetComponent<FallManager>();
+        }
+
+        private void OnEnable()
+        {
             EventManager.OnPointerDownCell += OnPointerDownCellEvent;
             EventManager.OnPointerUpCell += OnPointerUpCellEvent;
             EventManager.OnPointerEnterCell += OnPointerEnterCellEvent;
             EventManager.OnPointerClickedCell += OnPointerClickedCellEvent;
             EventManager.OnGridInitialized += OnGridInitialized;
+            EventManager.OnCellDestroyed += OnCellDestroyed;
+            EventManager.OnFilledCell += OnFilledCell;
+            EventManager.OnSwapCompleted += OnSwapCompleted;
 
-            SwapManager = GetComponent<SwapManager>();
-            MatchManager = GetComponent<MatchManager>();
-            ActivationManager = GetComponent<ActivationManager>();
         }
-        
+
+        private void OnDisable()
+        {
+            EventManager.OnPointerDownCell -= OnPointerDownCellEvent;
+            EventManager.OnPointerUpCell -= OnPointerUpCellEvent;
+            EventManager.OnPointerEnterCell -= OnPointerEnterCellEvent;
+            EventManager.OnPointerClickedCell -= OnPointerClickedCellEvent;
+            EventManager.OnGridInitialized -= OnGridInitialized;
+            EventManager.OnCellDestroyed -= OnCellDestroyed;
+            EventManager.OnFilledCell -= OnFilledCell;
+            EventManager.OnSwapCompleted -= OnSwapCompleted;
+
+        }     
         private void OnGridInitialized(Grid grid)
         {
             _grid = grid;
             SwapManager.Initialize(_grid);
-            SwapManager.OnSwapCompleted += SwapManager_OnSwapCompleted;
             MatchManager.Initialize(_grid);
+            FillManager.Initialize(_grid);
+            FallManager.Initialize(_grid);
+        }
+
+        private void OnFilledCell(int prevRow, int prevCol, Cell cell)
+        {
+            _grid.SetCell(prevRow, prevCol, null); // Clear old position
+            _grid.SetCell(cell.Row, cell.Col, cell); // Set the cell in its position
+        }
+        private void OnCellDestroyed(Cell cell)
+        {
+            _grid.SetCell(cell.Row, cell.Col,null);
         }
         
-        private void SwapManager_OnSwapCompleted(Cell swappedFirstCell, Cell swappedSecondCell)
+        private void OnSwapCompleted(Cell swappedFirstCell, Cell swappedSecondCell)
         {
             bool anyMatchFound = false;
             bool isAnyActivated = false;
 
-            anyMatchFound |= MatchManager.CheckAndHandleMatch(swappedFirstCell);
-            anyMatchFound |= MatchManager.CheckAndHandleMatch(swappedSecondCell);
+            anyMatchFound |= MatchManager.GetMatch(swappedFirstCell) is not null;
+            anyMatchFound |= MatchManager.GetMatch(swappedSecondCell) is not null;
 
 
             isAnyActivated |= ActivationManager.ActivateCell(swappedFirstCell);
@@ -53,6 +86,12 @@ namespace Managers
             {
                 SwapManager.RevertSwap();
             }
+            else
+            {
+                MatchManager.ClearAllValidMatches();
+                FillManager.StartFilling();
+            }
+
 
             _firstSelectedCell = null;
             _secondSelectedCell = null;
@@ -91,48 +130,6 @@ namespace Managers
             int dx = Mathf.Abs(cell1.Row - cell2.Row);
             int dy = Mathf.Abs(cell1.Col - cell2.Col);
             return (dx == 1 && dy == 0) || (dx == 0 && dy == 1); // Ensure adjacent swap only
-        }
-
-        public List<Cell> GetAdjacentElements(int row, int col)
-        {
-            List<Cell> adjacentElementList = new List<Cell>();
-            // Check below
-            if (row > 0)
-            {
-                if (_grid.GetCell(row - 1, col) != null)
-                {
-                    adjacentElementList.Add(_grid.GetCell(row - 1, col));
-                }
-            }
-
-            // Check above
-            if (row < _grid.Width - 1)
-            {
-                if (_grid.GetCell(row + 1, col) != null)
-                {
-                    adjacentElementList.Add(_grid.GetCell(row + 1, col));
-                }
-            }
-
-            // Check left
-            if (col > 0)
-            {
-                if (_grid.GetCell(row, col - 1) != null)
-                {
-                    adjacentElementList.Add(_grid.GetCell(row, col - 1));
-                }
-            }
-
-            // Check right
-            if (col < _grid.Height - 1)
-            {
-                if (_grid.GetCell(row, col + 1) != null)
-                {
-                    adjacentElementList.Add(_grid.GetCell(row, col + 1));
-                }
-            }
-
-            return adjacentElementList;
         }
     }
 }

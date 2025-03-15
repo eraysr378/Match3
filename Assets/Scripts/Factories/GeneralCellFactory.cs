@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Cells;
 using UnityEngine;
 
@@ -6,35 +8,51 @@ namespace Factories
 {
     [CreateAssetMenu(fileName = "GeneralCellFactory", menuName = "Factories/GeneralCellFactory")]
 
-    public class GeneralCellFactory : CellFactory
+    public class GeneralCellFactory : MonoBehaviour
     {
-        [SerializeField] private NormalCellFactory normalCellFactory;
-        [SerializeField] private ObstacleCellFactory obstacleCellFactory;
-        [SerializeField] private ActivatableCellFactory activatableCellFactory;
+        [SerializeField] private List<CellType> _cellTypeKeys;
+        [SerializeField] private List<CellFactory> _cellFactoryValues;
+        private Dictionary<CellType, CellFactory> _cellFactoriesByType;
         
-        public override Cell CreateCell(CellType cellType)
+        private void Start()
         {
-            Cell cell = null;
-            switch (cellType)
-            {
-                // case CellType.SquareNormalCell or CellType.CircleNormalCell:
-                //     cell = normalCellFactory.CreateCell(cellType);
-                //     break;
-                case CellType.SquareNormalCell or CellType.CircleNormalCell or CellType.TriangleNormalCell:
-                    cell = normalCellFactory.CreateCell(cellType);
-                    break;
-                case CellType.ObstacleCell:
-                    cell = obstacleCellFactory.CreateCell(cellType);
-                    break;
-                case CellType.ActivatableCell:
-                    cell = activatableCellFactory.CreateCell(cellType);
-                    break;
-                default:        
-                    throw new ArgumentOutOfRangeException(nameof(cellType), cellType, null);
-            }
-            return cell;
+            InitializeDictionary();
         }
 
+        private void InitializeDictionary()
+        {
+            _cellFactoriesByType = new Dictionary<CellType, CellFactory>();
+            for (int i = 0; i < Mathf.Min(_cellTypeKeys.Count, _cellFactoryValues.Count); i++)
+            {
+                _cellFactoriesByType.Add(_cellTypeKeys[i], _cellFactoryValues[i]);
+            }
+        }
 
+        public Cell CreateCellBasedOnType(CellType cellType)
+        {
+            if (_cellFactoriesByType.TryGetValue(cellType, out var factory))
+            {
+                return factory.CreateCell(cellType);
+            }
+            return null;
+        }
+
+        public Cell CreateRandomNormalCell()
+        {
+            // Filter out only the CellTypes that are created by NormalCellFactory
+            List<CellType> normalCellTypes = _cellFactoriesByType
+                .Where(kvp => kvp.Value is NormalCellFactory) 
+                .Select(kvp => kvp.Key) 
+                .ToList();
+
+            if (normalCellTypes.Count == 0)
+                throw new Exception("No NormalCellFactory found in the dictionary.");
+
+            CellType randomCellType = normalCellTypes[UnityEngine.Random.Range(0, normalCellTypes.Count)];
+
+            // Use the factory to create the cell
+            return CreateCellBasedOnType(randomCellType);
+        }
+  
     }
 }

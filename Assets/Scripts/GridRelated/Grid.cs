@@ -46,22 +46,5 @@ namespace GridRelated
                 _gridArray[row, col] = null;
             }
         }
-        public void UncheckAll()
-        {
-            for (int row = 0; row < height; row++)
-            {
-                for (int col = 0; col < width; col++)
-                {
-                    Cell cell = _gridArray[row, col];
-                    if (cell != null)
-                    {
-                        cell.Uncheck();
-                    }
-                }
-            }
-        }
-
-
-
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using Cells;
 using Factories;
 using Managers;
@@ -8,11 +9,14 @@ namespace GridRelated
 {
     public class GridInitializer : MonoBehaviour
     {
-        [SerializeField] private GeneralCellFactory generalCellFactory;
         [SerializeField] private GridPropertiesSo propertiesSo;
         [SerializeField] private RectTransform playground;
         [SerializeField] private SpriteRenderer borderSpriteRenderer;
-        [SerializeField] private Transform gridParent;
+
+        public void Awake()
+        {
+            GridUtility.PropertiesSo = propertiesSo;
+        }
 
         public void Start()
         {
@@ -42,7 +46,7 @@ namespace GridRelated
             // Calculate the size for each element to fit exactly within the grid
             float elementWidth = gridPlaygroundWidth / propertiesSo.width;
             float elementHeight = gridPlaygroundHeight / propertiesSo.height;
-            propertiesSo.elementSize = Mathf.Min(elementWidth, elementHeight); // Use the smaller size for square elements
+            propertiesSo.elementSize = Mathf.Min(elementWidth, elementHeight); // Use the smaller size
 
             // Calculate the center of the playground
             propertiesSo.gridPlaygroundCenter = (corners[0] + corners[2]) / 2;
@@ -65,12 +69,8 @@ namespace GridRelated
                 {
                     for (int col = 0; col < propertiesSo.width; col++)
                     {
-                        Cell createdCell = generalCellFactory.CreateCell(propertiesSo.customGridSo.customGrid.GetElement(row, col));
-                        Vector2 pos = GridUtility.GridPositionToWorldPosition(row,col,createdCell
-                            ,propertiesSo.gridPlaygroundCenter
-                            ,propertiesSo.gridOffset
-                            ,propertiesSo.elementSize);
-                        createdCell.Init(row,col,pos,propertiesSo.elementSize,gridParent);
+                        CellType cellType = propertiesSo.customGridSo.customGrid.GetElement(row, col);
+                        Cell createdCell = EventManager.OnRequestCellSpawn?.Invoke(cellType, row, col);
                         propertiesSo.grid.SetCell(row, col, createdCell);
 
                     }

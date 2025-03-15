@@ -13,7 +13,6 @@ namespace Cells
     public class NormalCell : Cell, ISwappable,IMatchable
     {
         [SerializeField] private NormalCellSpritesSo spritesSo;
-
         
         public override void Init(int row, int col, Vector3 position, float elementSize,Transform parent)
         {
@@ -32,5 +31,6 @@ namespace Cells
         }
 
 
+ 
     }
 }

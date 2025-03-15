@@ -8,6 +8,7 @@ namespace Factories
     public class NormalCellFactory : CellFactory
     {
         [SerializeField] private NormalCell prefab;
+
         public override Cell CreateCell(CellType cellType)
         {
             NormalCell normalCell = Instantiate(prefab);
@@ -15,4 +16,5 @@ namespace Factories
             return normalCell;
         }
     }
+
 }

@@ -1,4 +1,3 @@
-using Cells;
 using UnityEngine;
 
 namespace ScriptableObjects
@@ -6,19 +5,27 @@ namespace ScriptableObjects
     [CreateAssetMenu(fileName = "NormalCellSprites", menuName = "ScriptableObjects/NormalCellSprites")]
     public class NormalCellSpritesSo : ScriptableObject
     {
-        public Sprite blueSprite;
-        public Sprite redSprite;
-        public Sprite greenSprite;
-
-        public Sprite GetSprite(CellType cellType)
+        [System.Serializable]
+        private struct CellSpritePair
         {
-            switch (cellType)
+            public CellType cellType;
+            public Sprite sprite;
+        }
+
+        [SerializeField] private CellSpritePair[] cellSprites;
+
+        public Sprite GetSprite(CellType type)
+        {
+            foreach (var pair in cellSprites)
             {
-                case CellType.SquareNormalCell: return blueSprite;
-                case CellType.CircleNormalCell: return redSprite;
-                // case CellType.TriangleNormalCell: return greenSprite;
-                default: return null;
+                if (pair.cellType == type)
+                {
+                    return pair.sprite;
+                }
             }
+
+            Debug.LogError("Sprite not found for type: " + type);
+            return null;
         }
     }
 }
