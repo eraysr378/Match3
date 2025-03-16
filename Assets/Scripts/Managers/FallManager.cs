@@ -39,7 +39,7 @@ namespace Managers
             {
                 if (_grid.GetCell(row, col) != null) break;
 
-                Cell newCell = EventManager.OnRequestRandomCellSpawn(_grid.Height, col);
+                Cell newCell = EventManager.OnRequestRandomNormalCellSpawn(_grid.Height, col);
 
                 _grid.SetCell(row, col, newCell);
                 newCell.SetPosition(row, col);

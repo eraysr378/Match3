@@ -1,13 +1,16 @@
 using System;
 using System.Collections;
 using GridRelated;
+using Interfaces;
 using Managers;
+using Misc;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Cells
 {
-    public abstract class Cell : MonoBehaviour,IPointerDownHandler, IPointerUpHandler,IPointerEnterHandler,IPointerClickHandler
+    public abstract class Cell : MonoBehaviour,IPoolableObject,IPointerDownHandler, IPointerUpHandler,IPointerEnterHandler,IPointerClickHandler
     {
         [SerializeField] protected SpriteRenderer visual;
         public Collider2D Collider => _collider;
@@ -19,10 +22,16 @@ namespace Cells
         private int _row;
         private Collider2D _collider;
         private Coroutine _moveCoroutine;
+        private Color _baseColor;
 
         private void Awake()
         {
             _collider = GetComponent<Collider2D>();
+        }
+
+        private void Start()
+        {
+            _baseColor = visual.color;
         }
 
         public virtual void Init(int row, int col,Vector3 position,float elementSize,Transform parent)
@@ -77,7 +86,7 @@ namespace Cells
         private IEnumerator DestroyAfter(float seconds)
         {
             yield return new WaitForSeconds(seconds);
-            Destroy(gameObject);
+            ReturnToPool();
         }
         public void OnPointerDown(PointerEventData eventData)
         {
@@ -99,6 +108,18 @@ namespace Cells
         {
             EventManager.OnPointerClickedCell?.Invoke(this);
 
+        }
+
+        public virtual void OnSpawn()
+        {
+            visual.color = _baseColor;
+        }
+        
+
+        public void ReturnToPool()
+        {
+            gameObject.SetActive(false);
+            EventManager.OnCellReturnToPool?.Invoke(this);
         }
     }
 }

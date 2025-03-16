@@ -104,7 +104,7 @@ namespace Managers
             {
                 Cell cellBelow = _grid.GetCell(_grid.Height - 1, col);
                 if (cellBelow is not null) continue;
-                Cell newCell = EventManager.OnRequestRandomCellSpawn(_grid.Height, col);
+                Cell newCell = EventManager.OnRequestRandomNormalCellSpawn(_grid.Height, col);
                 newCell.TryGetComponent<Fillable>(out var fillable);
                 fillable.Fill(_grid.Height - 1, col, fillTime);
                 EventManager.OnFilledCell?.Invoke(newCell.Row, newCell.Col, newCell);

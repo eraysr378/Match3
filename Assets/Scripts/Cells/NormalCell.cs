@@ -4,12 +4,7 @@ using UnityEngine;
 
 namespace Cells
 {
-    public enum NormalCellType
-    {
-        Blue,
-        Red,
-        Green
-    }
+ 
     public class NormalCell : Cell, ISwappable,IMatchable
     {
         [SerializeField] private NormalCellSpritesSo spritesSo;
@@ -24,6 +19,7 @@ namespace Cells
         {
             visual.sprite = spritesSo.GetSprite(cellType);
         }
+        
 
         public void Swap(Cell other)
         {

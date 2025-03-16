@@ -1,51 +1,69 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Cells;
 using Factories;
 using GridRelated;
 using Managers;
+using Misc;
+using Random = System.Random;
 
 public class CellSpawner : MonoBehaviour
 {
+    private readonly Dictionary<CellType, Queue<Cell>> _cellPools = new();
     [SerializeField] private GeneralCellFactory cellFactory;
     [SerializeField] private Transform cellParent;
 
     public void OnEnable()
     {
         EventManager.OnRequestCellSpawn += SpawnCell;
-        EventManager.OnRequestRandomCellSpawn += SpawnRandomNormalCell;
+        EventManager.OnRequestRandomNormalCellSpawn += SpawnRandomNormalCell;
+        EventManager.OnCellReturnToPool += ReturnCellToPool;
     }
 
     private void OnDisable()
     {
         EventManager.OnRequestCellSpawn -= SpawnCell;
-        EventManager.OnRequestRandomCellSpawn -= SpawnRandomNormalCell;
+        EventManager.OnRequestRandomNormalCellSpawn -= SpawnRandomNormalCell;
+        EventManager.OnCellReturnToPool -= ReturnCellToPool;
     }
 
+ 
     private Cell SpawnCell(CellType cellType, int row, int col)
     {
-        Cell newCell = cellFactory.CreateCellBasedOnType(cellType);
-        if (newCell == null)
+        Cell cell;
+        if (_cellPools.TryGetValue(cellType, out Queue<Cell> pool) && pool.Count > 0)
         {
-            Debug.LogError($"Failed to create cell of type {cellType}");
-            return null;
+            cell = pool.Dequeue();
+            cell.gameObject.SetActive(true);
+            cell.OnSpawn();
         }
-
-        Vector2 pos = GridUtility.GridPositionToWorldPosition(row, col, newCell);
-        newCell.Init(row, col, pos, GridUtility.PropertiesSo.elementSize, cellParent);
-        return newCell;
+        else
+        {
+            cell = cellFactory.CreateCellBasedOnType(cellType);
+        }
+        Vector2 pos = GridUtility.GridPositionToWorldPosition(row, col, cell);
+        cell.Init(row, col, pos, GridUtility.PropertiesSo.elementSize, cellParent);
+        return cell;
     }
 
-    private Cell SpawnRandomNormalCell(int row, int col)
+    private void ReturnCellToPool(Cell cell)
     {
-        Cell newCell = cellFactory.CreateRandomNormalCell();
-        if (newCell == null)
+        if (!_cellPools.ContainsKey(cell.GetCellType()))
         {
-            Debug.LogError($"Failed to create random normal cell");
-            return null;
+            _cellPools[cell.GetCellType()] = new Queue<Cell>();
         }
 
-        Vector2 pos = GridUtility.GridPositionToWorldPosition(row, col, newCell);
-        newCell.Init(row, col, pos, GridUtility.PropertiesSo.elementSize, cellParent);
-        return newCell;
+        _cellPools[cell.GetCellType()].Enqueue(cell);
+    }
+    private Cell SpawnRandomNormalCell(int row, int col)
+    {
+        Array values = Enum.GetValues(typeof(NormalCellType));
+        var random = new Random();
+        NormalCellType randomNormalCell = (NormalCellType)values.GetValue(random.Next(values.Length));
+        CellType randomCellType = (CellType)randomNormalCell;
+        
+        return SpawnCell(randomCellType, row, col);
+
     }
 }
