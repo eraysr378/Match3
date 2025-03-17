@@ -1,5 +1,7 @@
 using System.Collections;
 using Cells;
+using GridRelated;
+using Pieces;
 using UnityEngine;
 using Grid = GridRelated.Grid;
 
@@ -46,7 +48,7 @@ namespace Managers
             {
                 yield return new WaitForSeconds(fillTime);
             }
-
+            
             EventManager.OnFillCompleted?.Invoke();
         }
 
@@ -57,13 +59,13 @@ namespace Managers
             {
                 for (int col = 0; col < _grid.Width; col++)
                 {
-                    Cell cell = _grid.GetCell(row, col);
-                    if (cell is null || !cell.TryGetComponent<Fillable>(out var fillable)) continue;
-                    Cell cellBelow = _grid.GetCell(row - 1, col);
-                    if (cellBelow is null)
+                    Piece piece = _grid.GetCell(row, col).CurrentPiece;
+                    if (piece is null || !piece.TryGetComponent<Fillable>(out var fillable)) continue;
+                    Piece pieceBelow = _grid.GetCell(row - 1, col).CurrentPiece;
+                    if (pieceBelow is null)
                     {
-                        fillable.Fill(row - 1, col, fillTime);
-                        EventManager.OnFilledCell?.Invoke(row, col, cell);
+                        Cell targetCell = _grid.GetCell(row - 1, col);
+                        fillable.Fill(targetCell, fillTime);
                         movedCell = true;
                     }
                     else
@@ -74,14 +76,14 @@ namespace Managers
                             int diagCol = col + diag;
                             if (diagCol < 0 || diagCol >= _grid.Width) continue;
 
-                            Cell diagonalCell = _grid.GetCell(row - 1, diagCol);
-                            if (diagonalCell is not null) continue;
+                            Piece diagonalPiece = _grid.GetCell(row - 1, diagCol).CurrentPiece;
+                            if (diagonalPiece is not null) continue;
                             bool hasCellAbove = true;
                             for (int aboveRow = row; aboveRow < _grid.Height; aboveRow++)
                             {
-                                Cell cellAbove = _grid.GetCell(aboveRow, diagCol);
-                                if (cellAbove is not null && cellAbove.GetComponent<Fillable>()) break;
-                                if (cellAbove is not null)
+                                Piece pieceAbove = _grid.GetCell(aboveRow, diagCol).CurrentPiece;
+                                if (pieceAbove is not null && pieceAbove.GetComponent<Fillable>()) break;
+                                if (pieceAbove is not null)
                                 {
                                     hasCellAbove = false;
                                     break;
@@ -90,8 +92,8 @@ namespace Managers
 
                             if (!hasCellAbove)
                             {
-                                fillable.Fill(row - 1, diagCol, fillTime);
-                                EventManager.OnFilledCell?.Invoke(row, col, cell);
+                                Cell targetCell = _grid.GetCell(row - 1, diagCol);
+                                fillable.Fill(targetCell, fillTime);
                                 movedCell = true;
                                 break;
                             }
@@ -102,12 +104,14 @@ namespace Managers
 
             for (int col = 0; col < _grid.Width; col++)
             {
-                Cell cellBelow = _grid.GetCell(_grid.Height - 1, col);
-                if (cellBelow is not null) continue;
-                Cell newCell = EventManager.OnRequestRandomNormalCellSpawn(_grid.Height, col);
-                newCell.TryGetComponent<Fillable>(out var fillable);
-                fillable.Fill(_grid.Height - 1, col, fillTime);
-                EventManager.OnFilledCell?.Invoke(newCell.Row, newCell.Col, newCell);
+                Piece pieceBelow = _grid.GetCell(_grid.Height - 1, col).CurrentPiece;
+                if (pieceBelow is not null) continue;
+                Piece newPiece = EventManager.OnRequestRandomNormalCellSpawn(_grid.Height, col);
+                newPiece.TryGetComponent<Fillable>(out var fillable);
+                Cell targetCell = _grid.GetCell(_grid.Height - 1, col);
+                newPiece.Init(newPiece.transform.position,GridUtility.PropertiesSo.elementSize,null,targetCell);
+
+                fillable.Fill(targetCell, fillTime);
                 movedCell = true;
             }
 

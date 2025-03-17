@@ -1,5 +1,6 @@
 using System;
 using Cells;
+using Pieces;
 using Factories;
 using Managers;
 using Misc;
@@ -10,6 +11,7 @@ namespace GridRelated
 {
     public class GridInitializer : MonoBehaviour
     {
+        [SerializeField] private Cell  _cellPrefab;
         [SerializeField] private GridPropertiesSo propertiesSo;
         [SerializeField] private RectTransform playground;
         [SerializeField] private SpriteRenderer borderSpriteRenderer;
@@ -35,7 +37,7 @@ namespace GridRelated
 
             propertiesSo.grid = new Grid(propertiesSo.height, propertiesSo.width);
             AdjustGridSize();
-            CreateGridElements();
+            CreateGridCells();
         }
         private void AdjustGridSize( )
         {
@@ -62,7 +64,7 @@ namespace GridRelated
             borderSpriteRenderer.size = new Vector2(totalGridWidth+propertiesSo.elementSize/8, totalGridHeight+propertiesSo.elementSize/8);
             borderSpriteRenderer.transform.position = new Vector3(propertiesSo.gridPlaygroundCenter.x, propertiesSo.gridPlaygroundCenter.y , borderSpriteRenderer.transform.position.z);
         }
-        private void CreateGridElements()
+        private void CreateGridCells()
         {
             if (propertiesSo.customGridSo != null)
             {
@@ -71,7 +73,15 @@ namespace GridRelated
                     for (int col = 0; col < propertiesSo.width; col++)
                     {
                         CellType cellType = propertiesSo.customGridSo.customGrid.GetElement(row, col);
-                        Cell createdCell = EventManager.OnRequestCellSpawn?.Invoke(cellType, row, col);
+                        // Piece createdPiece = EventManager.OnRequestCellSpawn?.Invoke(pieceType, row, col);
+                        Piece createdPiece = EventManager.OnRequestRandomNormalCellSpawn?.Invoke(row, col);
+                        Cell createdCell = Instantiate(_cellPrefab);
+                        createdCell.transform.position = GridUtility.GridPositionToWorldPosition(row,col);
+                        createdCell.transform.localScale = Vector3.one * propertiesSo.elementSize;
+                        createdCell.SetPosition(row,col);
+                        createdCell.SetPiece(createdPiece); 
+                        createdPiece?.Init(createdCell.transform.position,propertiesSo.elementSize,createdCell.transform,createdCell);
+
                         propertiesSo.grid.SetCell(row, col, createdCell);
 
                     }

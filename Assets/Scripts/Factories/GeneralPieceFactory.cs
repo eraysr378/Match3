@@ -1,17 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Cells;
+using Pieces;
 using Misc;
 using UnityEngine;
 
 namespace Factories
 {
-    public class GeneralCellFactory : MonoBehaviour
+    public class GeneralPieceFactory : MonoBehaviour
     {
-        [SerializeField] private List<CellType> _cellTypeKeys;
-        [SerializeField] private List<CellFactory> _cellFactoryValues;
-        private Dictionary<CellType, CellFactory> _cellFactoriesByType;
+        [SerializeField] private List<PieceType> _pieceTypeKeys;
+        [SerializeField] private List<PieceFactory> _pieceFactoryValues;
+        private Dictionary<PieceType, PieceFactory> _pieceFactoriesByType;
         
         private void Awake()
         {
@@ -20,18 +19,18 @@ namespace Factories
 
         private void InitializeDictionary()
         {
-            _cellFactoriesByType = new Dictionary<CellType, CellFactory>();
-            for (int i = 0; i < Mathf.Min(_cellTypeKeys.Count, _cellFactoryValues.Count); i++)
+            _pieceFactoriesByType = new Dictionary<PieceType, PieceFactory>();
+            for (int i = 0; i < Mathf.Min(_pieceTypeKeys.Count, _pieceFactoryValues.Count); i++)
             {
-                _cellFactoriesByType.Add(_cellTypeKeys[i], _cellFactoryValues[i]);
+                _pieceFactoriesByType.Add(_pieceTypeKeys[i], _pieceFactoryValues[i]);
             }
         }
 
-        public Cell CreateCellBasedOnType(CellType cellType)
+        public Piece CreateCellBasedOnType(PieceType pieceType)
         {
-            if (_cellFactoriesByType.TryGetValue(cellType, out var factory))
+            if (_pieceFactoriesByType.TryGetValue(pieceType, out var factory))
             {
-                return factory.CreateCell(cellType);
+                return factory.CreateCell(pieceType);
             }
             return null;
         }

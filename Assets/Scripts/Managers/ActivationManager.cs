@@ -1,26 +1,26 @@
 using System;
 using UnityEngine;
-using Cells;
+using Pieces;
 using Interfaces;
 
 namespace Managers
 {
     public class ActivationManager : MonoBehaviour
     {
-        public event Action<Cell> OnCellActivated;
+        public event Action<Piece> OnCellActivated;
 
-        public bool ActivateCell(Cell cell)
+        public bool ActivateCell(Piece piece)
         {
-            if (cell is IActivatable activatable)
+            if (piece is IActivatable activatable)
             {
                 activatable.Activate();
-                OnCellActivated?.Invoke(cell);
+                OnCellActivated?.Invoke(piece);
                 return true;
             }
             return false;
         }
 
-        public void ActivateCells(params Cell[] cells)
+        public void ActivateCells(params Piece[] cells)
         {
             foreach (var cell in cells)
             {

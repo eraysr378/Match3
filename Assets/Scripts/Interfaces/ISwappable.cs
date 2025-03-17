@@ -1,10 +1,10 @@
-using Cells;
+using Pieces;
 using UnityEngine.EventSystems;
 
 namespace Interfaces
 {
     public interface ISwappable 
     {
-        public void Swap(Cell other);
+        public void Swap(Piece other);
     }
 }

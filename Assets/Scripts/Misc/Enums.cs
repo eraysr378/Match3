@@ -2,14 +2,18 @@ namespace Misc
 {
     public enum CellType
     {
-        SquareNormalCell = NormalCellType.Square,
-        CircleNormalCell =  NormalCellType.Circle,
-        TriangleNormalCell =  NormalCellType.Triangle,
-        ObstacleCell,
-        ActivatableCell,
+        Default,
+    }
+    public enum PieceType
+    {
+        SquareNormalPiece = NormalPieceType.Square,
+        CircleNormalPiece =  NormalPieceType.Circle,
+        TriangleNormalPiece =  NormalPieceType.Triangle,
+        ObstaclePiece,
+        ActivatablePiece,
     }
 
-    public enum NormalCellType
+    public enum NormalPieceType
     {
         Square = 100,
         Circle = 101,

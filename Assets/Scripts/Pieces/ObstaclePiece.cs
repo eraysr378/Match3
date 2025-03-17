@@ -1,6 +1,6 @@
-namespace Cells
+namespace Pieces
 {
-    public class ObstacleCell : Cell
+    public class ObstaclePiece : Piece
     {
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()

@@ -1,3 +1,4 @@
+using Cells;
 using UnityEngine;
 [RequireComponent(typeof(Movable))]
 public class Fillable : MonoBehaviour
@@ -9,13 +10,13 @@ public class Fillable : MonoBehaviour
         _movable = GetComponent<Movable>();
     }
 
-    public void Fill(int targetRow, int targetCol,float duration)
+    public void Fill(Cell targetCell,float duration)
     {
         if (_movable == null)
         {
             Debug.LogWarning("Trying to move a Fillable cell without Movable!");
             return;
         }
-        _movable.StartMoving(targetRow, targetCol,duration);
+        _movable.StartMoving(targetCell,duration);
     }
 }

@@ -273,7 +273,6 @@ GameObject:
   - component: {fileID: 642688017}
   - component: {fileID: 642688016}
   - component: {fileID: 642688018}
-  - component: {fileID: 642688020}
   m_Layer: 0
   m_Name: GridManager
   m_TagString: Untagged
@@ -357,18 +356,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fillTime: 0.5
---- !u!114 &642688020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 642688013}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd67683f7aae42bda48e773dc9e5ce87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &716167378
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,6 +648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ca58922d1526b41b6f314e889059b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cellPrefab: {fileID: -35425637580997507, guid: 898cb1cb4bd6e4f4686b354746c52a74, type: 3}
   propertiesSo: {fileID: 11400000, guid: df0f665720a24074ea791749b6933e4a, type: 2}
   playground: {fileID: 2115160910}
   borderSpriteRenderer: {fileID: 811393423}
@@ -690,7 +678,7 @@ GameObject:
   - component: {fileID: 1187920152}
   - component: {fileID: 1187920151}
   m_Layer: 0
-  m_Name: CellSpawner
+  m_Name: PieceSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -708,7 +696,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f471f92aed1489a8973e26d5b0fb715, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellFactory: {fileID: 1738913331}
+  pieceFactory: {fileID: 1738913331}
   cellParent: {fileID: 426297526}
 --- !u!4 &1187920152
 Transform:
@@ -836,7 +824,7 @@ GameObject:
   - component: {fileID: 1738913332}
   - component: {fileID: 1738913331}
   m_Layer: 0
-  m_Name: GeneralCellFactory
+  m_Name: GeneralPieceFactory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -854,8 +842,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 839480d72e4ac424cb2839ac93fc67d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cellTypeKeys: 0200000000000000010000000300000004000000
-  _cellFactoryValues:
+  _pieceTypeKeys: 6400000065000000660000006700000068000000
+  _pieceFactoryValues:
   - {fileID: 11400000, guid: d44b0da2ea9847548aec7cf7bf6dc995, type: 2}
   - {fileID: 11400000, guid: d44b0da2ea9847548aec7cf7bf6dc995, type: 2}
   - {fileID: 11400000, guid: d44b0da2ea9847548aec7cf7bf6dc995, type: 2}

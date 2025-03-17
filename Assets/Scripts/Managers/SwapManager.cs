@@ -1,72 +1,75 @@
 using System;
 using System.Collections;
 using Cells;
+using Pieces;
 using UnityEngine;
 using Grid = GridRelated.Grid;
+
 namespace Managers
 {
     public class SwapManager : MonoBehaviour
     {
         private bool _canSwap = true;
         private Grid _grid;
-        private Cell _swappedFirstCell;
-        private Cell _swappedSecondCell;
-    
+        private Piece _swappedFirstPiece;
+        private Piece _swappedSecondPiece;
+
         public void Initialize(Grid grid)
         {
             _grid = grid;
         }
-
-
-
-        public void Swap(Cell firstCell, Cell secondCell)
+        
+        public void Swap(Piece firstPiece, Piece secondPiece)
         {
-            _swappedFirstCell = firstCell;
-            _swappedSecondCell = secondCell;
-            StartCoroutine(SwapIE(firstCell, secondCell,false));
+            _swappedFirstPiece = firstPiece;
+            _swappedSecondPiece = secondPiece;
+            StartCoroutine(SwapIE(firstPiece, secondPiece, false));
         }
+
         public void RevertSwap()
         {
-            StartCoroutine(SwapIE(_swappedFirstCell,_swappedSecondCell ,true));
-            _swappedFirstCell = null;
-            _swappedSecondCell = null;
+            StartCoroutine(SwapIE(_swappedFirstPiece, _swappedSecondPiece, true));
+            _swappedFirstPiece = null;
+            _swappedSecondPiece = null;
         }
-        private IEnumerator SwapIE(Cell firstCell, Cell secondCell,bool isReverting)
+
+        private IEnumerator SwapIE(Piece firstPiece, Piece secondPiece, bool isReverting)
         {
             _canSwap = false;
-            yield return StartCoroutine(AnimateSwapIE(firstCell, secondCell));
-            _grid.SwapCells(firstCell, secondCell);
-            
-            int saveRow = firstCell.Row;
-            int saveCol = firstCell.Col;
-            firstCell.SetPosition(secondCell.Row,secondCell.Col);
-            secondCell.SetPosition(saveRow,saveCol);
-            
+            yield return StartCoroutine(AnimateSwapIE(firstPiece, secondPiece));
+
+            Cell saveCell = firstPiece.CurrentCell;
+            firstPiece.SetCell(secondPiece.CurrentCell);
+            secondPiece.SetCell(saveCell);
+
+            firstPiece.CurrentCell.SetPiece(firstPiece);
+            secondPiece.CurrentCell.SetPiece(secondPiece);
+
             _canSwap = true;
             if (!isReverting)
             {
-                EventManager.OnSwapCompleted?.Invoke(_swappedFirstCell,_swappedSecondCell);
+                EventManager.OnSwapCompleted?.Invoke(_swappedFirstPiece, _swappedSecondPiece);
             }
         }
 
-        private IEnumerator AnimateSwapIE(Cell firstCell, Cell secondCell)
+        private IEnumerator AnimateSwapIE(Piece firstPiece, Piece secondPiece)
         {
             float duration = 0.25f;
-            Vector3 startPos1 = firstCell.transform.position;
-            Vector3 startPos2 = secondCell.transform.position;
+            Vector3 startPos1 = firstPiece.transform.position;
+            Vector3 startPos2 = secondPiece.transform.position;
             float time = 0;
 
             while (time < duration)
             {
                 time += Time.deltaTime;
                 float t = time / duration;
-                firstCell.transform.position = Vector3.Lerp(startPos1, startPos2, t);
-                secondCell.transform.position = Vector3.Lerp(startPos2, startPos1, t);
+                firstPiece.transform.position = Vector3.Lerp(startPos1, startPos2, t);
+                secondPiece.transform.position = Vector3.Lerp(startPos2, startPos1, t);
                 yield return null;
             }
 
-            firstCell.transform.position = startPos2;
-            secondCell.transform.position = startPos1;
+            firstPiece.transform.position = startPos2;
+            secondPiece.transform.position = startPos1;
         }
 
         public bool CanSwap()
@@ -74,6 +77,4 @@ namespace Managers
             return _canSwap;
         }
     }
-    
-
 }

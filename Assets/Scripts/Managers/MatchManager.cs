@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Cells;
+using Pieces;
 using Interfaces;
 using Misc;
 using UnityEngine;
@@ -20,6 +20,7 @@ namespace Managers
         {
             EventManager.OnFillCompleted += OnFillCompleted;
         }
+
         public void OnDisable()
         {
             EventManager.OnFillCompleted -= OnFillCompleted;
@@ -32,136 +33,124 @@ namespace Managers
                 EventManager.OnValidMatchCleared?.Invoke();
             }
         }
-        
+
         public bool ClearAllValidMatches()
         {
-            bool anyMatchFound = false;
+            HashSet<Piece> matchedPieces = new HashSet<Piece>();
+
             for (int row = 0; row < _grid.Height; row++)
             {
                 for (int col = 0; col < _grid.Width; col++)
                 {
-                    Cell cell = _grid.GetCell(row, col);
-                    if (cell is IMatchable)
+                    Piece piece = _grid.GetCell(row, col).CurrentPiece;
+                    if (piece is not IMatchable || matchedPieces.Contains(piece)) continue;
+
+                    var matchList = GetMatch(piece);
+                    if (matchList == null) continue;
+
+                    foreach (var match in matchList)
                     {
-                        List<Cell> matchList = GetMatch(cell);
-                        if (matchList != null)
-                        {
-                            for (int i = 0; i < matchList.Count; i++)
-                            {
-                                matchList[i].DestroyCell();
-                                anyMatchFound = true;
-                            }
-                        }
+                        match.DestroyPiece();
+                        matchedPieces.Add(match);
                     }
                 }
             }
 
-            return anyMatchFound;
+            return matchedPieces.Count > 0;
         }
 
-        public List<Cell> GetMatch(Cell cell)
+        public List<Piece> GetMatch(Piece piece)
         {
-            if (cell is not IMatchable) return null;
-            List<Cell> matchingCells = new List<Cell>();
-            List<Cell> verticalCells;
+            if (piece is not IMatchable) return null;
 
-            List<Cell> horizontalCells = GetHorizontalMatch(cell);
-            horizontalCells.Add(cell);
-
-            if (horizontalCells.Count >= 3)
+            List<Piece> horizontalPieces = GetHorizontalMatch(piece);
+            if (horizontalPieces.Count >= 2)
             {
-                matchingCells.AddRange(horizontalCells);
-                foreach (var horizontalCell in horizontalCells)
+                horizontalPieces.Add(piece);
+                foreach (var horizontalPiece in horizontalPieces)
                 {
-                    verticalCells = GetVerticalMatch(horizontalCell);
-                    if (verticalCells.Count < 2)
+                    var verticalExtension = GetVerticalMatch(horizontalPiece);
+                    if (verticalExtension.Count >= 2)
                     {
-                        verticalCells.Clear();
-                    }
-                    else
-                    {
-                        matchingCells.AddRange(verticalCells);
+                        horizontalPieces.AddRange(verticalExtension);
                         break;
                     }
                 }
             }
-            
-            if (matchingCells.Count >= 3)
-            {
-                return matchingCells;
-            }
-            horizontalCells.Clear();
-            verticalCells = GetVerticalMatch(cell );
-            verticalCells.Add(cell);
 
-            if (verticalCells.Count >= 3)
+            if (horizontalPieces.Count >= 3)
+                return horizontalPieces;
+
+
+            List<Piece> verticalPieces = GetVerticalMatch(piece);
+
+            if (verticalPieces.Count >= 2)
             {
-                matchingCells.AddRange(verticalCells);
-                foreach (var verticalCell in verticalCells)
+                verticalPieces.Add(piece);
+                foreach (var verticalPiece in verticalPieces)
                 {
-                    horizontalCells = GetHorizontalMatch(verticalCell);
-                    if (horizontalCells.Count < 2)
+                    var horizontalExtension = GetHorizontalMatch(verticalPiece);
+                    if (horizontalExtension.Count >= 2)
                     {
-                        horizontalCells.Clear();
-                    }
-                    else
-                    {
-                        matchingCells.AddRange(horizontalCells);
+                        verticalPieces.AddRange(horizontalExtension);
                         break;
                     }
                 }
             }
-            if (matchingCells.Count >= 3)
-            {
-                return matchingCells;
-            }
 
-            return null;
+            return verticalPieces.Count >= 3 ? verticalPieces : null;
         }
 
-        private List<Cell> GetVerticalMatch(Cell cell)
+        private List<Piece> GetVerticalMatch(Piece piece)
         {
-            List<Cell> verticalCells = new List<Cell>();
-            CellType cellType = cell.GetCellType();
-            for (int row = cell.Row - 1; row >= 0; row--)
+            if (piece is not IMatchable) return new List<Piece>();
+
+            List<Piece> verticalPieces = new List<Piece>();
+            PieceType pieceType = piece.GetPieceType();
+            for (int row = piece.Row - 1; row >= 0; row--)
             {
-                Cell cellBelow = _grid.GetCell(row, cell.Col);
-                if (cellBelow is not IMatchable || cellBelow.GetCellType() != cellType)
+                Piece pieceBelow = _grid.GetCell(row, piece.Col).CurrentPiece;
+                if (pieceBelow is not IMatchable || pieceBelow.GetPieceType() != pieceType)
                     break;
-                
-                verticalCells.Add(cellBelow);
+
+                verticalPieces.Add(pieceBelow);
             }
 
-            for (int row = cell.Row + 1; row < _grid.Height; row++)
+            for (int row = piece.Row + 1; row < _grid.Height; row++)
             {
-                Cell cellAbove = _grid.GetCell(row, cell.Col);
-                if (cellAbove is not IMatchable || cellAbove.GetCellType() != cellType)
+                Piece pieceAbove = _grid.GetCell(row, piece.Col).CurrentPiece;
+                if (pieceAbove is not IMatchable || pieceAbove.GetPieceType() != pieceType)
                     break;
-                
-                verticalCells.Add(cellAbove);
+
+                verticalPieces.Add(pieceAbove);
             }
-            return verticalCells;
+
+            return verticalPieces;
         }
 
-        private List<Cell> GetHorizontalMatch(Cell cell)
+        private List<Piece> GetHorizontalMatch(Piece piece)
         {
-            List<Cell> horizontalCells = new List<Cell>();
-            CellType cellType = cell.GetCellType();
-            for (int col = cell.Col - 1; col >= 0; col--)
+            if (piece is not IMatchable) return new List<Piece>();
+
+            List<Piece> horizontalPieces = new List<Piece>();
+            PieceType pieceType = piece.GetPieceType();
+            for (int col = piece.Col - 1; col >= 0; col--)
             {
-                Cell cellLeft = _grid.GetCell(cell.Row, col);
-                if (cellLeft is not IMatchable || cellLeft.GetCellType() != cellType)
+                Piece pieceLeft = _grid.GetCell(piece.Row, col).CurrentPiece;
+                if (pieceLeft is not IMatchable || pieceLeft.GetPieceType() != pieceType)
                     break;
-                horizontalCells.Add(cellLeft);
+                horizontalPieces.Add(pieceLeft);
             }
-            for (int col = cell.Col +1; col < _grid.Width; col++)
+
+            for (int col = piece.Col + 1; col < _grid.Width; col++)
             {
-                Cell cellRight = _grid.GetCell(cell.Row, col);
-                if (cellRight is not IMatchable || cellRight.GetCellType() != cellType)
+                Piece pieceRight = _grid.GetCell(piece.Row, col).CurrentPiece;
+                if (pieceRight is not IMatchable || pieceRight.GetPieceType() != pieceType)
                     break;
-                horizontalCells.Add(cellRight);
+                horizontalPieces.Add(pieceRight);
             }
-            return horizontalCells;
+
+            return horizontalPieces;
         }
     }
 }

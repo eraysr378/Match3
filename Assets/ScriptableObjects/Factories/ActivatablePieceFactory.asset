@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aec027509cff49d2bf26a7298933514b, type: 3}
-  m_Name: ObstacleCellFactory
+  m_Script: {fileID: 11500000, guid: d57dcee07bf442beac10b915f9359b79, type: 3}
+  m_Name: ActivatablePieceFactory
   m_EditorClassIdentifier: 
-  prefab: {fileID: 1199160095596775130, guid: 020e440273604cc4ab53ef9c1006332a, type: 3}
+  prefab: {fileID: -3878920638801830140, guid: 45220d495a7b3da45a5550eb63aea534, type: 3}

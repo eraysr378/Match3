@@ -1,9 +1,9 @@
 using Interfaces;
 using UnityEngine;
 
-namespace Cells
+namespace Pieces
 {
-    public class ActivatableCell : Cell, IActivatable,ISwappable
+    public class ActivatablePiece : Piece, IActivatable,ISwappable
     {
         public bool IsActivated { get; private set; }
 
@@ -18,7 +18,7 @@ namespace Cells
         }
 
 
-        public void Swap(Cell other)
+        public void Swap(Piece other)
         {
             throw new System.NotImplementedException();
         }

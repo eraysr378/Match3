@@ -1,5 +1,6 @@
 using System;
 using Cells;
+using Pieces;
 using UnityEngine;
 
 namespace GridRelated
@@ -18,12 +19,7 @@ namespace GridRelated
             width = columns;
             _gridArray = new Cell[rows, columns];
         }
-
-        public void SwapCells(Cell cell1, Cell cell2)
-        {
-            _gridArray[cell1.Row, cell1.Col] = cell2;
-            _gridArray[cell2.Row, cell2.Col] = cell1;
-        }
+        
         public void SetCell(int row, int col, Cell cell)
         {
             if (row >= 0 && row < height && col >= 0 && col < width)
