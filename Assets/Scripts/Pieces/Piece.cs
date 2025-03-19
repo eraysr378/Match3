@@ -31,12 +31,17 @@ namespace Pieces
             _baseColor = visual.color;
         }
 
-        public virtual void Init(Vector3 position,float elementSize,Transform parent,Cell cell = null)
+        public virtual void Init(Vector3 position)
         {
-            CurrentCell = cell;
             transform.position = position;
-            transform.localScale = Vector3.one * elementSize;
-            transform.SetParent(parent);
+            transform.localScale = Vector3.one;
+        }
+        public virtual void Init(Cell cell)
+        {
+            SetCell(cell);
+            transform.SetParent(cell?.transform);
+            transform.localScale = Vector3.one;
+
         }
   
 
@@ -44,7 +49,13 @@ namespace Pieces
         {
             CurrentCell?.SetPiece(null);
             CurrentCell = newCell;
-            CurrentCell?.SetPiece(this);
+            if (CurrentCell != null)
+            {
+                transform.SetParent(CurrentCell.transform);
+                transform.localScale = Vector3.one;
+                CurrentCell.SetPiece(this);
+            }
+            
         }
         
         public void SetPieceType(PieceType pieceType) => this.pieceType = pieceType;
@@ -65,24 +76,24 @@ namespace Pieces
         }
         public void OnPointerDown(PointerEventData eventData)
         {
-            EventManager.OnPointerDownCell?.Invoke(this);
+            EventManager.OnPointerDownPiece?.Invoke(this);
         }
         
         public void OnPointerUp(PointerEventData eventData)
         {
-            EventManager.OnPointerUpCell?.Invoke(this);
+            EventManager.OnPointerUpPiece?.Invoke(this);
         }
         
         public void OnPointerEnter(PointerEventData eventData)
         {
 
-            EventManager.OnPointerEnterCell?.Invoke(this);
+            EventManager.OnPointerEnterPiece?.Invoke(this);
         }
 
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            EventManager.OnPointerClickedCell?.Invoke(this);
+            EventManager.OnPointerClickedPiece?.Invoke(this);
 
         }
         public virtual void OnSpawn()
@@ -93,7 +104,7 @@ namespace Pieces
         public void ReturnToPool()
         {
             gameObject.SetActive(false);
-            EventManager.OnCellReturnToPool?.Invoke(this);
+            EventManager.OnPieceReturnToPool?.Invoke(this);
         }
     }
 }
