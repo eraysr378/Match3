@@ -6,11 +6,12 @@ namespace Misc
     }
     public enum PieceType
     {
+        None,
+        ObstaclePiece,
+        ActivatablePiece,
         SquareNormalPiece = NormalPieceType.Square,
         CircleNormalPiece =  NormalPieceType.Circle,
         TriangleNormalPiece =  NormalPieceType.Triangle,
-        ObstaclePiece,
-        ActivatablePiece,
     }
 
     public enum NormalPieceType
