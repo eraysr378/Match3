@@ -1,5 +1,6 @@
 using System;
 using Misc;
+using UnityEngine;
 
 namespace GridRelated
 {
@@ -8,18 +9,33 @@ namespace GridRelated
     {
         public int height;
         public int width;
-        public CellType[] data; // Flatten the array to store 2D grid data because it is easy to show in inspector
+
+        [SerializeReference] 
+        public CustomGridCell[] cellData;
 
         public CustomGrid(int height, int width)
         {
             this.height = height;
             this.width = width;
-            data = new CellType[height * width];
+            cellData = new CustomGridCell[height * width];
+
+            // Ensure each cell is properly instantiated
+            for (int i = 0; i < cellData.Length; i++)
+            {
+                cellData[i] = new CustomGridCell(); 
+            }
         }
-        public CellType GetElement(int row, int col)
+
+        public CustomGridCell GetElement(int row, int col)
         {
-            // Return the data as if the array is 2D
-            return data[row * width + col];
+            return cellData[row * width + col];
         }
+    }
+
+    [Serializable]
+    public class CustomGridCell
+    {
+        public CellType cellType;
+        public PieceType pieceType;
     }
 }
