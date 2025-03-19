@@ -14,8 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pieceSprites:
   - pieceType: 100
-    sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+    sprite: {fileID: 7482667652216324306, guid: 8a378311a0837fa4b9f4699e3c0586a5, type: 3}
+    color: {r: 0, g: 1, b: 0.057418108, a: 1}
   - pieceType: 101
-    sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+    sprite: {fileID: -2413806693520163455, guid: 623c84da3a71d5346b3071a315db8a4f, type: 3}
+    color: {r: 1, g: 0.93849885, b: 0, a: 1}
   - pieceType: 102
-    sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+    sprite: {fileID: 7482667652216324306, guid: cc8cbe2d8edd9dd4f8a60cb9caeeff4c, type: 3}
+    color: {r: 0, g: 0.20915973, b: 0.9169811, a: 1}
