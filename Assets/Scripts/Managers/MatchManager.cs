@@ -31,9 +31,16 @@ namespace Managers
             if (ClearAllValidMatches())
             {
                 EventManager.OnValidMatchCleared?.Invoke();
-            }
+            }   
         }
 
+        private void HandleMatch(List<Piece> matchList)
+        {
+            foreach (var match in matchList)
+            {
+                match.DestroyPiece();
+            }
+        }
         public bool ClearAllValidMatches()
         {
             HashSet<Piece> matchedPieces = new HashSet<Piece>();
@@ -47,12 +54,8 @@ namespace Managers
 
                     var matchList = GetMatch(piece);
                     if (matchList == null) continue;
-
-                    foreach (var match in matchList)
-                    {
-                        match.DestroyPiece();
-                        matchedPieces.Add(match);
-                    }
+                    matchedPieces.UnionWith(matchList);
+                    HandleMatch(matchList);
                 }
             }
 

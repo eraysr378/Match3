@@ -44,21 +44,21 @@ namespace Managers
             switch (touch.phase.ReadValue())
             {
                 case UnityEngine.InputSystem.TouchPhase.Began:
-                    EventManager.OnPointerDownCell?.Invoke(piece);
+                    EventManager.OnPointerDownPiece?.Invoke(piece);
                     _lastTouchedPiece = piece;
                     break;
 
                 case UnityEngine.InputSystem.TouchPhase.Moved:
                     if (_lastTouchedPiece != piece) // Trigger "enter" only if different
                     {
-                        EventManager.OnPointerEnterCell?.Invoke(piece);
+                        EventManager.OnPointerEnterPiece?.Invoke(piece);
                         _lastTouchedPiece = piece;
                     }
 
                     break;
 
                 case UnityEngine.InputSystem.TouchPhase.Ended:
-                    EventManager.OnPointerUpCell?.Invoke(piece);
+                    EventManager.OnPointerUpPiece?.Invoke(piece);
                     _lastTouchedPiece = null;
                     break;
             }

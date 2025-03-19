@@ -11,7 +11,6 @@ namespace Managers
         private MatchManager MatchManager { get; set; }
         private ActivationManager ActivationManager { get; set; }
         private FillManager FillManager { get; set; }
-        // private FallManager FallManager { get; set; }
 
         private Piece _firstSelectedPiece;
         private Piece _secondSelectedPiece;
@@ -23,15 +22,14 @@ namespace Managers
             MatchManager = GetComponent<MatchManager>();
             ActivationManager = GetComponent<ActivationManager>();
             FillManager = GetComponent<FillManager>();
-            // FallManager  = GetComponent<FallManager>();
         }
 
         private void OnEnable()
         {
-            EventManager.OnPointerDownCell += OnPointerDownCellEvent;
-            EventManager.OnPointerUpCell += OnPointerUpCellEvent;
-            EventManager.OnPointerEnterCell += OnPointerEnterCellEvent;
-            EventManager.OnPointerClickedCell += OnPointerClickedCellEvent;
+            EventManager.OnPointerDownPiece += OnPointerDownCellEvent;
+            EventManager.OnPointerUpPiece += OnPointerUpCellEvent;
+            EventManager.OnPointerEnterPiece += OnPointerEnterCellEvent;
+            EventManager.OnPointerClickedPiece += OnPointerClickedCellEvent;
             EventManager.OnGridInitialized += OnGridInitialized;
             EventManager.OnSwapCompleted += OnSwapCompleted;
 
@@ -39,10 +37,10 @@ namespace Managers
 
         private void OnDisable()
         {
-            EventManager.OnPointerDownCell -= OnPointerDownCellEvent;
-            EventManager.OnPointerUpCell -= OnPointerUpCellEvent;
-            EventManager.OnPointerEnterCell -= OnPointerEnterCellEvent;
-            EventManager.OnPointerClickedCell -= OnPointerClickedCellEvent;
+            EventManager.OnPointerDownPiece -= OnPointerDownCellEvent;
+            EventManager.OnPointerUpPiece -= OnPointerUpCellEvent;
+            EventManager.OnPointerEnterPiece -= OnPointerEnterCellEvent;
+            EventManager.OnPointerClickedPiece -= OnPointerClickedCellEvent;
             EventManager.OnGridInitialized -= OnGridInitialized;
             EventManager.OnSwapCompleted -= OnSwapCompleted;
 
@@ -50,10 +48,8 @@ namespace Managers
         private void OnGridInitialized(Grid grid)
         {
             _grid = grid;
-            SwapManager.Initialize(_grid);
             MatchManager.Initialize(_grid);
             FillManager.Initialize(_grid);
-            // FallManager.Initialize(_grid);
         }
 
         
@@ -81,26 +77,19 @@ namespace Managers
             }
 
 
-            _firstSelectedPiece = null;
-            _secondSelectedPiece = null;
+            ResetSelectedPieces();
         }
 
         private void OnPointerEnterCellEvent(Piece piece)
         {
-            if (!SwapManager.CanSwap())
-            {
+            if (!SwapManager.CanSwap)
                 return;
-            }
 
             if (!_firstSelectedPiece || _firstSelectedPiece == piece)
-            {
                 return;
-            }
 
             if (piece is not ISwappable || !ArePiecesAdjacent(_firstSelectedPiece, piece))
-            {
                 return;
-            }
 
             _secondSelectedPiece = piece;
             SwapManager.Swap(_firstSelectedPiece, _secondSelectedPiece);
@@ -112,6 +101,8 @@ namespace Managers
         }
         private void OnPointerDownCellEvent(Piece piece)
         {
+            if(FillManager.IsFilling)
+                return;
             if (piece is ISwappable)
             {
                 _firstSelectedPiece = piece;
@@ -120,15 +111,17 @@ namespace Managers
         
         private void OnPointerUpCellEvent(Piece piece)
         {
-            _firstSelectedPiece = null;
-            _secondSelectedPiece = null;
+            ResetSelectedPieces();
         }
 
         private bool ArePiecesAdjacent(Piece piece1, Piece piece2)
         {
-            int dx = Mathf.Abs(piece1.Row - piece2.Row);
-            int dy = Mathf.Abs(piece1.Col - piece2.Col);
-            return (dx == 1 && dy == 0) || (dx == 0 && dy == 1); // Ensure adjacent swap only
+            return Mathf.Abs(piece1.Row - piece2.Row) + Mathf.Abs(piece1.Col - piece2.Col) == 1;
+        }
+        private void ResetSelectedPieces()
+        {
+            _firstSelectedPiece = null;
+            _secondSelectedPiece = null;
         }
     }
 }

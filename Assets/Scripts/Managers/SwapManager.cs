@@ -9,15 +9,11 @@ namespace Managers
 {
     public class SwapManager : MonoBehaviour
     {
+        public bool CanSwap => _canSwap;
         private bool _canSwap = true;
-        private Grid _grid;
         private Piece _swappedFirstPiece;
         private Piece _swappedSecondPiece;
-
-        public void Initialize(Grid grid)
-        {
-            _grid = grid;
-        }
+        
         
         public void Swap(Piece firstPiece, Piece secondPiece)
         {
@@ -36,15 +32,14 @@ namespace Managers
         private IEnumerator SwapIE(Piece firstPiece, Piece secondPiece, bool isReverting)
         {
             _canSwap = false;
-            yield return StartCoroutine(AnimateSwapIE(firstPiece, secondPiece));
-
-            Cell saveCell = firstPiece.CurrentCell;
-            firstPiece.SetCell(secondPiece.CurrentCell);
-            secondPiece.SetCell(saveCell);
-
-            firstPiece.CurrentCell.SetPiece(firstPiece);
-            secondPiece.CurrentCell.SetPiece(secondPiece);
-
+            yield return AnimateSwapIE(firstPiece, secondPiece);
+            
+            Cell firstCell = firstPiece.CurrentCell;
+            Cell secondCell = secondPiece.CurrentCell;
+            secondPiece.SetCell(null);
+            firstPiece.SetCell(secondCell);
+            secondPiece.SetCell(firstCell);
+            
             _canSwap = true;
             if (!isReverting)
             {
@@ -71,10 +66,6 @@ namespace Managers
             firstPiece.transform.position = startPos2;
             secondPiece.transform.position = startPos1;
         }
-
-        public bool CanSwap()
-        {
-            return _canSwap;
-        }
+        
     }
 }

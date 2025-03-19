@@ -1,6 +1,5 @@
 using System.Collections;
 using Cells;
-using GridRelated;
 using Pieces;
 using UnityEngine;
 using Grid = GridRelated.Grid;
@@ -9,9 +8,10 @@ namespace Managers
 {
     public class FillManager : MonoBehaviour
     {
+        public bool IsFilling => _isFilling;
         public float fillTime = 0.25f;
         private Grid _grid;
-        private Coroutine _fillingCoroutine;
+        private bool _isFilling;
 
         public void Initialize(Grid grid)
         {
@@ -32,12 +32,12 @@ namespace Managers
 
         public void StartFilling()
         {
-            if (_fillingCoroutine != null)
-            {
-                StopCoroutine(_fillingCoroutine);
-            }
+            // Prevent multiple filling processes
+            if (_isFilling)
+                return;
 
-            _fillingCoroutine = StartCoroutine(FillIE());
+            _isFilling = true;
+            StartCoroutine(FillIE());
         }
 
         private IEnumerator FillIE()
@@ -48,74 +48,106 @@ namespace Managers
             {
                 yield return new WaitForSeconds(fillTime);
             }
-            
+
+            _isFilling = false;
             EventManager.OnFillCompleted?.Invoke();
         }
 
         private bool FillStep()
         {
-            bool movedCell = false;
+            var isAnyMoved = MovePiecesDown();
+            isAnyMoved |= SpawnNewPieces();
+            return isAnyMoved;
+        }
+
+        private bool MovePiecesDown()
+        {
+            bool isAnyMoved = false;
+
             for (int row = 1; row < _grid.Height; row++)
             {
                 for (int col = 0; col < _grid.Width; col++)
                 {
                     Piece piece = _grid.GetCell(row, col).CurrentPiece;
                     if (piece is null || !piece.TryGetComponent<Fillable>(out var fillable)) continue;
-                    Piece pieceBelow = _grid.GetCell(row - 1, col).CurrentPiece;
-                    if (pieceBelow is null)
+                    if (TryMoveDown(fillable, row, col) || TryMoveDiagonally(fillable, row, col))
                     {
-                        Cell targetCell = _grid.GetCell(row - 1, col);
-                        fillable.Fill(targetCell, fillTime);
-                        movedCell = true;
-                    }
-                    else
-                    {
-                        for (int diag = -1; diag <= 1; diag++)
-                        {
-                            if (diag == 0) continue;
-                            int diagCol = col + diag;
-                            if (diagCol < 0 || diagCol >= _grid.Width) continue;
-
-                            Piece diagonalPiece = _grid.GetCell(row - 1, diagCol).CurrentPiece;
-                            if (diagonalPiece is not null) continue;
-                            bool hasCellAbove = true;
-                            for (int aboveRow = row; aboveRow < _grid.Height; aboveRow++)
-                            {
-                                Piece pieceAbove = _grid.GetCell(aboveRow, diagCol).CurrentPiece;
-                                if (pieceAbove is not null && pieceAbove.GetComponent<Fillable>()) break;
-                                if (pieceAbove is not null)
-                                {
-                                    hasCellAbove = false;
-                                    break;
-                                }
-                            }
-
-                            if (!hasCellAbove)
-                            {
-                                Cell targetCell = _grid.GetCell(row - 1, diagCol);
-                                fillable.Fill(targetCell, fillTime);
-                                movedCell = true;
-                                break;
-                            }
-                        }
+                        isAnyMoved = true;
                     }
                 }
             }
 
-            for (int col = 0; col < _grid.Width; col++)
-            {
-                Piece pieceBelow = _grid.GetCell(_grid.Height - 1, col).CurrentPiece;
-                if (pieceBelow is not null) continue;
-                Piece newPiece = EventManager.OnRequestRandomNormalCellSpawn(_grid.Height, col);
-                newPiece.TryGetComponent<Fillable>(out var fillable);
-                Cell targetCell = _grid.GetCell(_grid.Height - 1, col);
-                newPiece.Init(newPiece.transform.position,GridUtility.PropertiesSo.elementSize,null,targetCell);
+            return isAnyMoved;
+        }
 
+        private bool TryMoveDown(Fillable fillable, int row, int col)
+        {
+            Cell targetCell = _grid.GetCell(row - 1, col);
+            if (targetCell.CurrentPiece == null)
+            {
                 fillable.Fill(targetCell, fillTime);
-                movedCell = true;
+                return true;
             }
 
-            return movedCell;
+            return false;
+        }
+
+        private bool TryMoveDiagonally(Fillable fillable, int row, int col)
+        {
+            int[] diagonalOffsets = { -1, 1 };
+
+            foreach (int offset in diagonalOffsets)
+            {
+                int diagCol = col + offset;
+                if (diagCol < 0 || diagCol >= _grid.Width) continue;
+
+                Cell targetCell = _grid.GetCell(row - 1, diagCol);
+                if (targetCell.CurrentPiece != null) continue;
+
+                if (IsPathBlockedAbove(row, diagCol))
+                {
+                    fillable.Fill(targetCell, fillTime);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool IsPathBlockedAbove(int row, int col)
+        {
+            for (int aboveRow = row; aboveRow < _grid.Height; aboveRow++)
+            {
+                Piece pieceAbove = _grid.GetCell(aboveRow, col).CurrentPiece;
+
+                if (pieceAbove == null) continue;
+
+                if (!pieceAbove.TryGetComponent<Fillable>(out _))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+        private bool SpawnNewPieces()
+        {
+            bool isSpawned = false;
+
+            for (int col = 0; col < _grid.Width; col++)
+            {
+                Cell topCell = _grid.GetCell(_grid.Height - 1, col);
+                if (topCell.CurrentPiece != null) continue;
+
+                Piece newPiece = EventManager.OnRequestRandomNormalPieceSpawn(_grid.Height, col);
+                newPiece.TryGetComponent<Fillable>(out var fillable);
+                fillable.Fill(topCell, fillTime);
+                isSpawned = true;
+            }
+
+            return isSpawned;
         }
     }
 }
