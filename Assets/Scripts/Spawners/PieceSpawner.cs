@@ -3,30 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pieces;
 using Factories;
+using Factories.PieceFactories;
 using GridRelated;
 using Managers;
 using Misc;
-using UnityEngine.Serialization;
 using Random = System.Random;
 
 public class PieceSpawner : MonoBehaviour
 {
     private readonly Dictionary<PieceType, Queue<Piece>> _cellPools = new();
-    [FormerlySerializedAs("cellFactory")] [SerializeField] private GeneralPieceFactory pieceFactory;
+    [SerializeField] private GeneralPieceFactory pieceFactory;
     [SerializeField] private Transform cellParent;
 
     public void OnEnable()
     {
-        EventManager.OnRequestCellSpawn += SpawnPiece;
-        EventManager.OnRequestRandomNormalCellSpawn += SpawnRandomNormalPiece;
-        EventManager.OnCellReturnToPool += ReturnPieceToPool;
+        EventManager.OnRequestPieceSpawn += SpawnPiece;
+        EventManager.OnRequestRandomNormalPieceSpawn += SpawnRandomNormalPiece;
+        EventManager.OnPieceReturnToPool += ReturnPieceToPool;
     }
 
     private void OnDisable()
     {
-        EventManager.OnRequestCellSpawn -= SpawnPiece;
-        EventManager.OnRequestRandomNormalCellSpawn -= SpawnRandomNormalPiece;
-        EventManager.OnCellReturnToPool -= ReturnPieceToPool;
+        EventManager.OnRequestPieceSpawn -= SpawnPiece;
+        EventManager.OnRequestRandomNormalPieceSpawn -= SpawnRandomNormalPiece;
+        EventManager.OnPieceReturnToPool -= ReturnPieceToPool;
     }
 
  
@@ -44,10 +44,10 @@ public class PieceSpawner : MonoBehaviour
         {
             // Debug.Log("factory");
 
-            piece = pieceFactory.CreateCellBasedOnType(pieceType);
+            piece = pieceFactory.CreatePieceBasedOnType(pieceType);
         }
         Vector2 pos = GridUtility.GridPositionToWorldPosition(row, col);
-        piece.Init( pos, GridUtility.PropertiesSo.elementSize, cellParent);
+        piece?.Init( pos, GridUtility.PropertiesSo.elementSize, cellParent);
         return piece;
     }
 
