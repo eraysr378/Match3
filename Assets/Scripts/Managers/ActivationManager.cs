@@ -7,25 +7,25 @@ namespace Managers
 {
     public class ActivationManager : MonoBehaviour
     {
-        public event Action<Piece> OnCellActivated;
+        public event Action<Piece> OnPieceActivated;
 
-        public bool ActivateCell(Piece piece)
+        public bool TryActivatePiece(Piece piece)
         {
             if (piece is IActivatable activatable)
             {
                 activatable.Activate();
-                OnCellActivated?.Invoke(piece);
+                OnPieceActivated?.Invoke(piece);
                 return true;
             }
             return false;
         }
 
-        public void ActivateCells(params Piece[] cells)
-        {
-            foreach (var cell in cells)
-            {
-                ActivateCell(cell);
-            }
-        }
+        // public void ActivatePieces(params Piece[] pieces)
+        // {
+        //     foreach (var piece in pieces)
+        //     {
+        //         TryActivatePiece(piece);
+        //     }
+        // }
     }
 }

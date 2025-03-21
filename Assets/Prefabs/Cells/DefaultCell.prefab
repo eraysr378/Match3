@@ -52,6 +52,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: DefaultCell
       objectReference: {fileID: 0}
+    - target: {fileID: 8329238398503052553, guid: f42bb65fa0e59f14bb8b4a02d3d709b3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -5177388603050735206, guid: 016bc6c8a7b3dae4fbcbf1d1ece5c736, type: 3}
+    - target: {fileID: 8329238398503052553, guid: f42bb65fa0e59f14bb8b4a02d3d709b3, type: 3}
+      propertyPath: m_Color.a
+      value: 0.101960786
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

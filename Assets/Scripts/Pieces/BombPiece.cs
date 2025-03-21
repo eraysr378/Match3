@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Pieces
 {
-    public class ActivatablePiece : Piece, IActivatable,ISwappable
+    public class BombPiece: Piece, IActivatable,ISwappable
     {
         public bool IsActivated { get; private set; }
 
@@ -11,12 +11,12 @@ namespace Pieces
         {
             if (IsActivated)
             {
+                Debug.Log("Already activated");
                 return;
             }
             IsActivated = true;
             Debug.Log("Activated");
         }
-
 
         public void Swap(Piece other)
         {

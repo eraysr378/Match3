@@ -8,7 +8,8 @@ namespace Misc
     {
         None,
         ObstaclePiece,
-        ActivatablePiece,
+        BombPiece,
+        RocketPiece,
         SquareNormalPiece = NormalPieceType.Square,
         CircleNormalPiece =  NormalPieceType.Circle,
         TriangleNormalPiece =  NormalPieceType.Triangle,

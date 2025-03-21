@@ -10,19 +10,31 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 136684101467879553, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
       propertyPath: m_Color.b
-      value: 0.7647059
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 136684101467879553, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
       propertyPath: m_Color.g
-      value: 0.24900879
+      value: 0.92875004
       objectReference: {fileID: 0}
     - target: {fileID: 136684101467879553, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
       propertyPath: m_Color.r
-      value: 0.07843137
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8572121683963636059, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8572121683963636059, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8572121683963636059, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 8632239336245859992, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
       propertyPath: m_Name
-      value: NormalCell
+      value: NormalPiece
       objectReference: {fileID: 0}
     - target: {fileID: 9188604277759040350, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
       propertyPath: m_LocalPosition.x

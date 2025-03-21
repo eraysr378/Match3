@@ -7,10 +7,10 @@ namespace Managers
 {
     public class GridManager : MonoBehaviour
     {
-        private SwapManager SwapManager { get; set; }
-        private MatchManager MatchManager { get; set; }
-        private ActivationManager ActivationManager { get; set; }
-        private FillManager FillManager { get; set; }
+        private SwapManager _swapManager;
+        private MatchManager _matchManager;
+        private ActivationManager _activationManager;
+        private FillManager _fillManager;
 
         private Piece _firstSelectedPiece;
         private Piece _secondSelectedPiece;
@@ -18,10 +18,10 @@ namespace Managers
 
         private void Awake()
         {
-            SwapManager = GetComponent<SwapManager>();
-            MatchManager = GetComponent<MatchManager>();
-            ActivationManager = GetComponent<ActivationManager>();
-            FillManager = GetComponent<FillManager>();
+            _swapManager = GetComponent<SwapManager>();
+            _matchManager = GetComponent<MatchManager>();
+            _activationManager = GetComponent<ActivationManager>();
+            _fillManager = GetComponent<FillManager>();
         }
 
         private void OnEnable()
@@ -48,8 +48,8 @@ namespace Managers
         private void OnGridInitialized(Grid grid)
         {
             _grid = grid;
-            MatchManager.Initialize(_grid);
-            FillManager.Initialize(_grid);
+            _matchManager.Initialize(_grid);
+            _fillManager.Initialize(_grid);
         }
 
         
@@ -58,22 +58,23 @@ namespace Managers
         {
             bool anyMatchFound = false;
             bool isAnyActivated = false;
+            // If both pieces are Activatable, there may be combinated piece created
 
-            anyMatchFound |= MatchManager.GetMatch(swappedFirstPiece) is not null;
-            anyMatchFound |= MatchManager.GetMatch(swappedSecondPiece) is not null;
+            anyMatchFound |= _matchManager.GetMatch(swappedFirstPiece) is not null;
+            anyMatchFound |= _matchManager.GetMatch(swappedSecondPiece) is not null;
 
 
-            isAnyActivated |= ActivationManager.ActivateCell(swappedFirstPiece);
-            isAnyActivated |= ActivationManager.ActivateCell(swappedSecondPiece);
+            isAnyActivated |= _activationManager.TryActivatePiece(swappedFirstPiece);
+            isAnyActivated |= _activationManager.TryActivatePiece(swappedSecondPiece);
 
             if (!anyMatchFound && !isAnyActivated)
             {
-                SwapManager.RevertSwap();
+                _swapManager.RevertSwap();
             }
             else
             {
-                MatchManager.ClearAllValidMatches();
-                FillManager.StartFilling();
+                _matchManager.ClearAllValidMatches();
+                _fillManager.StartFilling();
             }
 
 
@@ -82,7 +83,7 @@ namespace Managers
 
         private void OnPointerEnterCellEvent(Piece piece)
         {
-            if (!SwapManager.CanSwap)
+            if (!_swapManager.CanSwap)
                 return;
 
             if (!_firstSelectedPiece || _firstSelectedPiece == piece)
@@ -92,16 +93,16 @@ namespace Managers
                 return;
 
             _secondSelectedPiece = piece;
-            SwapManager.Swap(_firstSelectedPiece, _secondSelectedPiece);
+            _swapManager.Swap(_firstSelectedPiece, _secondSelectedPiece);
         }
 
         private void OnPointerClickedCellEvent(Piece piece)
         {
-            ActivationManager.ActivateCell(piece);
+            _activationManager.TryActivatePiece(piece);
         }
         private void OnPointerDownCellEvent(Piece piece)
         {
-            if(FillManager.IsFilling)
+            if(_fillManager.IsFilling)
                 return;
             if (piece is ISwappable)
             {
