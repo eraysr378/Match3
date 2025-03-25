@@ -1,7 +1,7 @@
 namespace Interfaces
 {
-    public class IExplodable
+    public interface IExplodable
     {
-        
+        public void Explode();
     }
 }
