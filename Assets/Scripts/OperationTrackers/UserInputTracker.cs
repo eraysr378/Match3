@@ -1,31 +1,32 @@
 using Managers;
+using MatchSystem;
 
 namespace OperationTrackers
 {
-    public class GridInputTracker : OperationTracker
+    public class UserInputTracker : OperationTracker
     {
         protected override void SubscribeEvents()
         {
-            EventManager.OnMatchHandlingStarted += IncreaseActiveOperations;
-            EventManager.OnMatchHandlingCompleted += DecreaseActiveOperations;
+            MatchHandler.OnMatchHandlingStarted += IncreaseActiveOperations;
+            MatchHandler.OnMatchHandlingCompleted += DecreaseActiveOperations;
 
-            EventManager.OnActivationsStarted += IncreaseActiveOperations;
-            EventManager.OnActivationsCompleted += DecreaseActiveOperations;
+            ActivationManager.OnActivationsStarted += IncreaseActiveOperations;
+            ActivationManager.OnActivationsCompleted += DecreaseActiveOperations;
 
-            EventManager.OnFillStarted += IncreaseActiveOperations;
-            EventManager.OnFillCompleted += DecreaseActiveOperations;
+            FillManager.OnFillStarted += IncreaseActiveOperations;
+            FillManager.OnFillCompleted += DecreaseActiveOperations;
         }
 
         protected override void UnsubscribeEvents()
         {
-            EventManager.OnMatchHandlingStarted -= IncreaseActiveOperations;
-            EventManager.OnMatchHandlingCompleted -= DecreaseActiveOperations;
+            MatchHandler.OnMatchHandlingStarted -= IncreaseActiveOperations;
+            MatchHandler.OnMatchHandlingCompleted -= DecreaseActiveOperations;
 
-            EventManager.OnActivationsStarted -= IncreaseActiveOperations;
-            EventManager.OnActivationsCompleted -= DecreaseActiveOperations;
+            ActivationManager.OnActivationsStarted -= IncreaseActiveOperations;
+            ActivationManager.OnActivationsCompleted -= DecreaseActiveOperations;
 
-            EventManager.OnFillStarted -= IncreaseActiveOperations;
-            EventManager.OnFillCompleted -= DecreaseActiveOperations;
+            FillManager.OnFillStarted -= IncreaseActiveOperations;
+            FillManager.OnFillCompleted -= DecreaseActiveOperations;
         }
     }
 }
