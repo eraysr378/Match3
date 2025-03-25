@@ -1,26 +1,27 @@
 using System;
-using Pieces;
+using Pieces.Behaviors;
+using UnityEngine;
 
 namespace Utils
 {
-    public class PieceSwapper
+    public class PositionSwapper
     {
         private readonly float _swapDuration;
-        private readonly Action<Piece, Piece, bool> _onMoveCompleted;
+        private readonly Action<GameObject, GameObject> _onPositionsSwapped;
 
-        public PieceSwapper(float swapDuration, Action<Piece, Piece, bool> onMoveCompleted)
+        public PositionSwapper(float swapDuration, Action<GameObject, GameObject> onPositionsSwapped)
         {
             _swapDuration = swapDuration;
-            _onMoveCompleted = onMoveCompleted;
+            _onPositionsSwapped = onPositionsSwapped;
         }
 
-        public void MovePieces(Piece firstPiece, Piece secondPiece, bool isReverting = false)
+        public void SwapPositions(GameObject first, GameObject second)
         {
-            var movableFirst = firstPiece.GetComponent<Movable>();
-            var movableSecond = secondPiece.GetComponent<Movable>();
+            var movableFirst = first.GetComponent<Movable>();
+            var movableSecond = second.GetComponent<Movable>();
 
             if (movableFirst == null || movableSecond == null)
-                throw new Exception("Movable component missing on one of the pieces!");
+                throw new Exception("Movable component missing on one of the objects!");
 
             int completedCount = 0;
 
@@ -32,14 +33,14 @@ namespace Utils
                 movableFirst.OnTargetReached -= OnMoveFinished;
                 movableSecond.OnTargetReached -= OnMoveFinished;
 
-                _onMoveCompleted?.Invoke(firstPiece, secondPiece, isReverting);
+                _onPositionsSwapped?.Invoke(first, second);
             }
 
             movableFirst.OnTargetReached += OnMoveFinished;
             movableSecond.OnTargetReached += OnMoveFinished;
 
-            movableFirst.StartMoving(secondPiece.CurrentCell.transform.position, _swapDuration);
-            movableSecond.StartMoving(firstPiece.CurrentCell.transform.position, _swapDuration);
+            movableFirst.StartMoving(second.transform.position, _swapDuration);
+            movableSecond.StartMoving(first.transform.position, _swapDuration);
         }
     }
 }
