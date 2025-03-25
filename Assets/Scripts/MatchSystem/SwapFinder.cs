@@ -1,11 +1,9 @@
-using System;
 using Interfaces;
 using Managers;
-using MatchSystem;
 using Pieces;
 using Grid = GridRelated.Grid;
 
-namespace SwapSystem
+namespace MatchSystem
 {
     public class SwapFinder
     {
@@ -18,8 +16,9 @@ namespace SwapSystem
             _matchFinder = matchFinder;
         }
 
-        public (Piece, Piece)? FindSwappablePieces()
+        public bool TryFindValidSwapForMatch(out (Piece, Piece)? pieces )
         {
+            pieces = null;
             for (int row = 0; row < _grid.Height; row++)
             {
                 for (int col = 0; col < _grid.Width; col++)
@@ -31,18 +30,24 @@ namespace SwapSystem
                     {
                         Piece rightPiece = _grid.GetCell(row, col + 1).CurrentPiece;
                         if (rightPiece is ISwappable && WillFormMatch(currentPiece, rightPiece))
-                            return (currentPiece, rightPiece);
+                        {
+                            pieces = (currentPiece, rightPiece);
+                            return true;
+                        }
                     }
 
                     if (row + 1 < _grid.Height)
                     {
                         Piece belowPiece = _grid.GetCell(row + 1, col).CurrentPiece;
                         if (belowPiece is ISwappable && WillFormMatch(currentPiece, belowPiece))
-                            return (currentPiece, belowPiece);
+                        {
+                            pieces = (currentPiece, belowPiece);
+                            return true;
+                        }
                     }
                 }
             }
-            return null;
+            return false;
         }
 
         private bool WillFormMatch(Piece pieceA, Piece pieceB)
