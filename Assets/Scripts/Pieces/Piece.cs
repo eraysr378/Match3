@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Cells;
 using Interfaces;
@@ -8,42 +9,42 @@ using UnityEngine.EventSystems;
 
 namespace Pieces
 {
-    public abstract class Piece : MonoBehaviour,IPoolableObject,IPointerDownHandler, IPointerUpHandler,IPointerEnterHandler,IPointerClickHandler
+    public abstract class Piece : MonoBehaviour, IPoolableObject, IPointerDownHandler, IPointerUpHandler,
+        IPointerEnterHandler
     {
+        public static event Action<Piece> OnAnyPointerDown;
+        public static event Action<Piece> OnAnyPointerUp;
+        public static event Action<Piece> OnAnyPointerEnter;
         [SerializeField] protected SpriteRenderer visual;
-        public Collider2D Collider => _collider;
         public Cell CurrentCell { get; private set; }
         public int Row => CurrentCell.Row;
         public int Col => CurrentCell.Col;
 
         protected PieceType pieceType;
-        
-        private Collider2D _collider;
+
+        protected Collider2D _collider2D;
         private Color _baseColor;
 
-        private void Awake()
+        protected virtual void Awake()
         {
-            _collider = GetComponent<Collider2D>();
+            _collider2D = GetComponent<Collider2D>();
+            _baseColor = visual.color;
+
         }
 
-        private void Start()
-        {
-            _baseColor = visual.color;
-        }
 
         public virtual void Init(Vector3 position)
         {
             transform.position = position;
             transform.localScale = Vector3.one;
         }
+
         public virtual void Init(Cell cell)
         {
             SetCell(cell);
             transform.SetParent(cell?.transform);
             transform.localScale = Vector3.one;
-
         }
-  
 
         public void SetCell(Cell newCell)
         {
@@ -55,56 +56,52 @@ namespace Pieces
                 transform.localScale = Vector3.one;
                 CurrentCell.SetPiece(this);
             }
-            
         }
-        
+
         public void SetPieceType(PieceType pieceType) => this.pieceType = pieceType;
         public PieceType GetPieceType() => pieceType;
 
         public void DestroyPiece()
         {
-            visual.color = Color.red;
-            SetCell(null);
             StartCoroutine(DestroyAfter(0.15f));
         }
 
-        private IEnumerator DestroyAfter(float seconds)
+        protected virtual IEnumerator DestroyAfter(float seconds)
         {
+            visual.color = Color.red;
+            SetCell(null);
             yield return new WaitForSeconds(seconds);
 
             ReturnToPool();
         }
+
         public void OnPointerDown(PointerEventData eventData)
         {
-            EventManager.OnPointerDownPiece?.Invoke(this);
+            OnAnyPointerDown?.Invoke(this);
         }
-        
+
         public void OnPointerUp(PointerEventData eventData)
         {
-            EventManager.OnPointerUpPiece?.Invoke(this);
+            OnAnyPointerUp?.Invoke(this);
         }
-        
+
         public void OnPointerEnter(PointerEventData eventData)
         {
-
-            EventManager.OnPointerEnterPiece?.Invoke(this);
+            OnAnyPointerEnter?.Invoke(this);
         }
 
 
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            EventManager.OnPointerClickedPiece?.Invoke(this);
-
-        }
         public virtual void OnSpawn()
         {
             visual.color = _baseColor;
+            _collider2D.enabled = true;
         }
-        
-        public void ReturnToPool()
+
+        public virtual void ReturnToPool()
         {
-            gameObject.SetActive(false);
             EventManager.OnPieceReturnToPool?.Invoke(this);
+            gameObject.SetActive(false);
+
         }
     }
 }
