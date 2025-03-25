@@ -1,8 +1,9 @@
 using System;
 using Interfaces;
+using Pieces;
 using UnityEngine;
 
-namespace Pieces
+namespace Projectiles
 {
     public class RocketProjectile : MonoBehaviour
     {
@@ -67,13 +68,9 @@ namespace Pieces
 
         private void HandleCollision(Collider2D hitCollider)
         {
-            if (hitCollider.TryGetComponent(out IActivatable activatable))
+            if (hitCollider.TryGetComponent<IExplodable>(out var explodable))
             {
-                activatable.Activate();
-            }
-            else if (hitCollider.TryGetComponent(out Piece piece))
-            {
-                piece.DestroyPiece();
+                explodable.Explode();
             }
         }
     }
