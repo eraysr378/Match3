@@ -1,71 +1,103 @@
 using System;
-using System.Collections;
 using Cells;
+using OperationTrackers;
 using Pieces;
 using UnityEngine;
-using Grid = GridRelated.Grid;
+using Utils;
 
 namespace Managers
 {
     public class SwapManager : MonoBehaviour
     {
-        public bool CanSwap => _canSwap;
-        private bool _canSwap = true;
+        public static event Action<Piece, Piece> OnSwapCompleted;
+
+        [SerializeField] private float swapDuration;
         private Piece _swappedFirstPiece;
         private Piece _swappedSecondPiece;
-        
-        
-        public void Swap(Piece firstPiece, Piece secondPiece)
+        private bool _canSwap = true;
+        private bool _isRevertingSwap = false;
+        private SwapTracker _swapTracker;
+        private PositionSwapper _positionSwapper;
+
+
+        private void Awake()
         {
-            _swappedFirstPiece = firstPiece;
-            _swappedSecondPiece = secondPiece;
-            StartCoroutine(SwapIE(firstPiece, secondPiece, false));
+            _swapTracker = GetComponent<SwapTracker>();
+            _positionSwapper = new PositionSwapper(swapDuration, OnPositionsSwapped);
+        }
+
+        private void OnEnable()
+        {
+            EventManager.OnSwapRequested += TrySwap;
+            EventManager.OnInstantSwapRequested += SwapInstantly;
+        }
+
+        private void OnDisable()
+        {
+            EventManager.OnSwapRequested -= TrySwap;
+            EventManager.OnInstantSwapRequested -= SwapInstantly;
+        }
+
+        private void SwapInstantly(Piece firstPiece, Piece secondPiece)
+        {
+            if (_swapTracker.HasActiveOperations() || !_canSwap)
+                return;
+            SwapPieceCells(firstPiece, secondPiece);
+        }
+
+        private void TrySwap(Piece firstPiece, Piece secondPiece)
+        {
+            if (_swapTracker.HasActiveOperations() || !_canSwap)
+                return;
+            Swap(firstPiece, secondPiece);
         }
 
         public void RevertSwap()
         {
-            StartCoroutine(SwapIE(_swappedFirstPiece, _swappedSecondPiece, true));
-            _swappedFirstPiece = null;
-            _swappedSecondPiece = null;
+            _isRevertingSwap = true;
+            StartSwap(_swappedFirstPiece, _swappedSecondPiece);
         }
 
-        private IEnumerator SwapIE(Piece firstPiece, Piece secondPiece, bool isReverting)
+        private void Swap(Piece firstPiece, Piece secondPiece)
+        {
+            _isRevertingSwap = false;
+            _swappedFirstPiece = firstPiece;
+            _swappedSecondPiece = secondPiece;
+            StartSwap(firstPiece, secondPiece);
+        }
+
+
+        private void StartSwap(Piece firstPiece, Piece secondPiece)
         {
             _canSwap = false;
-            yield return AnimateSwapIE(firstPiece, secondPiece);
-            
+
+            _positionSwapper.SwapPositions(firstPiece.gameObject, secondPiece.gameObject);
+        }
+
+        private void OnPositionsSwapped(GameObject first, GameObject second)
+        {
+            SwapPieceCells(_swappedFirstPiece, _swappedSecondPiece);
+            if (!_isRevertingSwap)
+            {
+                OnSwapCompleted?.Invoke(_swappedFirstPiece, _swappedSecondPiece);
+            }
+            else
+            {
+                _swappedFirstPiece = null;
+                _swappedSecondPiece = null;
+            }
+
+            _canSwap = true;
+        }
+
+        private void SwapPieceCells(Piece firstPiece, Piece secondPiece)
+        {
             Cell firstCell = firstPiece.CurrentCell;
             Cell secondCell = secondPiece.CurrentCell;
+
             secondPiece.SetCell(null);
             firstPiece.SetCell(secondCell);
             secondPiece.SetCell(firstCell);
-            
-            _canSwap = true;
-            if (!isReverting)
-            {
-                EventManager.OnSwapCompleted?.Invoke(_swappedFirstPiece, _swappedSecondPiece);
-            }
         }
-
-        private IEnumerator AnimateSwapIE(Piece firstPiece, Piece secondPiece)
-        {
-            float duration = 0.25f;
-            Vector3 startPos1 = firstPiece.transform.position;
-            Vector3 startPos2 = secondPiece.transform.position;
-            float time = 0;
-
-            while (time < duration)
-            {
-                time += Time.deltaTime;
-                float t = time / duration;
-                firstPiece.transform.position = Vector3.Lerp(startPos1, startPos2, t);
-                secondPiece.transform.position = Vector3.Lerp(startPos2, startPos1, t);
-                yield return null;
-            }
-
-            firstPiece.transform.position = startPos2;
-            secondPiece.transform.position = startPos1;
-        }
-        
     }
 }
