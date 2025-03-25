@@ -20,6 +20,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6963637064330502218, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8572121683963636059, guid: e3a8d339de8351a419ab8e3798013c15, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.8
@@ -114,6 +118,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visual: {fileID: 2589828484439301208}
+  specialMatchMergeDuration: 0.25
+  destructionDelay: 0.1
   spritesSo: {fileID: 11400000, guid: 837596a65731bf846834b248be42d45f, type: 2}
 --- !u!114 &2780764500470441013
 MonoBehaviour:
@@ -139,3 +145,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81d9758039f842b1b014a061e5eb4eff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMoving: 0
