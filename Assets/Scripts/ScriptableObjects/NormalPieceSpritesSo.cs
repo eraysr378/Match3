@@ -16,31 +16,18 @@ namespace ScriptableObjects
 
         [SerializeField] private PieceSpritePair[] pieceSprites;
 
-        public Sprite GetSprite(PieceType type)
+        public (Sprite, Color) GetAppearance(PieceType pieceType)
         {
             foreach (var pair in pieceSprites)
             {
-                if (pair.pieceType == type)
+                if (pair.pieceType == pieceType)
                 {
-                    return pair.sprite;
+                    return (pair.sprite, pair.color);
                 }
             }
 
-            Debug.LogError("Sprite not found for type: " + type);
-            return null;
-        }
-        public Color GetColor(PieceType type)
-        {
-            foreach (var pair in pieceSprites)
-            {
-                if (pair.pieceType == type)
-                {
-                    return pair.color;
-                }
-            }
-
-            Debug.LogError("Sprite not found for type: " + type);
-            return Color.white;
+            Debug.LogError("Sprite not found for type: " + pieceType);
+            return (null, default);
         }
     }
 }
