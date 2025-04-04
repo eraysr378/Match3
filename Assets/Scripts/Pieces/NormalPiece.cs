@@ -8,13 +8,14 @@ using UnityEngine;
 
 namespace Pieces
 {
-    public class NormalPiece : Piece, ISwappable, IMatchable,IExplodable
+    public class NormalPiece : InteractablePiece, ISwappable, IMatchable, IExplodable
     {
         public event Action OnMatchHandled;
         [SerializeField] private float specialMatchMergeDuration;
         [SerializeField] private float destructionDelay;
         [SerializeField] private NormalPieceSpritesSo spritesSo;
         private Movable _movable;
+        private bool _isExploded;
 
         protected override void Awake()
         {
@@ -34,11 +35,17 @@ namespace Pieces
             SetPieceAppearance();
         }
 
+        public override void OnSpawn()
+        {
+            base.OnSpawn();
+            _isExploded = false;
+        }
+
         private void SetPieceAppearance()
         {
-            (visual.sprite,visual.color) = spritesSo.GetAppearance(pieceType);
+            (visual.sprite, visual.color) = spritesSo.GetAppearance(pieceType);
         }
-        
+
         protected override IEnumerator DestroyAfter(float seconds)
         {
             SetCell(null);
@@ -46,29 +53,33 @@ namespace Pieces
             OnMatchHandled?.Invoke();
             ReturnToPool();
         }
+
         public void Explode()
         {
-            HandleDestruction(Color.red,destructionDelay);
+            if (_isExploded) return;
+            _isExploded = true;
+            HandleDestruction(Color.red, destructionDelay);
         }
+
         public void OnNormalMatch()
         {
-            HandleDestruction(Color.red,destructionDelay);
+            HandleDestruction(Color.red, destructionDelay);
         }
 
         public void OnSpecialMatch(Cell spawnCell)
         {
             _collider2D.enabled = false;
-            _movable.StartMoving(spawnCell.transform.position, specialMatchMergeDuration);
-
-            _movable.OnTargetReached += OnMoveComplete;
-            return;
-
-            void OnMoveComplete()
-            {
-                _movable.OnTargetReached -= OnMoveComplete;
-                StartCoroutine(DestroyAfter(destructionDelay));
-            }
+            int multiplier = Mathf.Abs(spawnCell.Row - Row) + Mathf.Abs(spawnCell.Col - Col);
+            float duration = multiplier * specialMatchMergeDuration;
+            _movable.StartMoving(spawnCell.transform.position, duration,
+                onComplete: OnMoveComplete);
         }
+
+        private void OnMoveComplete()
+        {
+            StartCoroutine(DestroyAfter(destructionDelay));
+        }
+
         private void HandleDestruction(Color color, float delay)
         {
             _collider2D.enabled = false;
@@ -76,6 +87,10 @@ namespace Pieces
             StartCoroutine(DestroyAfter(delay));
         }
 
-       
+
+        public void OnSwap(Piece otherPiece)
+        {
+            // Dont do anything for now
+        }
     }
 }

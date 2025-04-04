@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 namespace Pieces
 {
-    public class RocketPiece : Piece, IActivatable, ISwappable, IExplodable
+    public class RocketPiece : InteractablePiece, IActivatable, ISwappable, IExplodable, ICombinable
     {
         public event Action<IActivatable> OnActivationCompleted;
 
@@ -44,6 +44,14 @@ namespace Pieces
             _isVertical = Random.Range(0, 2) == 1;
             transform.rotation = Quaternion.Euler(0, 0, _isVertical ? 90 : 0);
         }
+        public override void OnSpawn()
+        {
+            base.OnSpawn();
+            projectileLeft.Reset();
+            projectileRight.Reset();
+            _exitedProjectileCount = 0;
+            IsActivated = false;
+        }
 
         private void ProjectileOnExitBorders()
         {
@@ -75,19 +83,30 @@ namespace Pieces
             projectileRight.Launch(projectileSpeed, _collider2D);
         }
 
-        public override void OnSpawn()
-        {
-            base.OnSpawn();
-            projectileLeft.Reset();
-            projectileRight.Reset();
-            _exitedProjectileCount = 0;
-            IsActivated = false;
-        }
 
         private void SetRandomOrientation()
         {
             _isVertical = Random.Range(0, 2) == 1;
             transform.rotation = Quaternion.Euler(0, 0, _isVertical ? 90 : 0);
+        }
+
+        public void SetHorizontal()
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        public void SetVertical()
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 90);
+
+        }
+        public void OnSwap(Piece otherPiece)
+        {
+            Activate();
+        }
+
+        public void OnCombined(Piece piece)
+        {
+            
         }
     }
 }

@@ -8,13 +8,14 @@ using Grid = GridRelated.Grid;
 
 namespace Pieces
 {
-    public class BombPiece : Piece, IActivatable, ISwappable, IExplodable
+    public class BombPiece : InteractablePiece, IActivatable, ISwappable, IExplodable,ICombinable
     {
         public event Action<IActivatable> OnActivationCompleted;
         public bool IsActivated { get; private set; }
         [SerializeField] private int explosionRadius = 1;
         [SerializeField] private float explosionDelay = 0.1f;
         [SerializeField] private float destroyDelay = 0.5f;
+        private bool _isExploded;
 
         public void Activate()
         {
@@ -42,15 +43,15 @@ namespace Pieces
 
             yield return new WaitForSeconds(delay);
 
-            Grid grid = GridManager.Instance.Grid;
-            List<IExplodable> explodables = GetPiecesInRadius(grid, Row, Col, explosionRadius);
-
+            List<IExplodable> explodables = GridManager.Instance.GetPiecesInRadius<IExplodable>( Row, Col, explosionRadius);
+            explodables.Remove(this);
             foreach (var explodable in explodables)
             {
                 explodable.Explode();
             }
 
             Invoke(nameof(OnExplosionCompleted), destroyDelay);
+            yield break;
         }
 
         private void OnExplosionCompleted()
@@ -66,25 +67,16 @@ namespace Pieces
             base.OnSpawn();
             IsActivated = false;
         }
+        
 
-
-        private List<IExplodable> GetPiecesInRadius(Grid grid, int row, int col, int radius)
+        public void OnSwap(Piece otherPiece)
         {
-            List<IExplodable> explodableList = new();
+            Activate();
+        }
 
-            for (int r = row - radius; r <= row + radius; r++)
-            {
-                for (int c = col - radius; c <= col + radius; c++)
-                {
-                    Piece piece = grid.GetCell(r, c)?.CurrentPiece;
-                    if (piece != null && piece != this && piece.TryGetComponent<IExplodable>(out var explodable))
-                    {
-                        explodableList.Add(explodable);
-                    }
-                }
-            }
-
-            return explodableList;
+        public void OnCombined(Piece piece)
+        {
+            
         }
     }
 }

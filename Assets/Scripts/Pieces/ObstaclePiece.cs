@@ -1,6 +1,6 @@
 namespace Pieces
 {
-    public class ObstaclePiece : Piece
+    public class ObstaclePiece : InteractablePiece
     {
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()

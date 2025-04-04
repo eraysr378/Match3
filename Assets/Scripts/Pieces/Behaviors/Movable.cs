@@ -10,15 +10,16 @@ namespace Pieces.Behaviors
         public event Action OnTargetReached;
         private Coroutine _moveCoroutine;
     
-        public void StartMoving(Vector3 targetPosition, float duration)
+        public void StartMoving(Vector3 targetPosition, float duration, Action onComplete = null)
         {
             if (_moveCoroutine != null)
             {
                 StopCoroutine(_moveCoroutine);
             }
-            _moveCoroutine = StartCoroutine(MoveToPositionIE(targetPosition,duration));
+            _moveCoroutine = StartCoroutine(MoveToPositionIE(targetPosition, duration, onComplete));
         }
-        private IEnumerator MoveToPositionIE(Vector3 targetPosition, float duration)
+
+        private IEnumerator MoveToPositionIE(Vector3 targetPosition, float duration, Action onComplete)
         {
             isMoving = true;
             Vector3 startPosition = transform.position;
@@ -34,8 +35,11 @@ namespace Pieces.Behaviors
             transform.position = targetPosition;
             OnTargetReached?.Invoke();
             isMoving = false;
-
+    
+            // Call the callback function when movement is complete
+            onComplete?.Invoke();
         }
+
         // public void StartMoving(Cell targetCell, float duration)
         // {
         //     if (targetCell == null)
