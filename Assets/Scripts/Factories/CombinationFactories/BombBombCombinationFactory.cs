@@ -1,19 +1,20 @@
+using Combinations;
+using Factories.PieceFactories;
 using Misc;
 using Pieces;
-using Pieces.CombinationPieces;
 using UnityEngine;
 
-namespace Factories.PieceFactories
+namespace Factories.CombinationFactories
 {
     [CreateAssetMenu(fileName = "BombBombCombinationFactory", menuName = "Factories/BombBombCombinationFactory")]
-    public class BombBombCombinationFactory : PieceFactory
+    public class BombBombCombinationFactory : CombinationFactory
     {
         [SerializeField] private BombBombCombination prefab;
 
-        public override Piece CreatePiece(PieceType pieceType)
+        public override Combination CreateCombination(CombinationType combinationType)
         {
             BombBombCombination bombCombination = Instantiate(prefab);
-            bombCombination.SetPieceType(pieceType);
+            bombCombination.SetCombinationType(combinationType);
             return bombCombination;
         }
     }

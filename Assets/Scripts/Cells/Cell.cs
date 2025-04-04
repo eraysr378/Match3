@@ -23,17 +23,17 @@ namespace Cells
             CurrentPiece = piece;
         }
 
-        // private void Update()
-        // {
-        //     if (CurrentPiece == null)
-        //     {
-        //         spriteRenderer.color = new Color(1, 1, 1, 0.8f); 
-        //     }
-        //     else
-        //     {
-        //         spriteRenderer.color = new Color(1, 1, 1, 0.2f); 
-        //     }
-        // }
+        private void Update()
+        {
+            if (CurrentPiece == null)
+            {
+                spriteRenderer.color = new Color(1, 1, 1, 0.8f); 
+            }
+            else
+            {
+                spriteRenderer.color = new Color(1, 1, 1, 0.2f); 
+            }
+        }
     }
 
 }

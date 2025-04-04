@@ -1,20 +1,21 @@
+using Combinations;
+using Factories.PieceFactories;
 using Misc;
 using Pieces;
-using Pieces.CombinationPieces;
 using UnityEngine;
 
-namespace Factories.PieceFactories
+namespace Factories.CombinationFactories
 {
     [CreateAssetMenu(fileName = "RocketRocketCombinationFactory",
         menuName = "Factories/RocketRocketCombinationFactory")]
-    public class RocketRocketCombinationFactory : PieceFactory
+    public class RocketRocketCombinationFactory : CombinationFactory
     {
         [SerializeField] private RocketRocketCombination prefab;
 
-        public override Piece CreatePiece(PieceType pieceType)
+        public override Combination CreateCombination(CombinationType combinationType)
         {
             RocketRocketCombination rocketRocketCombination = Instantiate(prefab);
-            rocketRocketCombination.SetPieceType(pieceType);
+            rocketRocketCombination.SetCombinationType(combinationType);
             return rocketRocketCombination;
         }
     }
