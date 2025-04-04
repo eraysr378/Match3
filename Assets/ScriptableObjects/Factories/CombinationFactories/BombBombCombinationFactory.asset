@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45c899b459ef4e938d2c092d9b6c3a00, type: 3}
-  m_Name: RocketPieceFactory
+  m_Script: {fileID: 11500000, guid: 9e821baf9cb04cb28769e9d068ee543a, type: 3}
+  m_Name: BombBombCombinationFactory
   m_EditorClassIdentifier: 
-  prefab: {fileID: 7920068937402446360, guid: 1d0fd499312f46e44853c1a9028ea632, type: 3}
+  prefab: {fileID: 8325731777595665707, guid: 422d2d3764ee5b64faa3c69e054b7aea, type: 3}

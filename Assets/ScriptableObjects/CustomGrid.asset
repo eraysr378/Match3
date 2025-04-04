@@ -13,34 +13,58 @@ MonoBehaviour:
   m_Name: CustomGrid
   m_EditorClassIdentifier: 
   customGrid:
-    height: 5
-    width: 5
+    height: 7
+    width: 7
     cellData:
     - rid: 3204495172050092119
-    - rid: 3204495172050092144
-    - rid: 3204495172050092145
-    - rid: 3204495172050092817
-    - rid: 3204495172050092818
-    - rid: 3204495172050092819
-    - rid: 3204495172050092820
-    - rid: 3204495172050092821
-    - rid: 3204495172050092822
-    - rid: 3204495172050092823
-    - rid: 3204495172050092824
-    - rid: 3204495172050092825
-    - rid: 3204495172050092826
-    - rid: 3204495172050092827
-    - rid: 3204495172050092828
-    - rid: 3204495172050092829
-    - rid: 3204495172050092830
-    - rid: 3204495172050092831
-    - rid: 3204495172050092832
-    - rid: 3204495172050092833
-    - rid: 3204495172050092834
-    - rid: 3204495172050092835
-    - rid: 3204495172050092836
-    - rid: 3204495172050092837
-    - rid: 3204495172050092838
+    - rid: 3425052463159836840
+    - rid: 3425052463159836841
+    - rid: 3425052463159836842
+    - rid: 3425052463159836843
+    - rid: 3425052463159836844
+    - rid: 3425052463159836845
+    - rid: 3425052463159836846
+    - rid: 3425052463159836847
+    - rid: 3425052463159836848
+    - rid: 3425052463159836849
+    - rid: 3425052463159836850
+    - rid: 3425052463159836851
+    - rid: 3425052463159836852
+    - rid: 3425052463159836853
+    - rid: 3425052463159836854
+    - rid: 3425052463159836855
+    - rid: 3425052463159836856
+    - rid: 3425052463159836857
+    - rid: 3425052463159836858
+    - rid: 3425052463159836859
+    - rid: 3425052463159836860
+    - rid: 3425052463159836861
+    - rid: 3425052463159836862
+    - rid: 3425052463159836863
+    - rid: 3425052463159836864
+    - rid: 3425052463159836865
+    - rid: 3425052463159836866
+    - rid: 3425052463159836867
+    - rid: 3425052463159836868
+    - rid: 3425052463159836869
+    - rid: 3425052463159836870
+    - rid: 3425052463159836871
+    - rid: 3425052463159836872
+    - rid: 3425052463159836873
+    - rid: 3425052463159836874
+    - rid: 3425052463159836875
+    - rid: 3425052463159836876
+    - rid: 3425052463159836877
+    - rid: 3425052463159836878
+    - rid: 3425052463159836879
+    - rid: 3425052463159836880
+    - rid: 3425052463159836881
+    - rid: 3425052463159836882
+    - rid: 3425052463159836883
+    - rid: 3425052463159836884
+    - rid: 3425052463159836885
+    - rid: 3425052463159836886
+    - rid: 3425052463159836887
   references:
     version: 2
     RefIds:
@@ -49,123 +73,243 @@ MonoBehaviour:
       data:
         cellType: 0
         pieceType: 100
-    - rid: 3204495172050092144
-      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
-      data:
-        cellType: 0
-        pieceType: 101
-    - rid: 3204495172050092145
+    - rid: 3425052463159836840
       type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
       data:
         cellType: 0
         pieceType: 100
-    - rid: 3204495172050092817
-      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
-      data:
-        cellType: 0
-        pieceType: 102
-    - rid: 3204495172050092818
-      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
-      data:
-        cellType: 0
-        pieceType: 101
-    - rid: 3204495172050092819
-      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
-      data:
-        cellType: 0
-        pieceType: 101
-    - rid: 3204495172050092820
+    - rid: 3425052463159836841
       type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
       data:
         cellType: 0
         pieceType: 100
-    - rid: 3204495172050092821
+    - rid: 3425052463159836842
       type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
       data:
         cellType: 0
         pieceType: 100
-    - rid: 3204495172050092822
-      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
-      data:
-        cellType: 0
-        pieceType: 102
-    - rid: 3204495172050092823
-      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
-      data:
-        cellType: 0
-        pieceType: 102
-    - rid: 3204495172050092824
-      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
-      data:
-        cellType: 0
-        pieceType: 102
-    - rid: 3204495172050092825
-      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
-      data:
-        cellType: 0
-        pieceType: 101
-    - rid: 3204495172050092826
-      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
-      data:
-        cellType: 0
-        pieceType: 101
-    - rid: 3204495172050092827
-      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
-      data:
-        cellType: 0
-        pieceType: 102
-    - rid: 3204495172050092828
-      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
-      data:
-        cellType: 0
-        pieceType: 101
-    - rid: 3204495172050092829
-      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
-      data:
-        cellType: 0
-        pieceType: 101
-    - rid: 3204495172050092830
-      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
-      data:
-        cellType: 0
-        pieceType: 102
-    - rid: 3204495172050092831
+    - rid: 3425052463159836843
       type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
       data:
         cellType: 0
         pieceType: 100
-    - rid: 3204495172050092832
-      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
-      data:
-        cellType: 0
-        pieceType: 101
-    - rid: 3204495172050092833
+    - rid: 3425052463159836844
       type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
       data:
         cellType: 0
         pieceType: 100
-    - rid: 3204495172050092834
+    - rid: 3425052463159836845
       type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
       data:
         cellType: 0
         pieceType: 100
-    - rid: 3204495172050092835
-      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
-      data:
-        cellType: 0
-        pieceType: 101
-    - rid: 3204495172050092836
+    - rid: 3425052463159836846
       type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
       data:
         cellType: 0
         pieceType: 100
-    - rid: 3204495172050092837
+    - rid: 3425052463159836847
       type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
       data:
         cellType: 0
-        pieceType: 101
-    - rid: 3204495172050092838
+        pieceType: 100
+    - rid: 3425052463159836848
       type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
       data:
         cellType: 0
-        pieceType: 102
+        pieceType: 100
+    - rid: 3425052463159836849
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836850
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836851
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836852
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836853
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836854
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836855
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836856
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836857
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836858
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836859
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836860
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836861
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836862
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 4
+    - rid: 3425052463159836863
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836864
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836865
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836866
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836867
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836868
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836869
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 4
+    - rid: 3425052463159836870
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836871
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836872
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836873
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836874
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836875
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836876
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836877
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836878
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836879
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836880
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836881
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836882
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836883
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836884
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836885
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836886
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
+    - rid: 3425052463159836887
+      type: {class: CustomGridCell, ns: GridRelated, asm: Assembly-CSharp}
+      data:
+        cellType: 0
+        pieceType: 100
