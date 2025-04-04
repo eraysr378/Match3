@@ -1,3 +1,4 @@
+using System;
 using Cells;
 using Pieces;
 using Managers;
@@ -8,6 +9,8 @@ namespace GridRelated
 {
     public class GridInitializer : MonoBehaviour
     {
+        public static event Action<Grid> OnGridInitialized;
+
         [SerializeField] private GridPropertiesSo propertiesSo;
         [SerializeField] private RectTransform playground;
         [SerializeField] private SpriteRenderer borderSpriteRenderer;
@@ -20,7 +23,7 @@ namespace GridRelated
         public void Start()
         {
             Init();
-            EventManager.OnGridInitialized?.Invoke(propertiesSo.grid);
+            OnGridInitialized?.Invoke(propertiesSo.grid);
         }
 
         private void Init()
@@ -78,9 +81,9 @@ namespace GridRelated
                     {
                         CustomGridCell customCell = propertiesSo.customGridSo.customGrid.GetElement(row, col);
                         
-                        Piece createdPiece = EventManager.OnRequestPieceSpawn?.Invoke(customCell.pieceType,row, col);
+                        Piece createdPiece = EventManager.OnPieceSpawnRequested?.Invoke(customCell.pieceType,row, col);
 
-                        Cell createdCell = EventManager.OnRequestCellSpawn(customCell.cellType, row, col);
+                        Cell createdCell = EventManager.OnCellSpawnRequested?.Invoke(customCell.cellType, row, col);
                         
                         createdCell.SetPiece(createdPiece);
                         createdPiece?.Init(createdCell);

@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Cells;
+using Misc;
 using Pieces;
 using UnityEngine;
 
@@ -41,6 +43,34 @@ namespace GridRelated
             {
                 _gridArray[row, col] = null;
             }
+        }
+        public IEnumerable<Piece> GetAllPieces()
+        {
+            for (int row = 0; row < Height; row++)
+            {
+                for (int col = 0; col < Width; col++)
+                {
+                    yield return GetCell(row, col).CurrentPiece;
+                }
+            }
+        }
+        public List<Piece> GetPiecesByType(PieceType type)
+        {
+            List<Piece> piecesOfType = new List<Piece>();
+
+            for (int row = 0; row < Height; row++)
+            {
+                for (int col = 0; col < Width; col++)
+                {
+                    Piece piece = GetCell(row, col)?.CurrentPiece;
+                    if (piece != null && piece.GetPieceType() == type)
+                    {
+                        piecesOfType.Add(piece);
+                    }
+                }
+            }
+
+            return piecesOfType;
         }
     }
 }
