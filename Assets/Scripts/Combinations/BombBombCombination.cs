@@ -3,12 +3,13 @@ using Interfaces;
 using Managers;
 using UnityEngine;
 
-namespace Pieces.CombinationPieces
+namespace Combinations
 {
     public class BombBombCombination : Combination
     {
         [SerializeField] private int explosionRadius;
-        public override void ExecuteEffect(int row,int col)
+
+        protected override void ExecuteEffect(int row,int col)
         {
             List<IExplodable> explodables = GridManager.Instance.GetPiecesInRadius<IExplodable>(row, col, explosionRadius);
 
@@ -24,7 +25,7 @@ namespace Pieces.CombinationPieces
         protected override void CompleteCombination()
         {
             base.CompleteCombination();
-            // DestroyPieceInstantly();
+            DestroySelf();
         }
     }
 }

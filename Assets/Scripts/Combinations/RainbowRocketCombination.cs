@@ -1,35 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cells;
 using Managers;
 using Misc;
+using Pieces;
 using UnityEngine;
 using Grid = GridRelated.Grid;
 
-namespace Pieces.CombinationPieces
+namespace Combinations
 {
     public class RainbowRocketCombination : Combination
     {
         private PieceType _targetType;
         private List<RocketPiece> _spawnedRockets = new List<RocketPiece>();
 
-        public override void ExecuteEffect(int row,int col)
+        protected override void ExecuteEffect(int row,int col)
         {   
             _targetType = PieceType.SquareNormalPiece;
             StartCoroutine(SpawnRocketsCoroutine());
-        }
-        
-        protected override void CompleteCombination()
-        {
-            base.CompleteCombination();
-            // DestroyPieceInstantly();
         }
         
         private IEnumerator SpawnRocketsCoroutine()
         {
             Grid grid = GridManager.Instance.Grid;
             List<Piece> matchingPieces = grid.GetPiecesByType(_targetType);
-            
+            matchingPieces = matchingPieces.OrderBy(_ => Random.value).ToList();
+
             foreach (var piece in matchingPieces)
             {
                 if (piece != null)
@@ -37,13 +34,15 @@ namespace Pieces.CombinationPieces
                     RocketPiece rocket = SpawnRocket(piece.Row, piece.Col);
                     _spawnedRockets.Add(rocket);
                     
+                    Cell piecesCell = piece.CurrentCell;
                     piece.DestroyPieceInstantly();
+                    rocket.SetCell(piecesCell);
 
-                    yield return new WaitForSeconds(0.2f); 
+                    yield return new WaitForSeconds(0.1f); 
                 }
             }
 
-            yield return new WaitForSeconds(0.5f); 
+            yield return new WaitForSeconds(0.1f); 
 
             ActivateAllRockets();
             CompleteCombination();
@@ -51,12 +50,7 @@ namespace Pieces.CombinationPieces
 
         private RocketPiece SpawnRocket(int row, int col)
         {
-            Grid grid = GridManager.Instance.Grid;
-            Cell referenceCell = grid.GetCell(0, 0); // Used for sizing the rocket
-
             Piece piece = EventManager.OnPieceSpawnRequested?.Invoke(PieceType.RocketPiece, row, col);
-            piece.transform.SetParent(referenceCell.transform); 
-            piece.transform.localScale = Vector3.one;
 
             if (piece is not RocketPiece rocketPiece)
                 return null;
@@ -71,6 +65,8 @@ namespace Pieces.CombinationPieces
 
         private void ActivateAllRockets()
         {
+            _spawnedRockets = _spawnedRockets.OrderBy(_ => Random.value).ToList();
+
             foreach (var rocket in _spawnedRockets)
             {
                 rocket.Activate();
