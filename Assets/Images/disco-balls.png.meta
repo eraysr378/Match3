@@ -1,0 +1,1079 @@
+fileFormatVersion: 2
+guid: baf2a1e6232228e45a3e791999033cbb
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6962036506709510462
+    second: disco-balls-Photoroom_0
+  - first:
+      213: -3226741284751657491
+    second: disco-balls-Photoroom_1
+  - first:
+      213: 8741090141002117555
+    second: disco-balls-Photoroom_2
+  - first:
+      213: -8368705129728832345
+    second: disco-balls-Photoroom_3
+  - first:
+      213: 6885233581582268248
+    second: disco-balls-Photoroom_4
+  - first:
+      213: 4132800522775504078
+    second: disco-balls-Photoroom_5
+  - first:
+      213: 7194250091830215317
+    second: disco-balls-Photoroom_6
+  - first:
+      213: 4055227740453547445
+    second: disco-balls-Photoroom_7
+  - first:
+      213: 7256902354164422958
+    second: disco-balls-Photoroom_8
+  - first:
+      213: -6429872619131131846
+    second: disco-balls-Photoroom_9
+  - first:
+      213: 1112424827605646397
+    second: disco-balls-Photoroom_10
+  - first:
+      213: 3313219694540529614
+    second: disco-balls-Photoroom_11
+  - first:
+      213: 7538736243773773303
+    second: disco-balls-Photoroom_12
+  - first:
+      213: -5500949527051876729
+    second: disco-balls-Photoroom_13
+  - first:
+      213: 3821961969118699168
+    second: disco-balls-Photoroom_14
+  - first:
+      213: -8104701448362523394
+    second: disco-balls-Photoroom_15
+  - first:
+      213: 6968254723107142536
+    second: disco-balls-Photoroom_16
+  - first:
+      213: 8705057562878996081
+    second: disco-balls-Photoroom_17
+  - first:
+      213: 2971427894757645778
+    second: disco-balls-Photoroom_18
+  - first:
+      213: 4653238486851555574
+    second: disco-balls-Photoroom_19
+  - first:
+      213: 2924173056123895846
+    second: disco-balls-Photoroom_20
+  - first:
+      213: -30934071163202981
+    second: disco-balls-Photoroom_21
+  - first:
+      213: -4415700094925072406
+    second: disco-balls-Photoroom_22
+  - first:
+      213: 7248007043884966685
+    second: disco-balls-Photoroom_23
+  - first:
+      213: -495724432990741653
+    second: disco-balls-Photoroom_24
+  - first:
+      213: 6984059366636518346
+    second: disco-balls-Photoroom_25
+  - first:
+      213: 602040964041998590
+    second: disco-balls-Photoroom_26
+  - first:
+      213: 4989555302871041101
+    second: disco-balls-Photoroom_27
+  - first:
+      213: 6468270941757754731
+    second: disco-balls-Photoroom_28
+  - first:
+      213: -916270329012466879
+    second: disco-balls-Photoroom_29
+  - first:
+      213: -723232175504783754
+    second: disco-balls-Photoroom_30
+  - first:
+      213: 5815419161115548637
+    second: disco-balls-Photoroom_31
+  - first:
+      213: 5164939387236989409
+    second: disco-balls-Photoroom_32
+  - first:
+      213: 826326101929311747
+    second: disco-balls-Photoroom_33
+  - first:
+      213: 1386682629490469877
+    second: disco-balls-Photoroom_34
+  - first:
+      213: -5326781175396077605
+    second: disco-balls-Photoroom_35
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_0
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 846
+        width: 150
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e39c8bff05f1e9060800000000000000
+      internalID: 6962036506709510462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_1
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 846
+        width: 150
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de53a44c5ef4833d0800000000000000
+      internalID: -3226741284751657491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_2
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 846
+        width: 150
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b1b914cb279e4970800000000000000
+      internalID: 8741090141002117555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_3
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 847
+        width: 149
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ac068816036cdb80800000000000000
+      internalID: -8368705129728832345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_4
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 847
+        width: 148
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8573dc186734d8f50800000000000000
+      internalID: 6885233581582268248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_5
+      rect:
+        serializedVersion: 2
+        x: 850
+        y: 847
+        width: 148
+        height: 147
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec4259fcd28aa5930800000000000000
+      internalID: 4132800522775504078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_6
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 685
+        width: 150
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5928cdc775c17d360800000000000000
+      internalID: 7194250091830215317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_7
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 685
+        width: 149
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bd2b09f420174830800000000000000
+      internalID: 4055227740453547445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_8
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 685
+        width: 149
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e299aad0e32b5b460800000000000000
+      internalID: 7256902354164422958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_9
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 685
+        width: 149
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a38ada97be084c6a0800000000000000
+      internalID: -6429872619131131846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_10
+      rect:
+        serializedVersion: 2
+        x: 684
+        y: 685
+        width: 149
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3c72c0ac70207f00800000000000000
+      internalID: 1112424827605646397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_11
+      rect:
+        serializedVersion: 2
+        x: 850
+        y: 685
+        width: 148
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecf9aeb02cbeafd20800000000000000
+      internalID: 3313219694540529614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_12
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 524
+        width: 150
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f59f79fba8fe9860800000000000000
+      internalID: 7538736243773773303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_13
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 524
+        width: 149
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78648b8ec83b8a3b0800000000000000
+      internalID: -5500949527051876729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_14
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 523
+        width: 150
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ae5f5a49265a0530800000000000000
+      internalID: 3821961969118699168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_15
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 523
+        width: 150
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef402c729f0568f80800000000000000
+      internalID: -8104701448362523394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_16
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 524
+        width: 148
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88b3d3350c634b060800000000000000
+      internalID: 6968254723107142536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_17
+      rect:
+        serializedVersion: 2
+        x: 850
+        y: 524
+        width: 148
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17eeab86bb39ec870800000000000000
+      internalID: 8705057562878996081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_18
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 362
+        width: 150
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2dd57be4de1ac3920800000000000000
+      internalID: 2971427894757645778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_19
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 362
+        width: 150
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f096f7ffbf939040800000000000000
+      internalID: 4653238486851555574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_20
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 362
+        width: 149
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6208800d6efb49820800000000000000
+      internalID: 2924173056123895846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_21
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 362
+        width: 150
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b525cdc40a9129ff0800000000000000
+      internalID: -30934071163202981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_22
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 362
+        width: 148
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae71557b82848b2c0800000000000000
+      internalID: -4415700094925072406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_23
+      rect:
+        serializedVersion: 2
+        x: 850
+        y: 362
+        width: 148
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d13ea4c3108169460800000000000000
+      internalID: 7248007043884966685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_24
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 201
+        width: 149
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6bda113145de19f0800000000000000
+      internalID: -495724432990741653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_25
+      rect:
+        serializedVersion: 2
+        x: 188
+        y: 200
+        width: 149
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acbfb96adfc5ce060800000000000000
+      internalID: 6984059366636518346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_26
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 200
+        width: 150
+        height: 151
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef005f92111ea5800800000000000000
+      internalID: 602040964041998590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_27
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 200
+        width: 150
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d448bc6bc167e3540800000000000000
+      internalID: 4989555302871041101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_28
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 201
+        width: 148
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6dc372b62ae3c950800000000000000
+      internalID: 6468270941757754731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_29
+      rect:
+        serializedVersion: 2
+        x: 849
+        y: 201
+        width: 149
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14b4bf88df0c843f0800000000000000
+      internalID: -916270329012466879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_30
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 39
+        width: 150
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67687e01b2096f5f0800000000000000
+      internalID: -723232175504783754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_31
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 39
+        width: 150
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddbda466ae484b050800000000000000
+      internalID: 5815419161115548637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_32
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 39
+        width: 151
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e93fa6f10d8da740800000000000000
+      internalID: 5164939387236989409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_33
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 39
+        width: 149
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30e312e2633b77b00800000000000000
+      internalID: 826326101929311747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_34
+      rect:
+        serializedVersion: 2
+        x: 684
+        y: 39
+        width: 149
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fbebfa218c7e3310800000000000000
+      internalID: 1386682629490469877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: disco-balls-Photoroom_35
+      rect:
+        serializedVersion: 2
+        x: 850
+        y: 39
+        width: 148
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdf67445eb87316b0800000000000000
+      internalID: -5326781175396077605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      disco-balls-Photoroom_0: 6962036506709510462
+      disco-balls-Photoroom_1: -3226741284751657491
+      disco-balls-Photoroom_10: 1112424827605646397
+      disco-balls-Photoroom_11: 3313219694540529614
+      disco-balls-Photoroom_12: 7538736243773773303
+      disco-balls-Photoroom_13: -5500949527051876729
+      disco-balls-Photoroom_14: 3821961969118699168
+      disco-balls-Photoroom_15: -8104701448362523394
+      disco-balls-Photoroom_16: 6968254723107142536
+      disco-balls-Photoroom_17: 8705057562878996081
+      disco-balls-Photoroom_18: 2971427894757645778
+      disco-balls-Photoroom_19: 4653238486851555574
+      disco-balls-Photoroom_2: 8741090141002117555
+      disco-balls-Photoroom_20: 2924173056123895846
+      disco-balls-Photoroom_21: -30934071163202981
+      disco-balls-Photoroom_22: -4415700094925072406
+      disco-balls-Photoroom_23: 7248007043884966685
+      disco-balls-Photoroom_24: -495724432990741653
+      disco-balls-Photoroom_25: 6984059366636518346
+      disco-balls-Photoroom_26: 602040964041998590
+      disco-balls-Photoroom_27: 4989555302871041101
+      disco-balls-Photoroom_28: 6468270941757754731
+      disco-balls-Photoroom_29: -916270329012466879
+      disco-balls-Photoroom_3: -8368705129728832345
+      disco-balls-Photoroom_30: -723232175504783754
+      disco-balls-Photoroom_31: 5815419161115548637
+      disco-balls-Photoroom_32: 5164939387236989409
+      disco-balls-Photoroom_33: 826326101929311747
+      disco-balls-Photoroom_34: 1386682629490469877
+      disco-balls-Photoroom_35: -5326781175396077605
+      disco-balls-Photoroom_4: 6885233581582268248
+      disco-balls-Photoroom_5: 4132800522775504078
+      disco-balls-Photoroom_6: 7194250091830215317
+      disco-balls-Photoroom_7: 4055227740453547445
+      disco-balls-Photoroom_8: 7256902354164422958
+      disco-balls-Photoroom_9: -6429872619131131846
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
