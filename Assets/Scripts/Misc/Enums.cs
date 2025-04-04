@@ -7,12 +7,19 @@ namespace Misc
     public enum PieceType
     {
         None,
+
         ObstaclePiece,
         BombPiece,
         RocketPiece,
+        RainbowPiece,
+
+
+        
+        
         SquareNormalPiece = NormalPieceType.Square,
         CircleNormalPiece =  NormalPieceType.Circle,
         TriangleNormalPiece =  NormalPieceType.Triangle,
+
     }
 
     public enum NormalPieceType
@@ -20,5 +27,15 @@ namespace Misc
         Square = 100,
         Circle = 101,
         Triangle = 102,
+    }
+
+    public enum CombinationType
+    {
+        RocketBombCombination,
+        BombBombCombination,
+        RocketRocketCombination,
+        RainbowRocketCombination,
+        RainbowBombCombination,
+        RainbowRainbowCombination,
     }
 }
