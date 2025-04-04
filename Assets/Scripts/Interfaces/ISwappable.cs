@@ -5,5 +5,6 @@ namespace Interfaces
 {
     public interface ISwappable 
     {
+        public void OnSwap(Piece otherPiece);
     }
 }

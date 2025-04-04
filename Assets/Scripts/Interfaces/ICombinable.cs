@@ -1,7 +1,9 @@
+using Pieces;
+
 namespace Interfaces
 {
-    public class ICombinable
+    public interface ICombinable
     {
-        
+        public void OnCombined(Piece piece);
     }
 }
