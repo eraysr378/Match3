@@ -1,5 +1,6 @@
 using System;
 using Cells;
+using Interfaces;
 using OperationTrackers;
 using Pieces;
 using UnityEngine;
@@ -51,7 +52,7 @@ namespace Managers
                 return;
             Swap(firstPiece, secondPiece);
         }
-
+        
         public void RevertSwap()
         {
             _isRevertingSwap = true;

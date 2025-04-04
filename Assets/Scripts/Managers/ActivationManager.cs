@@ -10,8 +10,8 @@ namespace Managers
     {
         public static event Action OnActivationsStarted;
         public static event Action OnActivationsCompleted;
-        [SerializeField] private int _activeCount = 0;
-        private List<IActivatable> _activePieces = new List<IActivatable>();
+        [SerializeField] private int activeCount = 0;
+        [SerializeField] private List<Piece>  activatedObjects = new List<Piece>(); 
 
 
         private void OnEnable()
@@ -27,28 +27,26 @@ namespace Managers
 
         private void OnPieceActivated(IActivatable activatable)
         {
-            if (_activeCount == 0)
+            if (activeCount == 0)
             {
                 OnActivationsStarted?.Invoke();
-                // Debug.Log("Activation started");    
             }
-            _activePieces.Add(activatable);
-            _activeCount++;
+            activeCount++;
             activatable.OnActivationCompleted += HandleActivationCompleted;
+            Piece piece = activatable as Piece;
+            activatedObjects.Add(piece);
         }
 
         private void HandleActivationCompleted(IActivatable activatable)
         {
             activatable.OnActivationCompleted -= HandleActivationCompleted;
+            Piece piece = activatable as Piece;
+            activatedObjects.Remove(piece);
+            activeCount--;
 
-            _activeCount--;
-
-            if (_activeCount == 0) // All activations completed
+            if (activeCount == 0)
             {
-                _activePieces.Clear();
                 OnActivationsCompleted?.Invoke();
-                // Debug.Log("Activation end");    
-
             }
         }
 
@@ -62,5 +60,6 @@ namespace Managers
 
             return false;
         }
+        
     }
 }

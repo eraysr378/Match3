@@ -1,67 +1,31 @@
-using Pieces;
+using Handlers;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
 
 namespace Managers
 {
     public class InputManager : MonoBehaviour
     {
-        private Camera _mainCamera;
-        private Piece _lastTouchedPiece; // Track last touched cell for "Enter" event
+        [SerializeField] private InputHandler userInputHandler;
+        [SerializeField] private InputHandler autoInputHandler;
+        private InputHandler _activeHandler;
 
-        private void Awake()
+        private void Start()
         {
-            _mainCamera = Camera.main;
+            SetInputHandler(userInputHandler); 
         }
 
-        private void Update()
+        private void SetInputHandler(InputHandler newHandler)
         {
-            if (Touchscreen.current == null || Touchscreen.current.primaryTouch.press.isPressed == false)
-                return;
-            Debug.Log("touchscreen pressed");
-            TouchControl touch = Touchscreen.current.primaryTouch;
-            Vector2 touchPosition = touch.position.ReadValue();
+            if (_activeHandler != null)
+                _activeHandler.Disable();
 
-
-            Vector2 worldPoint = _mainCamera.ScreenToWorldPoint(touchPosition);
-
-            RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero); // No need for a direction in 2D
-
-            if (hit.collider) // Ensure we hit something
-            {
-                Piece touchedPiece = hit.collider.GetComponent<Piece>();
-                if (touchedPiece)
-                {
-                    HandleTouch(touch,touchedPiece);
-                }
-            }
+            _activeHandler = newHandler;
+            _activeHandler.Enable();
         }
 
-        private void HandleTouch(TouchControl touch, Piece piece)
+        public void ToggleInputMode()
         {
-
-            switch (touch.phase.ReadValue())
-            {
-                case UnityEngine.InputSystem.TouchPhase.Began:
-                    EventManager.OnPointerDownPiece?.Invoke(piece);
-                    _lastTouchedPiece = piece;
-                    break;
-
-                case UnityEngine.InputSystem.TouchPhase.Moved:
-                    if (_lastTouchedPiece != piece) // Trigger "enter" only if different
-                    {
-                        EventManager.OnPointerEnterPiece?.Invoke(piece);
-                        _lastTouchedPiece = piece;
-                    }
-
-                    break;
-
-                case UnityEngine.InputSystem.TouchPhase.Ended:
-                    EventManager.OnPointerUpPiece?.Invoke(piece);
-                    _lastTouchedPiece = null;
-                    break;
-            }
+            SetInputHandler(_activeHandler == userInputHandler ? autoInputHandler : userInputHandler);
         }
     }
 }

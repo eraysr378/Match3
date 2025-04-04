@@ -1,3 +1,4 @@
+using Interfaces;
 using Pieces;
 using UnityEngine;
 
@@ -21,18 +22,17 @@ namespace Managers
 
         private void HandleSwapSequentially(Piece first, Piece second)
         {
-            // MatchManager processes matches first
             bool anyMatchFound = matchManager.TryHandleMatches(first, second);
-
-            // ActivationManager processes activations next
-            bool isAnyActivated = activationManager.TryActivatePiece(first);
-            isAnyActivated |= activationManager.TryActivatePiece(second);
-
-            // If nothing happened, tell SwapManager to revert
+            bool isAnyActivated = first is IActivatable || second is IActivatable;
+            
             if (!anyMatchFound && !isAnyActivated)
             {
                 swapManager.RevertSwap();
+                return;
             }
+            
+            ((ISwappable)first).OnSwap(second);
+            ((ISwappable)second).OnSwap(first);
         }
     }
 }
