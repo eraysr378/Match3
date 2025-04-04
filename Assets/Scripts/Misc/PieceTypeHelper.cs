@@ -1,20 +1,17 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Misc
 {
     public class PieceTypeHelper
     {
-        private static readonly HashSet<PieceType> NormalCells;
-
-        static PieceTypeHelper()
+        public static PieceType GetRandomNormalPieceType()
         {
-            NormalCells = Enum.GetValues(typeof(NormalPieceType))
-                .Cast<NormalPieceType>()
-                .Select(type => (PieceType)type)
-                .ToHashSet();
+            Array values = Enum.GetValues(typeof(NormalPieceType));
+            var random = new Random();
+            NormalPieceType randomNormalPiece = (NormalPieceType)values.GetValue(random.Next(values.Length));
+            PieceType randomPieceType = (PieceType)randomNormalPiece;
+            return randomPieceType;
         }
-        public static bool  IsNormalCell(PieceType pieceType) => NormalCells.Contains(pieceType);
+
     }
 }
