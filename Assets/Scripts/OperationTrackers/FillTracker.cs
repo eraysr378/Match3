@@ -12,6 +12,8 @@ namespace OperationTrackers
             MatchHandler.OnMatchHandlingCompleted += DecreaseActiveOperations;
             ActivationManager.OnActivationsStarted += IncreaseActiveOperations;
             ActivationManager.OnActivationsCompleted += DecreaseActiveOperations;
+            CombinationManager.OnCombiantionStarted += IncreaseActiveOperations;
+            CombinationManager.OnCombinationCompleted += DecreaseActiveOperations;
         }
 
         protected override void UnsubscribeEvents()
@@ -20,6 +22,8 @@ namespace OperationTrackers
             MatchHandler.OnMatchHandlingCompleted -= DecreaseActiveOperations;
             ActivationManager.OnActivationsStarted -= IncreaseActiveOperations;
             ActivationManager.OnActivationsCompleted -= DecreaseActiveOperations;
+            CombinationManager.OnCombiantionStarted -= IncreaseActiveOperations;
+            CombinationManager.OnCombinationCompleted -= DecreaseActiveOperations;
         }
     }
 }
