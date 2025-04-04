@@ -8,6 +8,7 @@ namespace Utils
     {
         private readonly float _swapDuration;
         private readonly Action<GameObject, GameObject> _onPositionsSwapped;
+        private int _completedCount;
 
         public PositionSwapper(float swapDuration, Action<GameObject, GameObject> onPositionsSwapped)
         {
@@ -23,24 +24,20 @@ namespace Utils
             if (movableFirst == null || movableSecond == null)
                 throw new Exception("Movable component missing on one of the objects!");
 
-            int completedCount = 0;
+            _completedCount = 0;
 
-            void OnMoveFinished()
-            {
-                completedCount++;
-                if (completedCount < 2) return;
+            movableFirst.StartMoving(second.transform.position, _swapDuration,
+                onComplete: () => OnMoveFinished(first, second));
+            movableSecond.StartMoving(first.transform.position, _swapDuration,
+                onComplete: () => OnMoveFinished(first, second));
+        }
 
-                movableFirst.OnTargetReached -= OnMoveFinished;
-                movableSecond.OnTargetReached -= OnMoveFinished;
+        private void OnMoveFinished(GameObject first, GameObject second)
+        {
+            _completedCount++;
+            if (_completedCount < 2) return;
 
-                _onPositionsSwapped?.Invoke(first, second);
-            }
-
-            movableFirst.OnTargetReached += OnMoveFinished;
-            movableSecond.OnTargetReached += OnMoveFinished;
-
-            movableFirst.StartMoving(second.transform.position, _swapDuration);
-            movableSecond.StartMoving(first.transform.position, _swapDuration);
+            _onPositionsSwapped?.Invoke(first, second);
         }
     }
 }
