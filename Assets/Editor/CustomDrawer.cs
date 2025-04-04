@@ -1,6 +1,8 @@
-using UnityEditor;
+using System;
 using UnityEngine;
+using UnityEditor;
 using GridRelated;
+using Misc;
 
 namespace Editor
 {
@@ -57,12 +59,22 @@ namespace Editor
                     SerializedProperty cellProperty = dataProperty.GetArrayElementAtIndex(index);
                     SerializedProperty cellTypeProperty = cellProperty.FindPropertyRelative("cellType");
                     SerializedProperty pieceTypeProperty = cellProperty.FindPropertyRelative("pieceType");
-
+                    
                     float cellX = position.x + col * cellWidth;
+                    
+                    if (pieceTypeProperty.enumValueIndex == 0) // Default value check
+                    {
+                        Array enumValues = Enum.GetValues(typeof(PieceType));
 
-                    // Draw cell type
+                        // Find the index of the enum value in the array
+                        int indx = Array.IndexOf(enumValues, PieceType.SquareNormalPiece);
+                        pieceTypeProperty.enumValueIndex = indx; // Set default value (you can choose any valid value)
+                    }
+
+                    // Draw cell type with EnumField to prevent default 0 being selected
                     Rect cellRect = new Rect(cellX, rowY, cellWidth - 5, EditorGUIUtility.singleLineHeight);
                     EditorGUI.PropertyField(cellRect, cellTypeProperty, GUIContent.none);
+                    
 
                     // Draw piece type below it
                     Rect pieceRect = new Rect(cellX, rowY + EditorGUIUtility.singleLineHeight, cellWidth - 5,
