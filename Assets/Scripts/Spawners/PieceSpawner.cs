@@ -15,7 +15,6 @@ namespace Spawners
     {
         private readonly Dictionary<PieceType, Queue<Piece>> _piecePools = new();
         [SerializeField] private GeneralPieceFactory pieceFactory;
-        [SerializeField] private Transform cellParent;
 
         public void OnEnable()
         {
@@ -30,7 +29,7 @@ namespace Spawners
             EventManager.OnRandomNormalPieceSpawnRequested -= SpawnRandomNormalPiece;
             EventManager.OnPieceReturnToPool -= ReturnPieceToPool;
         }
-        
+  
         private Piece SpawnPiece(PieceType pieceType, int row, int col)
         {
             Piece piece;
@@ -46,6 +45,11 @@ namespace Spawners
             }
 
             Vector2 pos = GridUtility.GridPositionToWorldPosition(row, col);
+            Cell referenceCell = GridManager.Instance.Grid?.GetCell(0, 0); // just to make sure piece is resized
+            if (referenceCell != null)
+            {
+                piece?.transform.SetParent(referenceCell.transform);
+            }
             piece?.Init(pos);
             return piece;
         }
