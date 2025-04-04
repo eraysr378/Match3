@@ -1,66 +1,67 @@
+using System;
+using Cells;
+using Combinations;
+using CombinationSystem;
 using Interfaces;
+using Misc;
 using Pieces;
+using Pieces.Behaviors;
 using UnityEngine;
 
 namespace Managers
 {
-    public class ActivatableCombinationManager : MonoBehaviour
+    public class CombinationManager : MonoBehaviour
     {
+        public static event Action OnCombiantionStarted;
+        public static event Action OnCombinationCompleted;
+        private readonly CombinationRuleSet _ruleSet = new CombinationRuleSet();
+        private Combination _combination;
+
         private void OnEnable()
         {
-            EventManager.OnActivatableCombinationRequested += HandleCombination;
+            EventManager.OnCombinationRequested += StartCombination;
         }
 
         private void OnDisable()
         {
-            EventManager.OnActivatableCombinationRequested -= HandleCombination;
+            EventManager.OnCombinationRequested -= StartCombination;
         }
-        private void HandleCombination(Piece pieceA, Piece pieceB)
+        private void StartCombination(Piece pieceA, Piece pieceB)
         {
-            if (!(pieceA is IActivatable activatableA) || !(pieceB is IActivatable activatableB)) return;
-
-            // Decide which piece remains and which one merges
-            Piece basePiece = pieceA;
-            Piece mergingPiece = pieceB;
-
-            if (pieceB is RainbowPiece) // Example: Keep RainbowPiece if available
+            OnCombiantionStarted?.Invoke();
+            if (!pieceA.TryGetComponent<Movable>(out var movable))
             {
-                basePiece = pieceB;
-                mergingPiece = pieceA;
+                Debug.LogError("Movable component not found on pieceA!");
+                return;
             }
+            movable.StartMoving(pieceB.transform.position,0.25f, onComplete: () => ActivateCombinationEffect(pieceA, pieceB));
 
-            // Move merging piece onto base piece
-            mergingPiece.transform.position = basePiece.transform.position;
-
-            // Trigger the enhanced combination effect
-            ExecuteSpecialCombination(basePiece, mergingPiece);
-
-            // Remove the merging piece after combining
-            mergingPiece.Explode();
         }
-
-        private void ExecuteSpecialCombination(Piece basePiece, Piece mergingPiece)
+        private void ActivateCombinationEffect(Piece pieceA, Piece pieceB)
         {
-            if (basePiece is RainbowPiece && mergingPiece is RainbowPiece)
+            if (!(pieceA is ICombinable combinableA) || !(pieceB is ICombinable combinableB))
+                return;
+            if (!_ruleSet.TryGetCombinationResult(pieceA.GetPieceType(), pieceB.GetPieceType(), out var combinationType))
             {
-                GridManager.Instance.Grid.DestroyAllPieces();
+                Debug.LogWarning("Combination result not found");
+                return;
             }
-            else if (basePiece is RainbowPiece)
-            {
-                GridManager.Instance.Grid.DestroyPiecesOfType(mergingPiece.PieceType);
-            }
-            else if (basePiece is BombPiece && mergingPiece is BombPiece)
-            {
-                GridManager.Instance.Grid.ExplodeLargeArea(basePiece, mergingPiece);
-            }
-            else if (basePiece is RocketPiece && mergingPiece is RocketPiece)
-            {
-                GridManager.Instance.Grid.ClearBoard();
-            }
-            else
-            {
-                GridManager.Instance.Grid.ExplodeMediumArea(basePiece, mergingPiece);
-            }
+            _combination = EventManager.OnCombinationSpawnRequested(combinationType, pieceB.Row,pieceB.Col);
+            Cell spawnCell = pieceB.CurrentCell;
+            pieceA.DestroyPieceInstantly();
+            pieceB.DestroyPieceInstantly();
+            _combination.Init(spawnCell);
+            _combination.OnCombinationCompleted += CompleteCombination;
+            _combination.StartCombination(spawnCell.Row, spawnCell.Col);
+
         }
+
+        private void CompleteCombination()
+        {
+            _combination.OnCombinationCompleted -= CompleteCombination;
+            OnCombinationCompleted?.Invoke();
+
+        }
+        
     }
 }
