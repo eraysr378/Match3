@@ -62,9 +62,12 @@ namespace MatchSystem
                 {
                     switch (matchList.Count)
                     {
-                        case > 4:
-                            RequestSpecialPieceSpawn(spawnCell, PieceType.RocketPiece);
+                        case > 5:
+                            RequestSpecialPieceSpawn(spawnCell, PieceType.RainbowPiece);
                             break;
+                        // case > 4:
+                        //     RequestSpecialPieceSpawn(spawnCell, PieceType.RocketPiece);
+                        //     break;
                         case > 3:
                             RequestSpecialPieceSpawn(spawnCell, PieceType.BombPiece);
                             break;
