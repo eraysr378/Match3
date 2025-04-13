@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eeba56fc9a7414eab574f72ba90a954, type: 3}
+  m_Name: SquareExplosionParticleFactory
+  m_EditorClassIdentifier: 
+  prefab: {fileID: -2917231320970494647, guid: c1e934bd2aa325e4e8336abe147f40b9, type: 3}

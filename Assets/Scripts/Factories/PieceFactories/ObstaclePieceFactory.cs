@@ -5,16 +5,14 @@ using UnityEngine;
 namespace Factories.PieceFactories
 {
     [CreateAssetMenu(fileName = "ObstaclePieceFactory", menuName = "Factories/ObstaclePieceFactory")]
-    public class ObstaclePieceFactory : PieceFactory
+    public class ObstacleBasePieceFactory : BasePieceFactory
     {
-        [SerializeField] private ObstaclePiece prefab;
-        
-        public override Piece CreatePiece(PieceType pieceType)
+        public override bool CanCreatePiece(PieceType pieceType)
         {
-            ObstaclePiece obstaclePiece = Instantiate(prefab);
-            obstaclePiece.SetPieceType(pieceType);
-            return obstaclePiece;
+            return pieceType == PieceType.ObstaclePiece;
         }
+
+
     }
 
 }

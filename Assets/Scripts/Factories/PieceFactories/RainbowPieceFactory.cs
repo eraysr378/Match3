@@ -1,21 +1,16 @@
 using Misc;
 using Pieces;
+using Pieces.SpecialPieces;
 using UnityEngine;
 
 namespace Factories.PieceFactories
 {
     [CreateAssetMenu(fileName = "RainbowPieceFactory", menuName = "Factories/RainbowPieceFactory")]
-    public class RainbowPieceFactory : PieceFactory
-
+    public class RainbowBasePieceFactory : BasePieceFactory
     {
-        [SerializeField] private RainbowPiece prefab;
-
-        public override Piece CreatePiece(PieceType pieceType)
+        public override bool CanCreatePiece(PieceType pieceType)
         {
-            RainbowPiece rainbowPiece = Instantiate(prefab);
-            rainbowPiece.SetPieceType(pieceType);
-            return rainbowPiece;
+            return pieceType == PieceType.RainbowPiece;
         }
-        
     }
 }

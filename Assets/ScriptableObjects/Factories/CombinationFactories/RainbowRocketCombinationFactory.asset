@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d788565411f4000baa8202ad6d0cd42, type: 3}
   m_Name: RainbowRocketCombinationFactory
   m_EditorClassIdentifier: 
-  prefab: {fileID: -2149086152225151271, guid: f1ff17e6792237846a74935edcf9f03c, type: 3}
+  prefab: {fileID: 1822693764893446911, guid: f1ff17e6792237846a74935edcf9f03c, type: 3}
