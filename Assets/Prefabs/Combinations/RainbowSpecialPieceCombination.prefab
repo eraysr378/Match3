@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &68094498713133931
+--- !u!1001 &3003570737396967064
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,23 +10,31 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 652341550231627953, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.33
+      value: 0.55
       objectReference: {fileID: 0}
     - target: {fileID: 652341550231627953, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.25
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 652341550231627953, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 652341550231627953, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2951468035746722423, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 6.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2951468035746722423, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 6.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2951468035746722423, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 6.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2951468035746722423, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
       propertyPath: m_ConstrainProportionsScale
@@ -35,10 +43,10 @@ PrefabInstance:
     - target: {fileID: 5082413062225601171, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 54329cfced983fe44a6cf760ecd47d5e, type: 2}
+      objectReference: {fileID: 9100000, guid: 223f997f7d1cd8e4e9321329186f5de5, type: 2}
     - target: {fileID: 5215386083233002011, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
       propertyPath: m_Name
-      value: BombBombCombination
+      value: RainbowSpecialPieceCombination
       objectReference: {fileID: 0}
     - target: {fileID: 7761903363868925422, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -82,16 +90,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7771473178951756347, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
       propertyPath: m_Size.x
-      value: 4.89
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7771473178951756347, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
       propertyPath: m_Size.y
-      value: 4.92
+      value: 1.48
       objectReference: {fileID: 0}
     - target: {fileID: 7771473178951756347, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 5803848543178072545, guid: 23ad37d144e39484181830eea31f2a01, type: 3}
+      objectReference: {fileID: 6962036506709510462, guid: baf2a1e6232228e45a3e791999033cbb, type: 3}
     - target: {fileID: 7771473178951756347, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
@@ -99,33 +107,5 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5215386083233002011, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8325731777595665707}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
---- !u!1 &5229010770517954928 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5215386083233002011, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
-  m_PrefabInstance: {fileID: 68094498713133931}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8325731777595665707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5229010770517954928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbb6548bd01b4c669c33dafd4f18ff5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  visual: {fileID: 7721485588654803280}
-  combinationType: 1
-  explosionRadius: 2
---- !u!212 &7721485588654803280 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 7771473178951756347, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
-  m_PrefabInstance: {fileID: 68094498713133931}
-  m_PrefabAsset: {fileID: 0}

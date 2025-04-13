@@ -74,9 +74,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 12
+  m_SortingLayerID: -301808509
+  m_SortingLayer: 3
+  m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: cc8cbe2d8edd9dd4f8a60cb9caeeff4c, type: 3}
   m_Color: {r: 0, g: 0.42801094, b: 1, a: 1}
   m_FlipX: 0
@@ -161,9 +161,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingLayerID: -301808509
+  m_SortingLayer: 3
+  m_SortingOrder: 0
   m_Sprite: {fileID: 5803848543178072545, guid: 23ad37d144e39484181830eea31f2a01, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -248,9 +248,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 11
+  m_SortingLayerID: -301808509
+  m_SortingLayer: 3
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 8a378311a0837fa4b9f4699e3c0586a5, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -336,9 +336,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 12
+  m_SortingLayerID: -301808509
+  m_SortingLayer: 3
+  m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: cc8cbe2d8edd9dd4f8a60cb9caeeff4c, type: 3}
   m_Color: {r: 0, g: 0.45005798, b: 1, a: 1}
   m_FlipX: 0
@@ -374,14 +374,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1078265459804373435}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4796341687509501004}
   - {fileID: 4250104567922301647}
-  m_Father: {fileID: 2359767542072393875}
+  m_Father: {fileID: 7205193593348402954}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1126434964322491566
 GameObject:
@@ -413,7 +413,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4549765337018323447}
-  m_Father: {fileID: 2359767542072393875}
+  m_Father: {fileID: 7205193593348402954}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7004541061501162923
 GameObject:
@@ -488,9 +488,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 11
+  m_SortingLayerID: -301808509
+  m_SortingLayer: 3
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 8a378311a0837fa4b9f4699e3c0586a5, type: 3}
   m_Color: {r: 1, g: 0.11456679, b: 0, a: 1}
   m_FlipX: 0
@@ -561,10 +561,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 7761903363868925422, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 2951468035746722423, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8997259800010935242}
-    - targetCorrespondingSourceObject: {fileID: 7761903363868925422, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 2951468035746722423, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5777130843521511118}
     m_AddedComponents:
@@ -589,8 +589,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62676eabbc61468fb5b5d390cfe1426c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &2359767542072393875 stripped
+  visual: {fileID: 0}
+--- !u!4 &7205193593348402954 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 7761903363868925422, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2951468035746722423, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}
   m_PrefabInstance: {fileID: 5406648247637368189}
   m_PrefabAsset: {fileID: 0}
