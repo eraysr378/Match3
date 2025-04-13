@@ -8,8 +8,8 @@ namespace Factories.CellFactories
     public class GeneralCellFactory :MonoBehaviour
     {
         [SerializeField] private List<CellType> _cellTypeKeys;
-        [SerializeField] private List<CellFactory> _cellFactoryValues;
-        private Dictionary<CellType, CellFactory> _cellFactoriesByType;
+        [SerializeField] private List<BaseCellFactory> _cellFactoryValues;
+        private Dictionary<CellType, BaseCellFactory> _cellFactoriesByType;
         
         private void Awake()
         {
@@ -18,7 +18,7 @@ namespace Factories.CellFactories
 
         private void InitializeDictionary()
         {
-            _cellFactoriesByType = new Dictionary<CellType, CellFactory>();
+            _cellFactoriesByType = new Dictionary<CellType, BaseCellFactory>();
             for (int i = 0; i < Mathf.Min(_cellTypeKeys.Count, _cellFactoryValues.Count); i++)
             {
                 if (!_cellFactoriesByType.TryAdd(_cellTypeKeys[i], _cellFactoryValues[i]))

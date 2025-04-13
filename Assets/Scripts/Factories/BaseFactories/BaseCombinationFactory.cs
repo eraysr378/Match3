@@ -1,11 +1,9 @@
 using Combinations;
-using Factories.BaseFactories;
 using Misc;
-using UnityEngine;
 
-namespace Factories.CombinationFactories
+namespace Factories.BaseFactories
 {
-    public abstract class BaseCombinationFactory: BasePoolableObjectFactory<Combination>
+    public abstract class BaseCombinationFactory: BasePoolableObjectFactory<BaseCombination>
     {
         public abstract bool CanCreateCombination(CombinationType combinationType);
 

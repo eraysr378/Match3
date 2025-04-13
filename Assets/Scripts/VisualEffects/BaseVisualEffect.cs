@@ -1,7 +1,27 @@
+using Interfaces;
+using Managers;
+using UnityEngine;
+
 namespace VisualEffects
 {
-    public class BaseVisualEffect
+    public enum VisualEffectType
     {
+        RainbowPieceLineRenderer,
         
+    }
+    public abstract class BaseVisualEffect : MonoBehaviour,IPoolableObject 
+    {
+        [SerializeField] private VisualEffectType effectType;
+        public abstract void Play();
+        public abstract void Finish();
+        public void OnSpawn()
+        {
+        }
+
+        public void OnReturnToPool()
+        {
+            EventManager.OnVisualEffectReturnToPool?.Invoke(this);
+        }
+        public VisualEffectType GetEffectType() => effectType;
     }
 }

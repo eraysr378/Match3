@@ -7,6 +7,5 @@ namespace Interfaces
     {
         public event Action<IActivatable> OnActivationCompleted;
         public void Activate();
-        public bool IsActivated { get; }
     }
 }

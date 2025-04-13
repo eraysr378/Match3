@@ -1,25 +1,26 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using Cells;
 using Interfaces;
 using Managers;
 using Misc;
-using Projectiles;
+using Processes;
 using UnityEngine;
-using Grid = GridRelated.Grid;
+using UnityEngine.Serialization;
+using VisualEffects;
 
-namespace Pieces
+namespace Pieces.SpecialPieces
 {
     public class RainbowPiece : InteractablePiece, IActivatable, ISwappable, IExplodable, ICombinable
     {
         public event Action<IActivatable> OnActivationCompleted;
-        public bool IsActivated { get; private set; }
+        [FormerlySerializedAs("pieceLineRendererPrefab")] [SerializeField] private RainbowPieceLineRenderer rainbowPieceLineRendererPrefab;
+        [SerializeField] private Transform radiusReferenceTransform;
+        [SerializeField] private float destroyDuration;
+        [SerializeField] private float timeBetweenDestroys;
         private PieceAnimationHandler _animationHandler;
         private PieceType _targetType;
-        [SerializeField] private RainbowProjectile rainbowProjectilePrefab;
-        private int _activeProjectileCount;
-        private bool _isDestroying;
+        private float _radius;
 
 
         protected override void Awake()
@@ -30,82 +31,92 @@ namespace Pieces
             _animationHandler = GetComponent<PieceAnimationHandler>();
         }
 
-        public void Activate()
+        private void Start()
         {
-            if (IsActivated) return;
-            IsActivated = true;
-            EventManager.OnPieceActivated?.Invoke(this);
-            _animationHandler.PlayActivateAnimation(null);
-            StartCoroutine(DestroyMatchingPieces(_targetType));
+            _radius = Vector2.Distance(radiusReferenceTransform.position, transform.position);
         }
 
-        public void Explode()
+        public void Activate()
         {
+            if (isBeingDestroyed) return;
+            isBeingDestroyed = true;
+
+            CurrentCell.MarkDirty();
+            EventManager.OnPieceActivated?.Invoke(this);
+            _animationHandler.PlayActivateAnimation(null);
+            StartCoroutine(DestroyTargetPieces(_targetType));
+        }
+
+        public bool TryExplode()
+        {
+            if (isBeingDestroyed)
+                return false;
+
             Activate();
+            return true;
         }
 
         public void OnSwap(Piece otherPiece)
+        {
+        }
+
+        public void OnPostSwap(Piece otherPiece)
         {
             _targetType = otherPiece.GetPieceType();
             Activate();
         }
 
-        private IEnumerator DestroyMatchingPieces(PieceType targetType)
+        private IEnumerator DestroyTargetPieces(PieceType targetType)
         {
-            _isDestroying = true;
-            Grid grid = GridManager.Instance.Grid;
-            List<Piece> matchingPieces = grid.GetPiecesByType(targetType);
-            
-            matchingPieces = matchingPieces.OrderBy(_ => UnityEngine.Random.value).ToList();
-            foreach (var piece in matchingPieces)
+            float elapsedTime = 0f;
+            while (elapsedTime < destroyDuration)
             {
-                if (piece != null && piece.gameObject.activeSelf)
-                {
-                    var rainbowProjectile = SpawnProjectile(piece);
-                    rainbowProjectile.OnExplosionCompleted += RainbowProjectileOnExplosionCompleted;
-                    _activeProjectileCount++;
-                    yield return new WaitForSeconds(0.1f);
-                }
-                
+                Piece piece = GridManager.Instance.GetPieceOfType(targetType);
+                // No more pieces of targetType left we are done
+                if (piece == null)
+                    break;
+
+                StartDestroyProcessForPiece(piece);
+                elapsedTime += timeBetweenDestroys;
+                yield return new WaitForSeconds(timeBetweenDestroys);
             }
-            _isDestroying = false;
-            if (_activeProjectileCount == 0)
-            {
-                _animationHandler.PlayEndAnimation(CompleteDestruction);
-            }
+
+            _animationHandler.PlayEndAnimation(CompleteDestruction);
         }
 
-        private void RainbowProjectileOnExplosionCompleted(RainbowProjectile rainbowProjectile)
+        private void StartDestroyProcessForPiece(Piece piece)
         {
-            rainbowProjectile.OnExplosionCompleted -= RainbowProjectileOnExplosionCompleted;
-            _activeProjectileCount--;
-            if (!_isDestroying && _activeProjectileCount == 0)
+            var visualEffect = EventManager.OnVisualEffectSpawnRequested(VisualEffectType.RainbowPieceLineRenderer);
+            if (visualEffect is not IRainbowLineEffect lineEffect)
             {
-                _animationHandler.PlayEndAnimation(CompleteDestruction);
+                Debug.LogError("Effect is not rainbow line effect");
+                return;
             }
-        }
 
-        private RainbowProjectile SpawnProjectile(Piece targetPiece)
-        {
-            RainbowProjectile rainbowProjectile =
-                Instantiate(rainbowProjectilePrefab, transform.position, Quaternion.identity);
-            rainbowProjectile.Initialize(targetPiece);
-            return rainbowProjectile;
+            lineEffect.SetUpAtEdge(transform, piece.CurrentCell.transform, _radius, transform.lossyScale.x);
+            if (piece is IColorProvider colorProvider)
+            {
+                lineEffect.SetColor(colorProvider.GetColor());
+            }
+
+            var process = new RainbowDestroyProcess(piece, visualEffect);
+            process.Execute();
         }
 
         private void CompleteDestruction()
         {
+            Cell cellToClear = CurrentCell;
             SetCell(null);
+            cellToClear.ClearDirty();
             OnActivationCompleted?.Invoke(this);
-            ReturnToPool();
+            OnReturnToPool();
         }
 
         public override void OnSpawn()
         {
             base.OnSpawn();
-            IsActivated = false;
-            _targetType = PieceTypeHelper.GetRandomNormalPieceType();
 
+            _targetType = PieceTypeHelper.GetRandomNormalPieceType();
         }
 
         public void OnCombined(Piece piece)

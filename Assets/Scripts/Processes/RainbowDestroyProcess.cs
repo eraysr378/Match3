@@ -1,23 +1,22 @@
-using System;
-using Cells;
 using Interfaces;
-using UnityEngine;
+using Pieces;
+using Utils;
+using VisualEffects;
 
-namespace Pieces.SpecialPieces
+namespace Processes
 {
     public class RainbowDestroyProcess
     {
         private readonly Piece _targetPiece;
-        private readonly Action _onCompleted;
-        private readonly IRainbowVisualEffect _visualEffect;
+        private readonly BaseVisualEffect _visualEffect;
 
-        private Cell _targetPieceCell;
+        private readonly CellDirtyTracker _cellDirtyTracker;
 
-        public RainbowDestroyProcess(Piece targetPiece, IRainbowVisualEffect visualEffect , Action onCompleted)
+        public RainbowDestroyProcess(Piece targetPiece, BaseVisualEffect visualEffect)
         {
             _targetPiece = targetPiece;
             _visualEffect = visualEffect;
-            _onCompleted = onCompleted;
+            _cellDirtyTracker = new();
         }
 
         public void Execute()
@@ -25,23 +24,19 @@ namespace Pieces.SpecialPieces
             if (_targetPiece != null &&
                 _targetPiece.TryGetComponent<IRainbowHittable>(out var hittable))
             {
-                _targetPieceCell = _targetPiece.CurrentCell;
+                var targetPieceCell = _targetPiece.CurrentCell;
                 if (!hittable.TryHandleRainbowHit(OnRainbowHitHandled))
                     return;
 
-                _targetPieceCell.MarkDirty();
+                _cellDirtyTracker.Mark(targetPieceCell);
                 _visualEffect.Play();
             }
-
-            _onCompleted?.Invoke();
         }
 
         private void OnRainbowHitHandled()
         {
-            _targetPieceCell.ClearDirty();
+            _cellDirtyTracker.ClearAll();
             _visualEffect.Finish();
         }
-
-   
     }
 }

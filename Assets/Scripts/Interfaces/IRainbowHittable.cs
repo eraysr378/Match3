@@ -4,7 +4,6 @@ namespace Interfaces
 {
     public interface IRainbowHittable
     {
-        public event Action OnRainbowHitHandled;
-        void OnHitByRainbow();
+        bool TryHandleRainbowHit(Action onHandled);
     }
 }

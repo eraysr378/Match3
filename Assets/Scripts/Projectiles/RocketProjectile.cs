@@ -1,77 +1,103 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using Cells;
 using Interfaces;
-using Pieces;
+using Pieces.Behaviors;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Projectiles
 {
+    [RequireComponent(typeof(Movable))]
     public class RocketProjectile : MonoBehaviour
     {
-        public event Action OnExitBorders;
-        private Vector3 _defaultPosition;
-        private Vector2 _direction;
-        private float _speed;
-        private Collider2D _collider;
-        private bool _isLaunched;
+        public event Action OnPathCleared;
+        public event Action OnOutOfView;
+        [SerializeField]private Vector3 defaultPosition;
+        private float _moveSpeed;
+        private Queue<Cell> _cellPath;
+        private Movable _movable;
+        private Cell _currentTargetCell;
 
         private void Awake()
         {
-            _collider = GetComponent<Collider2D>();
+            _movable = GetComponent<Movable>();
+        }
+        public void Launch(List<Cell> path, float moveSpeed)
+        {
+            _moveSpeed = moveSpeed;
+            if (path == null)
+            {
+                WhenPathCleared();
+                return;
+            }
+            _cellPath = new Queue<Cell>(path);
+            StartClearingPath();
         }
 
+        private void StartClearingPath()
+        {
+            if (_cellPath.Count == 0)
+            {
+                WhenPathCleared();
+                return;
+            }
+            _currentTargetCell = _cellPath.Dequeue();
+            _movable.StartMovingWithSpeed(_currentTargetCell.transform.position,_moveSpeed,ExplodeCurrentCellPiece);
+        }
+
+        private void ExplodeCurrentCellPiece()
+        {
+            if (_currentTargetCell.CurrentPiece is IExplodable explodable)
+            {
+                explodable.TryExplode();
+            }
+            MoveToNextCell();
+        }
+        private void MoveToNextCell()
+        {
+            if (_cellPath.Count == 0)
+            {
+                WhenPathCleared();
+                return;
+            }
+            _currentTargetCell = _cellPath.Dequeue();
+            _movable.StartMovingWithSpeed(_currentTargetCell.transform.position,_moveSpeed,ExplodeCurrentCellPiece);
+            
+        }
+        private IEnumerator ContinueStraight()
+        {
+            while (!IsOutOfView())
+            {
+                transform.position += (transform.up * (_moveSpeed * Time.deltaTime));
+                yield return null;
+            }
+            OnOutOfView?.Invoke();
+            gameObject.SetActive(false);
+        }
+
+        private void WhenPathCleared()
+        {
+            StartCoroutine(ContinueStraight());
+            OnPathCleared?.Invoke();
+        }
+        
         public void Reset()
         {
-            _speed = 0;
-            _isLaunched = false;
             gameObject.SetActive(true);
-            transform.localPosition = _defaultPosition;
+            transform.localPosition = defaultPosition;
         }
-
-        public void Launch(float speed, Collider2D rocketCollider)
-        {
-            _defaultPosition = transform.localPosition;
-            _direction = transform.up;
-            _speed = speed;
-            Physics2D.IgnoreCollision(_collider, rocketCollider);
-            _isLaunched = true;
-        }
-
-        private void Update()
-        {
-            if(!_isLaunched) return;
-            
-            Vector3 oldPosition = transform.position;
-            transform.position += (Vector3)(_direction * (_speed * Time.deltaTime));
-
-            RaycastHit2D[] hits = Physics2D.RaycastAll(oldPosition, _direction, _speed * Time.deltaTime);
-            foreach (RaycastHit2D hit in hits)
-            {
-                if (hit.collider != null && hit.collider.gameObject != gameObject) // Ignore self
-                {
-                    HandleCollision(hit.collider);
-                }
-            }
-
-            CheckIfOutOfView();
-        }
-
-        private void CheckIfOutOfView()
+        private bool IsOutOfView()
         {
             Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
-            // Check if the object is outside the screen
+            
             if (viewportPos.x < 0 || viewportPos.x > 1 || viewportPos.y < 0 || viewportPos.y > 1)
             {
-                OnExitBorders?.Invoke();
-                gameObject.SetActive(false);
+                return true;
             }
+            return false;
         }
-
-        private void HandleCollision(Collider2D hitCollider)
-        {
-            if (hitCollider.TryGetComponent<IExplodable>(out var explodable))
-            {
-                explodable.Explode();
-            }
-        }
+        
     }
 }

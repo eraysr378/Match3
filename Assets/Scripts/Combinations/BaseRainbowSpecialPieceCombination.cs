@@ -11,12 +11,18 @@ using UnityEngine;
 
 namespace Combinations
 {
-    public abstract class RainbowSpecialPieceCombination<T> : BaseCombination where T : Piece
+    public abstract class BaseRainbowSpecialPieceCombination<T> : BaseCombination where T : Piece
     {
         [SerializeField] private RainbowProjectile rainbowProjectilePrefab;
         private readonly List<T> _spawnedSpecialPieces = new();
         private int _projectileCount = 0;
-        private PieceType _targetType = PieceType.SquareNormalPiece; // for testing, make it random selected later
+        private PieceType _targetType;
+
+        public override void Awake()
+        {
+            base.Awake();
+            _targetType = PieceTypeHelper.GetRandomNormalPieceType();
+        }
 
         protected override void ActivateCombination(int row, int col)
         {
@@ -35,7 +41,7 @@ namespace Combinations
                 if (piece == null)
                     continue;
 
-                RainbowProjectile projectile = SpawnProjectile(piece);
+                SpawnProjectile(piece);
                 yield return new WaitForSeconds(0.1f);
             }
         }
@@ -78,6 +84,12 @@ namespace Combinations
             {
                 (piece as IActivatable)?.Activate();
             }
+        }
+
+        public override void OnSpawn()
+        {
+            base.OnSpawn();
+            _targetType = PieceTypeHelper.GetRandomNormalPieceType();
         }
     }
 }

@@ -1,9 +1,9 @@
 using Managers;
 using MatchSystem;
 
-namespace OperationTrackers
+namespace OperationBlockTrackers
 {
-    public class SwapTracker : OperationTracker
+    public class SwapBlockTracker : OperationBlockTracker
     {
         protected override void SubscribeEvents()
         {

@@ -1,7 +1,10 @@
+using VisualEffects;
+
 namespace Factories.BaseFactories
 {
-    public class BaseVisualEffectFactory
+    public abstract class BaseVisualEffectFactory : BasePoolableObjectFactory<BaseVisualEffect>
     {
-        
+        public abstract bool CanCreateEffect(VisualEffectType effectType);
+
     }
 }

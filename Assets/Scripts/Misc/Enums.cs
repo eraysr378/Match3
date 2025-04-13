@@ -19,6 +19,7 @@ namespace Misc
         SquareNormalPiece = NormalPieceType.Square,
         CircleNormalPiece =  NormalPieceType.Circle,
         TriangleNormalPiece =  NormalPieceType.Triangle,
+        HexagonNormalPiece = NormalPieceType.Hexagon
 
     }
 
@@ -27,6 +28,7 @@ namespace Misc
         Square = 100,
         Circle = 101,
         Triangle = 102,
+        Hexagon = 103,
     }
 
     public enum CombinationType
@@ -37,5 +39,21 @@ namespace Misc
         RainbowRocketCombination,
         RainbowBombCombination,
         RainbowRainbowCombination,
+        
     }
+    public enum ParticleType
+    {
+        None,
+        Activation,
+        Explosion,
+        SquareExplosion,
+        TriangleExplosion,
+        CircleExplosion,
+        BombExplosion,
+        BombBombExplosion,
+        HexagonExplosion,
+        
+        
+    }
+
 }

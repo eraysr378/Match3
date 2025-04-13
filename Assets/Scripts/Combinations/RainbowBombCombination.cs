@@ -1,10 +1,11 @@
 using Managers;
 using Misc;
 using Pieces;
+using Pieces.SpecialPieces;
 
 namespace Combinations
 {
-    public class RainbowBombCombination : RainbowSpecialPieceCombination<BombPiece>
+    public class RainbowBombCombination : BaseRainbowSpecialPieceCombination<BombPiece>
     {
         protected override BombPiece SpawnSpecialPiece(int row, int col)
         {

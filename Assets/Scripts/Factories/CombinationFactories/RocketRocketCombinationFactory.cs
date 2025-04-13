@@ -1,4 +1,5 @@
 using Combinations;
+using Factories.BaseFactories;
 using Factories.PieceFactories;
 using Misc;
 using Pieces;
@@ -7,16 +8,12 @@ using UnityEngine;
 namespace Factories.CombinationFactories
 {
     [CreateAssetMenu(fileName = "RocketRocketCombinationFactory",
-        menuName = "Factories/RocketRocketCombinationFactory")]
-    public class RocketRocketCombinationFactory : CombinationFactory
+        menuName = "Factories/Combination/RocketRocketCombinationFactory")]
+    public class RocketRocketCombinationFactory : BaseCombinationFactory
     {
-        [SerializeField] private RocketRocketCombination prefab;
-
-        public override Combination CreateCombination(CombinationType combinationType)
+        public override bool CanCreateCombination(CombinationType combinationType)
         {
-            RocketRocketCombination rocketRocketCombination = Instantiate(prefab);
-            rocketRocketCombination.SetCombinationType(combinationType);
-            return rocketRocketCombination;
+            return combinationType == CombinationType.RocketRocketCombination;
         }
     }
 }

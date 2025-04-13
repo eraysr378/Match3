@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 
-namespace OperationTrackers
+namespace OperationBlockTrackers
 {
-    public abstract class OperationTracker : MonoBehaviour
+    public abstract class OperationBlockTracker : MonoBehaviour
     {
         public event Action OnAllOperationsCompleted;
         private int _activeOperations = 0;

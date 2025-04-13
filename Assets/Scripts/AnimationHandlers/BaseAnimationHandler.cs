@@ -28,15 +28,18 @@ namespace AnimationHandlers
 
         private IEnumerator WaitForAnimation(string animationName, Action onComplete)
         {
-            while (!_animator.GetCurrentAnimatorStateInfo(0).IsName(animationName))
+            
+            yield return new WaitUntil(() => 
+                _animator.GetCurrentAnimatorStateInfo(0).IsName(animationName));
+
+            if (_animator.GetCurrentAnimatorStateInfo(0).loop && onComplete != null)
             {
-                yield return null;
+                Debug.LogWarning("Are you Waiting Looped Animation?");
             }
-
-            float duration = _animator.GetCurrentAnimatorStateInfo(0).length;
-
-            yield return new WaitForSeconds(duration);
-
+            yield return new WaitUntil(() => 
+                _animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f &&
+                !_animator.IsInTransition(0));
+        
             onComplete?.Invoke();
         }
     }

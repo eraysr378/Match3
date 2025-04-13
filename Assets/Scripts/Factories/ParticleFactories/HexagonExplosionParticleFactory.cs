@@ -1,7 +1,16 @@
+using Factories.BaseFactories;
+using Misc;
+using UnityEngine;
+
 namespace Factories.ParticleFactories
 {
-    public class HexagonExplosionParticleFactory
+    [CreateAssetMenu(fileName = "HexagonExplosionParticleFactory",
+        menuName = "Factories/Particle/HexagonExplosionParticleFactory")]
+    public class HexagonExplosionParticleFactory : BaseParticleFactory
     {
-        
+        public override bool CanCreateParticle(ParticleType particleType)
+        {
+            return particleType == ParticleType.HexagonExplosion;
+        }
     }
 }

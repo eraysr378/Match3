@@ -1,8 +1,9 @@
 using System;
 using Cells;
 using Interfaces;
-using OperationTrackers;
+using OperationBlockTrackers;
 using Pieces;
+using SwapSystem;
 using UnityEngine;
 using Utils;
 
@@ -10,86 +11,87 @@ namespace Managers
 {
     public class SwapManager : MonoBehaviour
     {
-        public static event Action<Piece, Piece> OnSwapCompleted;
+        public static event Action<Piece, Piece> OnValidSwapCompleted;
+        public static event Action<Piece, Piece> OnInvalidSwapCompleted;
 
         [SerializeField] private float swapDuration;
+
         private Piece _swappedFirstPiece;
         private Piece _swappedSecondPiece;
         private bool _canSwap = true;
-        private bool _isRevertingSwap = false;
-        private SwapTracker _swapTracker;
-        private PositionSwapper _positionSwapper;
+        private bool _isValidSwap;
 
+        private SwapBlockTracker _swapBlockTracker;
+        private PositionSwapper _positionSwapper;
+        private ISwapCommand _swapCommand;
+        private SwapValidator _swapValidator;
 
         private void Awake()
         {
-            _swapTracker = GetComponent<SwapTracker>();
+            _swapBlockTracker = GetComponent<SwapBlockTracker>();
             _positionSwapper = new PositionSwapper(swapDuration, OnPositionsSwapped);
+            _swapValidator = new SwapValidator();
         }
 
         private void OnEnable()
         {
-            EventManager.OnSwapRequested += TrySwap;
-            EventManager.OnInstantSwapRequested += SwapInstantly;
+            EventManager.OnSwapRequested += HandleSwap;
         }
 
         private void OnDisable()
         {
-            EventManager.OnSwapRequested -= TrySwap;
-            EventManager.OnInstantSwapRequested -= SwapInstantly;
+            EventManager.OnSwapRequested -= HandleSwap;
         }
 
-        private void SwapInstantly(Piece firstPiece, Piece secondPiece)
+        private void HandleSwap(Piece first, Piece second)
         {
-            if (_swapTracker.HasActiveOperations() || !_canSwap)
+            if (_swapBlockTracker.HasActiveOperations() || !_canSwap)
                 return;
-            SwapPieceCells(firstPiece, secondPiece);
-        }
 
-        private void TrySwap(Piece firstPiece, Piece secondPiece)
-        {
-            if (_swapTracker.HasActiveOperations() || !_canSwap)
-                return;
-            Swap(firstPiece, secondPiece);
-        }
-        
-        public void RevertSwap()
-        {
-            _isRevertingSwap = true;
-            StartSwap(_swappedFirstPiece, _swappedSecondPiece);
-        }
-
-        private void Swap(Piece firstPiece, Piece secondPiece)
-        {
-            _isRevertingSwap = false;
-            _swappedFirstPiece = firstPiece;
-            _swappedSecondPiece = secondPiece;
-            StartSwap(firstPiece, secondPiece);
-        }
-
-
-        private void StartSwap(Piece firstPiece, Piece secondPiece)
-        {
             _canSwap = false;
 
-            _positionSwapper.SwapPositions(firstPiece.gameObject, secondPiece.gameObject);
+            _isValidSwap = _swapValidator.IsValidSwap(first, second);
+            _swappedFirstPiece = first;
+            _swappedSecondPiece = second;
+
+            _swapCommand = new SwapCommand(first, second, _positionSwapper);
+
+            _swapCommand.Execute();
         }
 
         private void OnPositionsSwapped(GameObject first, GameObject second)
         {
-            SwapPieceCells(_swappedFirstPiece, _swappedSecondPiece);
-            if (!_isRevertingSwap)
+            if (_swapCommand == null)
             {
-                OnSwapCompleted?.Invoke(_swappedFirstPiece, _swappedSecondPiece);
-            }
-            else
-            {
-                _swappedFirstPiece = null;
-                _swappedSecondPiece = null;
+                _canSwap = true;
+                OnInvalidSwapCompleted?.Invoke(_swappedFirstPiece, _swappedSecondPiece);
+                return;
             }
 
+            if (!_isValidSwap)
+            {
+                _swapCommand.Undo();
+                _swapCommand = null;
+                return;
+            }
+            
+            SwapPieceCells(_swappedFirstPiece, _swappedSecondPiece);
+            _swapCommand = null;
             _canSwap = true;
+            
+            if (_swappedFirstPiece.TryGetComponent<ISwappable>(out var swappableFirst))
+                swappableFirst.OnSwap(_swappedSecondPiece);
+            if (_swappedSecondPiece.TryGetComponent<ISwappable>(out var swappableSecond))
+                swappableSecond.OnSwap(_swappedFirstPiece);
+            
+            
+            swappableFirst?.OnPostSwap(_swappedSecondPiece);
+            swappableSecond?.OnPostSwap(_swappedFirstPiece);
+            
+            
+            OnValidSwapCompleted?.Invoke(_swappedFirstPiece, _swappedSecondPiece);
         }
+        
 
         private void SwapPieceCells(Piece firstPiece, Piece secondPiece)
         {

@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
+  serializedVersion: 3
   tags: []
   layers:
   - Default
@@ -11,7 +11,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - GridBorder
   - 
   - 
   - 
@@ -41,3 +41,23 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Cell
+    uniqueID: 1742616449
+    locked: 0
+  - name: Piece
+    uniqueID: 2799095281
+    locked: 0
+  - name: Projectile
+    uniqueID: 2498888087
+    locked: 0
+  - name: Combination
+    uniqueID: 3993158787
+    locked: 0
+  - name: Effect
+    uniqueID: 3891699919
+    locked: 0
+  - name: Particle
+    uniqueID: 475793191
+    locked: 0
+  m_RenderingLayers:
+  - Default

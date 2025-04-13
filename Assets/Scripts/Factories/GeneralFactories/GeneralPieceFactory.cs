@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Factories.BaseFactories;
+using Factories.PieceFactories;
 using Managers;
 using Misc;
 using Pieces;
 using UnityEngine;
 
-namespace Factories.PieceFactories
+namespace Factories.GeneralFactories
 {
     public class GeneralPieceFactory : MonoBehaviour
     {
@@ -14,6 +16,11 @@ namespace Factories.PieceFactories
         private void OnEnable()
         {
             EventManager.OnPieceReturnToPool += ReturnToPool;
+        }
+
+        private void OnDisable()
+        {
+            EventManager.OnPieceReturnToPool -= ReturnToPool;
         }
 
         public Piece GetPieceBasedOnType(PieceType pieceType)

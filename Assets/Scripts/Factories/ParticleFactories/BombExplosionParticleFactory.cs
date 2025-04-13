@@ -6,7 +6,7 @@ namespace Factories.ParticleFactories
 {
     [CreateAssetMenu(fileName = "BombExplosionParticle",
         menuName = "Factories/Particle/BombExplosionParticle")]
-    public class BombExplosionParticle : BaseParticleFactory
+    public class BombExplosionParticleFactory : BaseParticleFactory
     {
         public override bool CanCreateParticle(ParticleType particleType)
         {

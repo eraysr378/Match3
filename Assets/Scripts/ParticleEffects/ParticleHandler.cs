@@ -1,14 +1,6 @@
 using System.Collections.Generic;
+using Misc;
 using UnityEngine;
-public enum ParticleType
-{
-    None,
-    Activation,
-    Explosion,
-    SquareExplosion,
-    TriangleExplosion,
-    CircleExplosion,
-}
 
 namespace ParticleEffects
 {

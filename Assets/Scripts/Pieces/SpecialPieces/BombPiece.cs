@@ -3,76 +3,86 @@ using System.Collections;
 using System.Collections.Generic;
 using Interfaces;
 using Managers;
+using Misc;
 using UnityEngine;
-using Grid = GridRelated.Grid;
+using Utils;
 
-namespace Pieces
+namespace Pieces.SpecialPieces
 {
     public class BombPiece : InteractablePiece, IActivatable, ISwappable, IExplodable,ICombinable
     {
         public event Action<IActivatable> OnActivationCompleted;
-        public bool IsActivated { get; private set; }
         [SerializeField] private int explosionRadius = 1;
         [SerializeField] private float explosionDelay = 0.1f;
         [SerializeField] private float destroyDelay = 0.5f;
-        private bool _isExploded;
-
+        private readonly CellDirtyTracker _cellDirtyTracker = new();
         public void Activate()
         {
             TriggerExplosion(0);
         }
 
-        public void Explode()
+        public bool TryExplode()
         {
-            TriggerExplosion(explosionDelay); // Add slight delay for explosion effect
+            return TriggerExplosion(explosionDelay);
         }
 
-        private void TriggerExplosion(float delay)
+        private bool TriggerExplosion(float delay)
         {
-            if (IsActivated)
-                return;
-
+            if (isBeingDestroyed)
+                return false;
+            isBeingDestroyed = true;
             StartCoroutine(TriggerExplosionCoroutine(delay));
+            return true;
         }
 
         private IEnumerator TriggerExplosionCoroutine(float delay)
         {
             EventManager.OnPieceActivated?.Invoke(this);
-            IsActivated = true;
             
             yield return new WaitForSeconds(delay);
-
+            PlayParticle();
+            var cellsInRadius = GridManager.Instance.GetCellsInRadius(Row, Col,explosionRadius);
             List<IExplodable> explodables = GridManager.Instance.GetPiecesInRadius<IExplodable>( Row, Col, explosionRadius);
             explodables.Remove(this);
+            _cellDirtyTracker.Mark(cellsInRadius);
             foreach (var explodable in explodables)
             {
-                explodable.Explode();
+                explodable.TryExplode();
             }
-
+            
             Invoke(nameof(OnExplosionCompleted), destroyDelay);
-            yield break;
+        }
+
+        private void PlayParticle()
+        {
+            var particle = EventManager.OnParticleSpawnRequested?.Invoke(ParticleType.BombExplosion, transform,
+                transform.position, Vector3.one);
+            particle?.transform.SetParent(null);
         }
 
         private void OnExplosionCompleted()
         {
             SetCell(null);
+            _cellDirtyTracker.ClearAll();
             OnActivationCompleted?.Invoke(this);
-            ReturnToPool();
+            OnReturnToPool();
         }
 
 
         public override void OnSpawn()
         {
             base.OnSpawn();
-            IsActivated = false;
         }
         
 
         public void OnSwap(Piece otherPiece)
         {
+            // dont need anything  
+        }
+        public void OnPostSwap(Piece otherPiece)
+        {
             Activate();
         }
-
         public void OnCombined(Piece piece)
         {
             

@@ -1,4 +1,5 @@
 using Combinations;
+using Factories.BaseFactories;
 using Factories.PieceFactories;
 using Misc;
 using Pieces;
@@ -6,16 +7,12 @@ using UnityEngine;
 
 namespace Factories.CombinationFactories
 {
-    [CreateAssetMenu(fileName = "BombBombCombinationFactory", menuName = "Factories/BombBombCombinationFactory")]
-    public class BombBombCombinationFactory : CombinationFactory
+    [CreateAssetMenu(fileName = "BombBombCombinationFactory", menuName = "Factories/Combination/BombBombCombinationFactory")]
+    public class BombBombCombinationFactory : BaseCombinationFactory
     {
-        [SerializeField] private BombBombCombination prefab;
-
-        public override Combination CreateCombination(CombinationType combinationType)
+        public override bool CanCreateCombination(CombinationType combinationType)
         {
-            BombBombCombination bombCombination = Instantiate(prefab);
-            bombCombination.SetCombinationType(combinationType);
-            return bombCombination;
+            return combinationType == CombinationType.BombBombCombination;
         }
     }
 }

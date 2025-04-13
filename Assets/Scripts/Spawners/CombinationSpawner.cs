@@ -1,5 +1,6 @@
 using Combinations;
 using Factories.CombinationFactories;
+using Factories.GeneralFactories;
 using GridRelated;
 using Managers;
 using Misc;
@@ -21,9 +22,9 @@ namespace Spawners
         }
 
  
-        private Combination SpawnCombination(CombinationType combinationType, int row, int col)
+        private BaseCombination SpawnCombination(CombinationType combinationType, int row, int col)
         {
-            Combination combination = combinationFactory.CreateCombinationBasedOnType(combinationType);
+            BaseCombination combination = combinationFactory.GetCombinationBasedOnType(combinationType);
             if (combination == null) return null;
             
             Vector2 pos = GridUtility.GridPositionToWorldPosition(row, col);

@@ -1,16 +1,19 @@
 using System;
 using Cells;
 using Interfaces;
+using Managers;
 using Misc;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Combinations
 {
-    public abstract class Combination : MonoBehaviour , IPoolableObject
+    public abstract class BaseCombination : MonoBehaviour , IPoolableObject
     {
-        [SerializeField] protected SpriteRenderer visual;
         public event Action OnCombinationCompleted;
-        private CombinationType _combinationType;
+
+        [SerializeField] protected SpriteRenderer visual;
+        [SerializeField] private CombinationType combinationType;
         private CombinationAnimationHandler _animationHandler;
 
         public virtual void Awake()
@@ -28,21 +31,14 @@ namespace Combinations
         protected virtual void CompleteCombination()
         {
             OnCombinationCompleted?.Invoke();
-            _animationHandler.PlayEndAnimation(onComplete:DestroySelf);
+            _animationHandler.PlayEndAnimation(onComplete:OnReturnToPool);
         }
 
         public CombinationType GetCombinationType()
         {
-            return _combinationType;
+            return combinationType;
         }
-        public void SetCombinationType(CombinationType type)
-        {
-             _combinationType = type;
-        }
-        protected virtual void DestroySelf()
-        {
-            Destroy(gameObject);
-        }
+        
         public void StartCombination(int row, int col)
         {
             _animationHandler.PlayStartAnimation(() =>
@@ -55,12 +51,12 @@ namespace Combinations
 
         public virtual void OnSpawn()
         {
-            // throw new NotImplementedException();
+            
         }
 
         public virtual void OnReturnToPool()
         {
-            // throw new NotImplementedException();
+            EventManager.OnCombinationReturnToPool?.Invoke(this);
         }
     }
 }

@@ -8,9 +8,9 @@ using UnityEngine.Pool;
 
 namespace Factories.PieceFactories
 {
-    [CreateAssetMenu(fileName = "RocketPieceFactory", menuName = "Factories/RocketPieceFactory")]
+    [CreateAssetMenu(fileName = "RocketPieceFactory", menuName = "Factories/Piece/RocketPieceFactory")]
 
-    public class RocketBasePieceFactory : BasePieceFactory
+    public class RocketPieceFactory : BasePieceFactory
     {
         public override bool CanCreatePiece(PieceType pieceType)
         {

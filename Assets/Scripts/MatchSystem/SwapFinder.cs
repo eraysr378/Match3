@@ -23,13 +23,13 @@ namespace MatchSystem
             {
                 for (int col = 0; col < _grid.Width; col++)
                 {
-                    Piece currentPiece = _grid.GetCell(row, col).CurrentPiece;
+                    Piece currentPiece = _grid.GetCellAt(row, col).CurrentPiece;
                     if (currentPiece is not ISwappable) continue;
 
                     if (col + 1 < _grid.Width)
                     {
-                        Piece rightPiece = _grid.GetCell(row, col + 1).CurrentPiece;
-                        if (rightPiece is ISwappable && WillFormMatch(currentPiece, rightPiece))
+                        Piece rightPiece = _grid.GetCellAt(row, col + 1).CurrentPiece;
+                        if (rightPiece is ISwappable && _matchFinder.WouldSwapCauseMatch(currentPiece, rightPiece) )
                         {
                             pieces = (currentPiece, rightPiece);
                             return true;
@@ -38,8 +38,8 @@ namespace MatchSystem
 
                     if (row + 1 < _grid.Height)
                     {
-                        Piece belowPiece = _grid.GetCell(row + 1, col).CurrentPiece;
-                        if (belowPiece is ISwappable && WillFormMatch(currentPiece, belowPiece))
+                        Piece belowPiece = _grid.GetCellAt(row + 1, col).CurrentPiece;
+                        if (belowPiece is ISwappable && _matchFinder.WouldSwapCauseMatch(currentPiece, belowPiece))
                         {
                             pieces = (currentPiece, belowPiece);
                             return true;
@@ -48,28 +48,6 @@ namespace MatchSystem
                 }
             }
             return false;
-        }
-
-        private bool WillFormMatch(Piece pieceA, Piece pieceB)
-        {
-            if (pieceA is IActivatable || pieceB is IActivatable)
-                return true;
-
-            // Swap the pieces temporarily
-            EventManager.OnInstantSwapRequested?.Invoke(pieceA, pieceB);
-
-            // Check if swapping creates a match
-            bool matchFound = CanCreateMatch(pieceA) || CanCreateMatch(pieceB);
-
-            // Swap back to original position
-            EventManager.OnInstantSwapRequested?.Invoke(pieceA, pieceB);
-
-            return matchFound;
-        }
-
-        private bool CanCreateMatch(Piece piece)
-        {
-            return _matchFinder.TryGetMatch(piece, out _, out _);
         }
     }
 }

@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Cells;
-using Interfaces;
-using Managers;
-using Misc;
 using Pieces;
 using UnityEngine;
+using Utils;
 
 namespace MatchSystem
 {
@@ -14,83 +12,76 @@ namespace MatchSystem
                 
         public static event Action OnMatchHandlingStarted;
         public static event Action OnMatchHandlingCompleted;
-        private int _activeMatchLists = 0;
+        public bool IsHandlerActive {get; private set;} = false;
 
+        private int _activeProcessCount = 0;
+        private int _startedProcessCount = 0;
+        private int _totalProcessCount = 0;
+        private readonly List<MatchProcess> _processList = new();
+        private readonly List<CellDirtyTracker> _cellDirtyTrackerList = new ();
         public void HandleMatches(List<(List<Piece>, Piece)> matchLists)
         {
-            OnMatchHandlingStarted?.Invoke();
-            // Debug.Log("Match Handling Started");
-            _activeMatchLists = matchLists.Count;
-
+            if (!IsHandlerActive)
+            {
+                OnMatchHandlingStarted?.Invoke();
+                IsHandlerActive = true;
+            }
+            
             foreach (var (matchList, spawnPiece) in matchLists)
             {
-                HandleSingleMatch(matchList, spawnPiece);
+                CreateMatchProcess(matchList, spawnPiece);
+            }
+            foreach (var process in _processList)
+            {
+                process.Begin();
+            }
+            _processList.Clear();
+        }
+        
+        private void CreateMatchProcess(List<Piece> matchList, Piece spawnPiece)
+        {
+            var cellDirtyTracker = new CellDirtyTracker();
+            var process = new MatchProcess(matchList, spawnPiece,cellDirtyTracker);
+            process.OnAllMatchablesNotified += OnAllMatchablesNotified;
+            process.OnMatchProcessCompleted += OnMatchProcessCompleted;
+            _processList.Add(process);
+            _totalProcessCount++;
+            _activeProcessCount++;
+        }
+
+        private void OnAllMatchablesNotified()
+        {
+            _startedProcessCount++;
+        }
+
+        private void OnMatchProcessCompleted(CellDirtyTracker cellDirtyTracker)
+        {
+            _activeProcessCount--;
+            _cellDirtyTrackerList.Add(cellDirtyTracker);
+
+            if (_startedProcessCount == _totalProcessCount)
+            {
+                foreach (var tracker in _cellDirtyTrackerList)
+                {
+                    tracker.ClearAll();
+                }
+                _cellDirtyTrackerList.Clear();
+            }
+
+            if (_activeProcessCount == 0)
+            {
+                OnAllProcessesCompleted();
             }
         }
 
-        private void HandleSingleMatch(List<Piece> matchList, Piece spawnPiece)
+        private void OnAllProcessesCompleted()
         {
-            int remainingPieces = matchList.Count;
-            Cell spawnCell = spawnPiece.CurrentCell;
-
-            foreach (var piece in matchList)
-            {
-                if (piece is IMatchable matchable)
-                {
-                    matchable.OnMatchHandled += OnMatchHandled;
-
-                    if (matchList.Count == 3)
-                        matchable.OnNormalMatch();
-                    else if (matchList.Count > 3)
-                        matchable.OnSpecialMatch(spawnCell);
-                    else
-                        Debug.LogError($"Matchlist has less than 3 pieces");
-                }
-                else
-                {
-                    Debug.LogError($"Piece {piece.name} does not implement IMatchable!");
-                }
-            }
-
-            return;
-
-            void OnMatchHandled()
-            {
-                remainingPieces--;
-
-                if (remainingPieces == 0)
-                {
-                    switch (matchList.Count)
-                    {
-                        case > 5:
-                            RequestSpecialPieceSpawn(spawnCell, PieceType.RainbowPiece);
-                            break;
-                        // case > 4:
-                        //     RequestSpecialPieceSpawn(spawnCell, PieceType.RocketPiece);
-                        //     break;
-                        case > 3:
-                            RequestSpecialPieceSpawn(spawnCell, PieceType.BombPiece);
-                            break;
-                    }
-
-                    _activeMatchLists--;
-                    // Debug.Log($"remaining match lists: {_activeMatchLists}");
-                    if (_activeMatchLists == 0)
-                    {
-                        OnMatchHandlingCompleted?.Invoke();
-                        // Debug.Log("Match Handling end");
-
-                    }
-                }
-            }
-        }
-
-        private Piece RequestSpecialPieceSpawn(Cell cell,PieceType pieceType)
-        {
-            // Piece piece = EventManager.OnPieceSpawnRequested?.Invoke(PieceType.RocketPiece, cell.Row, cell.Col);
-            Piece piece = EventManager.OnPieceSpawnRequested?.Invoke(pieceType, cell.Row, cell.Col);
-            piece.SetCell(cell);
-            return piece;
+            // Debug.Log("Match Handling completed");
+            _startedProcessCount = 0;
+            _totalProcessCount = 0;
+            _processList.Clear();
+            IsHandlerActive = false;
+            OnMatchHandlingCompleted?.Invoke();
         }
     }
 }

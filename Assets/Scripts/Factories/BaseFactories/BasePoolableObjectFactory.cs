@@ -1,12 +1,10 @@
 using Interfaces;
-using Misc;
-using Pieces;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace Factories
+namespace Factories.BaseFactories
 {
-    public abstract class BasePoolFactory<T> : ScriptableObject where T : MonoBehaviour, IPoolableObject
+    public abstract class BasePoolableObjectFactory<T> : ScriptableObject where T : MonoBehaviour, IPoolableObject
     {
         [SerializeField] private T prefab;
         private ObjectPool<T> _pool;

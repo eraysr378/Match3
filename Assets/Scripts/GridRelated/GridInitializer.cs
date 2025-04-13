@@ -24,6 +24,7 @@ namespace GridRelated
         {
             Init();
             OnGridInitialized?.Invoke(propertiesSo.grid);
+            CreateGridPieces();
         }
 
         private void Init()
@@ -81,17 +82,34 @@ namespace GridRelated
                     {
                         CustomGridCell customCell = propertiesSo.customGridSo.customGrid.GetElement(row, col);
                         
-                        Piece createdPiece = EventManager.OnPieceSpawnRequested?.Invoke(customCell.pieceType,row, col);
-
                         Cell createdCell = EventManager.OnCellSpawnRequested?.Invoke(customCell.cellType, row, col);
                         
-                        createdCell.SetPiece(createdPiece);
-                        createdPiece?.Init(createdCell);
-                        propertiesSo.grid.SetCell(row, col, createdCell);
+                        propertiesSo.grid.SetCellAt(row, col, createdCell);
 
                     }
                 }
             }
         }
+
+        private void CreateGridPieces()
+        {
+            if (propertiesSo.customGridSo != null)
+            {
+                for (int row = 0; row < propertiesSo.height; row++)
+                {
+                    for (int col = 0; col < propertiesSo.width; col++)
+                    {
+                        CustomGridCell customCell = propertiesSo.customGridSo.customGrid.GetElement(row, col);
+                        
+                        Piece createdPiece = EventManager.OnPieceSpawnRequested?.Invoke(customCell.pieceType,row, col);
+                        Cell cell = propertiesSo.grid.GetCellAt(row, col);
+                        cell.SetPiece(createdPiece);
+                        createdPiece?.Init(cell);
+
+                    }
+                }
+            }
+        }
+        
     }
 }

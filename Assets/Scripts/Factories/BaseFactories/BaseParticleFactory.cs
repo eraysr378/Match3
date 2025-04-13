@@ -1,7 +1,12 @@
+using Misc;
+using ParticleEffects;
+using UnityEngine;
+
 namespace Factories.BaseFactories
 {
-    public class BaseParticleFactory
+    public abstract class BaseParticleFactory : BasePoolableObjectFactory<PoolableParticle>
     {
-        
+        public abstract bool CanCreateParticle(ParticleType particleType);
+
     }
 }

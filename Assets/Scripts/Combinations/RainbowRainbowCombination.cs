@@ -1,45 +1,73 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Cells;
 using Interfaces;
 using Managers;
 using Misc;
+using ParticleEffects;
 using Pieces;
 using UnityEngine;
-using Grid = GridRelated.Grid;
+using Utils;
+
 
 namespace Combinations
 {
-    public class RainbowRainbowCombination : Combination
+    public class RainbowRainbowCombination : BaseCombination
     {
-        private PieceType _targetType;
-        
+        private ParticleHandler _particleHandler;
+        private int _explosionCount;
+        private readonly CellDirtyTracker _dirtyTracker = new();
 
-        protected override void ExecuteEffect(int row, int col)
+        public override void Awake()
         {
-            _targetType = PieceType.SquareNormalPiece;
-            StartCoroutine(DestroyAllPieces());
+            base.Awake();
+            _particleHandler = GetComponent<ParticleHandler>();
         }
 
-        private IEnumerator DestroyAllPieces()
+        public override void OnSpawn()
         {
-            Grid grid = GridManager.Instance.Grid;
-            List<Piece> allPieces = grid.GetAllPieces().ToList();
-            // allPieces = allPieces.OrderBy(_ => UnityEngine.Random.value).ToList();
-            yield return new WaitForSeconds(1f);
+            visual.enabled = true;
+        }
 
-            foreach (var piece in allPieces)
+        protected override void ActivateCombination(int row, int col)
+        {
+            visual.enabled = false;
+            _particleHandler.Play(ParticleType.Activation);
+            DestroyAll(row, col);
+        }
+
+        private void DestroyAll(int row, int col)
+        {
+            List<Cell> allCells = GridManager.Instance.GetAllCells();
+            _dirtyTracker.Mark(allCells);
+            float delayPerDistance = 0.05f;
+            _explosionCount = allCells.Count;
+            foreach (var cell in allCells)
             {
-                if (piece != null && piece.gameObject.activeSelf &&
-                    piece.TryGetComponent<IExplodable>(out var explodable))
-                    explodable.Explode();
-
+                var piece = cell.CurrentPiece;
+                if (piece == null || !piece.gameObject.activeSelf ||
+                    !piece.TryGetComponent<IExplodable>(out var explodable))
+                {
+                    _explosionCount--;
+                }
+                else
+                {
+                    var distance = Mathf.Abs(piece.Row - row) + Mathf.Abs(piece.Col - col);
+                    StartCoroutine(ExplodeDelayed(explodable, distance * delayPerDistance));
+                }
             }
-            yield return new WaitForSeconds(0.2f);
-
-            CompleteCombination();
         }
 
+        private IEnumerator ExplodeDelayed(IExplodable explodable, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            explodable.TryExplode();
+            _explosionCount--;
+            if (_explosionCount == 0)
+            {
+                _dirtyTracker.ClearAll();
+                CompleteCombination();
+            }
+        }
     }
 }

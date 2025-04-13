@@ -9,7 +9,7 @@ namespace Interfaces
     {
         public event Action OnMatchHandled;
 
-        public void OnNormalMatch();
-        public void OnSpecialMatch(Cell spawnCell);
+        public bool TryHandleNormalMatch(Action onHandled);
+        public bool TryHandleSpecialMatch(Cell spawnCell,Action onHandled);
     }
 }

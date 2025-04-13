@@ -5,7 +5,7 @@ using Pieces.SpecialPieces;
 
 namespace Combinations
 {
-    public class RainbowRocketPieceCombination : RainbowSpecialPieceCombination<RocketPiece>
+    public class RainbowRocketCombination : BaseRainbowSpecialPieceCombination<RocketPiece>
     {
         protected override RocketPiece SpawnSpecialPiece(int row, int col)
         {

@@ -2,15 +2,15 @@ using Factories.BaseFactories;
 using Misc;
 using UnityEngine;
 
-namespace Factories.PieceFactories
+namespace Factories.ParticleFactories
 {
-    [CreateAssetMenu(fileName = "BombPieceFactory", menuName = "Factories/SquareExplodeParticleFactory")]
-
-    public class SquareExplodeParticleFactory : BasePieceFactory
+    [CreateAssetMenu(fileName = "SquareExplosionParticleFactory",
+        menuName = "Factories/Particle/SquareExplosionParticleFactory")]
+    public class SquareExplosionParticleFactory : BaseParticleFactory
     {
-        public override bool CanCreatePiece(PieceType pieceType)
+        public override bool CanCreateParticle(ParticleType particleType)
         {
-            return pieceType == PieceType.BombPiece;
+            return particleType == ParticleType.SquareExplosion;
         }
     }
 }

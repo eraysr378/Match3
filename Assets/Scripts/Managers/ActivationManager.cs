@@ -18,12 +18,10 @@ namespace Managers
         {
             EventManager.OnPieceActivated += OnPieceActivated;
         }
-
         private void OnDisable()
         {
             EventManager.OnPieceActivated -= OnPieceActivated;
         }
-
 
         private void OnPieceActivated(IActivatable activatable)
         {
@@ -48,17 +46,6 @@ namespace Managers
             {
                 OnActivationsCompleted?.Invoke();
             }
-        }
-
-        public bool TryActivatePiece(Piece piece)
-        {
-            if (piece is IActivatable activatable)
-            {
-                activatable.Activate();
-                return true;
-            }
-
-            return false;
         }
         
     }

@@ -4,12 +4,13 @@ using GridRelated;
 using Managers;
 using Misc;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Spawners
 {
     public class CellSpawner : MonoBehaviour
     {
-        [SerializeField] private GeneralCellFactory _cellFactory;
+        [SerializeField] private GeneralCellFactory cellFactory;
         [SerializeField] private Transform cellParent;
         public void OnEnable()
         {
@@ -24,7 +25,7 @@ namespace Spawners
  
         private Cell SpawnCell(CellType cellType, int row, int col)
         {
-            Cell cell = _cellFactory.CreateCellBasedOnType(cellType);
+            Cell cell = cellFactory.CreateCellBasedOnType(cellType);
             if (cell == null) return null;
             
             Vector2 pos = GridUtility.GridPositionToWorldPosition(row, col);

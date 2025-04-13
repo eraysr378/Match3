@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Factories.CellFactories
 {
-    [CreateAssetMenu(fileName = "DefaultCellFactory", menuName = "Factories/DefaultCellFactory")]
-    public class DefaultCellFactory : CellFactory
+    [CreateAssetMenu(fileName = "DefaultCellFactory", menuName = "Factories/Cell/DefaultCellFactory")]
+    public class DefaultCellFactory : BaseCellFactory
     {
         [SerializeField] private DefaultCell prefab;
 

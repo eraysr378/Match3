@@ -1,111 +1,131 @@
 using System;
 using System.Collections;
 using Cells;
+using Controllers;
 using Interfaces;
+using Managers;
 using ParticleEffects;
 using Pieces.Behaviors;
-using ScriptableObjects;
 using UnityEngine;
 
-namespace Pieces
+namespace Pieces.NormalPieces
 {
-    public class NormalPiece : InteractablePiece, ISwappable, IMatchable, IExplodable
+    [RequireComponent(typeof(Fillable))]
+    public abstract class NormalPiece : InteractablePiece, ISwappable, IMatchable, IExplodable, IRainbowHittable,
+        IColorProvider
     {
+        public event Action OnRainbowHitHandled;
         public event Action OnMatchHandled;
-
-        [SerializeField] private SpriteRenderer visual;
-        [SerializeField] private float specialMatchMergeDuration;
-        [SerializeField] private float destructionDelay;
-        [SerializeField] private NormalPieceSpritesSo spritesSo;
-        [SerializeField] private ParticleHandler particleHandler;
-
+        [SerializeField] private VisualController visualController;
+        private readonly float _specialMatchMergeDuration = 0.25f;
         private Movable _movable;
-        private bool _isExploded;
-        private Color _baseColor;
+        private Fillable _fillable;
+
 
         protected override void Awake()
         {
             base.Awake();
             _movable = GetComponent<Movable>();
-            _baseColor = visual.color;
+            _fillable = GetComponent<Fillable>();
         }
 
-        public override void Init(Vector3 position)
+        protected virtual void PlayParticleEffect()
         {
-            base.Init(position);
-            SetPieceAppearance();
+            Debug.LogWarning("No particle");
         }
-
-        public override void Init(Cell cell)
-        {
-            base.Init(cell);
-            SetPieceAppearance();
-        }
-
         public override void OnSpawn()
         {
             base.OnSpawn();
-            _isExploded = false;
-            visual.color = _baseColor;
+            _fillable.enabled = true;
+            visualController.ResetScale();
+            visualController.EnableVisual();
+
         }
 
-        private void SetPieceAppearance()
+        public bool TryExplode()
         {
-            (visual.sprite, visual.color) = spritesSo.GetAppearance(pieceType);
-        }
-
-        protected override IEnumerator DestroyAfter(float seconds)
-        {
+            if (isBeingDestroyed) return false;
+            isBeingDestroyed = true;
             SetCell(null);
-            yield return new WaitForSeconds(seconds);
-            particleHandler.Play(ParticleType.Explosion);
-            OnMatchHandled?.Invoke();
-            ReturnToPool();
+            visualController.DisableVisual();
+            PlayParticleEffect();
+            OnReturnToPool();
+            return true;
         }
-
-        public void Explode()
+     
+        public bool TryHandleRainbowHit(Action onHandled)
         {
-            if (_isExploded) return;
-            _isExploded = true;
-            HandleDestruction(Color.red, destructionDelay);
-        }
-
-        public void OnNormalMatch()
-        {
-            HandleDestruction(Color.red, destructionDelay);
-        }
-
-        public void OnSpecialMatch(Cell spawnCell)
-        {
-            _collider2D.enabled = false;
-            int multiplier = Mathf.Abs(spawnCell.Row - Row) + Mathf.Abs(spawnCell.Col - Col);
-            float duration = multiplier * specialMatchMergeDuration;
-            _movable.StartMoving(spawnCell.transform.position, duration,
-                onComplete: OnMoveComplete);
-        }
-
-        private void OnMoveComplete()
-        {
+            if (isBeingDestroyed) return false;
+            isBeingDestroyed = true;
             SetCell(null);
-            OnMatchHandled?.Invoke();
-            ReturnToPool();
+            OnRainbowHitHandled += onHandled;
+            visualController.Shrink(OnHitByRainbowHandled);
+            return true;
         }
 
-        private void HandleDestruction(Color color, float delay)
+        private void OnHitByRainbowHandled()
         {
-            _collider2D.enabled = false;
-            visual.color = color;
-            SetCell(null);
-            particleHandler.Play(ParticleType.Explosion);
-            OnMatchHandled?.Invoke();
-            ReturnToPool();
-            // StartCoroutine(DestroyAfter(delay));
+            CompleteDestruction(ref OnRainbowHitHandled);
         }
 
+        public bool TryHandleNormalMatch(Action onHandled)
+        {
+            if (isBeingDestroyed) return false;
+            isBeingDestroyed = true;
+            SetCell(null);
+            OnMatchHandled += onHandled;
+            visualController.Shrink(OnNormalMatchHandled);
+            return true;
+        }
 
+        private void OnNormalMatchHandled()
+        {
+            CompleteDestruction(ref OnMatchHandled);
+        }
+
+        private void CompleteDestruction(ref Action destructionEvent)
+        {
+            visualController.DisableVisual();
+
+            destructionEvent?.Invoke();
+            destructionEvent = null; // cleanup
+            PlayParticleEffect();
+            OnReturnToPool();
+        }
+
+        public bool TryHandleSpecialMatch(Cell spawnCell, Action onHandled)
+        {
+            if (isBeingDestroyed) return false;
+            isBeingDestroyed = true;
+            _fillable.enabled = false;
+            SetCell(null);
+            OnMatchHandled += onHandled;
+
+            _movable.StartMovingWithDuration(spawnCell.transform.position, _specialMatchMergeDuration,
+                onComplete: HandleMoveComplete);
+
+            return true;
+        }
+
+        private void HandleMoveComplete()
+        {
+            OnMatchHandled?.Invoke();
+            OnReturnToPool();
+        }
+        
         public void OnSwap(Piece otherPiece)
         {
-            // Dont do anything for now
+            EventManager.OnMatchCheckRequested?.Invoke(this);
+        }
+
+        public void OnPostSwap(Piece otherPiece)
+        {
+            // dont need anything
+        }
+
+        public Color GetColor()
+        {
+            return visualController.GetColor();
         }
     }
 }

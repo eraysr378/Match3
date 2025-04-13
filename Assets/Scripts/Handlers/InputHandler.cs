@@ -16,7 +16,12 @@ namespace Handlers
                 return;
             }
 
-            EventManager.OnSwapRequested?.Invoke(piece1, piece2);
+            if (piece1 is ISwappable && piece2 is ISwappable)
+            {
+                Debug.Log($"SWAP requested {piece1.name} {piece2.name}");
+                EventManager.OnSwapRequested?.Invoke(piece1, piece2);
+                return;
+            }
         }
 
         public abstract void Enable();

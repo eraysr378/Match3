@@ -1,6 +1,6 @@
 using Interfaces;
 using Managers;
-using OperationTrackers;
+using OperationBlockTrackers;
 using Pieces;
 using UnityEngine;
 
@@ -9,11 +9,11 @@ namespace Handlers
     public class UserInputHandler : InputHandler
     {
         private Piece _selectedPiece;
-        private UserInputTracker _userInputTracker;
+        private UserInputBlockTracker _userInputBlockTracker;
 
         private void Awake()
         {
-            _userInputTracker = GetComponent<UserInputTracker>();
+            _userInputBlockTracker = GetComponent<UserInputBlockTracker>();
         }
 
         private void OnEnable()
@@ -28,7 +28,7 @@ namespace Handlers
 
         private void OnAnyPointerEnterCellEvent(Piece secondPiece)
         {
-            if (_userInputTracker.HasActiveOperations())
+            if (_userInputBlockTracker.HasActiveOperations())
             {
                 _selectedPiece = null;
                 return;
@@ -50,7 +50,7 @@ namespace Handlers
 
         private void OnAnyPointerUpCellEvent(Piece piece)
         {
-            if (_userInputTracker.HasActiveOperations())
+            if (_userInputBlockTracker.HasActiveOperations())
             {
                 _selectedPiece = null;
                 return;
@@ -69,7 +69,7 @@ namespace Handlers
 
         private void OnAnyPointerDownCellEvent(Piece piece)
         {
-            if (_userInputTracker.HasActiveOperations())
+            if (_userInputBlockTracker.HasActiveOperations())
             {
                 _selectedPiece = null;
                 return;

@@ -26,9 +26,9 @@ namespace Utils
 
             _completedCount = 0;
 
-            movableFirst.StartMoving(second.transform.position, _swapDuration,
+            movableFirst.StartMovingWithDuration(second.transform.position, _swapDuration,
                 onComplete: () => OnMoveFinished(first, second));
-            movableSecond.StartMoving(first.transform.position, _swapDuration,
+            movableSecond.StartMovingWithDuration(first.transform.position, _swapDuration,
                 onComplete: () => OnMoveFinished(first, second));
         }
 
