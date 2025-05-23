@@ -58,10 +58,7 @@ namespace MatchSystem
                     {
                         Debug.LogError("TryHandleSpecialMatch failed");
                     }
-                }    
-                
-                
-                    
+                }   
             }
             OnAllMatchablesNotified?.Invoke();
         }
@@ -70,9 +67,7 @@ namespace MatchSystem
         {
             _remainingPieces--;
             if (_remainingPieces != 0) return;
-
             SpawnCorrespondingPiece(_matchList.Count, _spawnCell);
-           
             OnMatchProcessCompleted?.Invoke(_cellDirtyTracker);
         }
 

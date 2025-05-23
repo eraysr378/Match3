@@ -71,8 +71,7 @@ namespace Combinations
             _projectileCount--;
             if (_projectileCount == 0)
             {
-                ActivateAllSpecialPieces();
-                CompleteCombination();
+                Invoke(nameof(ActivateAllSpecialPieces),1f);
             }
         }
 
@@ -82,8 +81,10 @@ namespace Combinations
         {
             foreach (var piece in _spawnedSpecialPieces)
             {
-                (piece as IActivatable)?.Activate();
+                (piece as IActivatable)?.TryActivate();
             }
+            CompleteCombination();
+
         }
 
         public override void OnSpawn()

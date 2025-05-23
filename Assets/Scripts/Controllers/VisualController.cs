@@ -29,7 +29,7 @@ namespace Controllers
         }
         public void Shrink(Action onComplete = null)
         {
-            _resizer.Resize(visual.transform,Vector3.zero, shrinkDuration, onComplete);
+            // _resizer.Resize(visual.transform,Vector3.zero, shrinkDuration, onComplete);
         }
 
         
@@ -37,10 +37,6 @@ namespace Controllers
         {
             visual.transform.localScale = Vector3.one;
         }
-
-        public void PlayBounce()
-        {
-        }
-
+        
     }
 }

@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c93e66d1bea2414c97f505348fa1c388, type: 3}
+  m_Name: DisabledCellFactory
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 8915918996727741980, guid: f85a33e262c59b844aa48af4607833c6, type: 3}

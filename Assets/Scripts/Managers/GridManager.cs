@@ -4,6 +4,7 @@ using GridRelated;
 using Interfaces;
 using Misc;
 using Pieces;
+using TileRelated;
 using UnityEngine;
 using Grid = GridRelated.Grid;
 
@@ -28,12 +29,12 @@ namespace Managers
         }
         private void OnEnable()
         {
-            GridInitializer.OnGridInitialized += OnGridInitialized;
+            TilemapLoader.OnCellsCreated += OnGridInitialized;
         }
 
         private void OnDisable()
         {
-            GridInitializer.OnGridInitialized -= OnGridInitialized;
+            TilemapLoader.OnCellsCreated -= OnGridInitialized;
         }
 
         private void OnGridInitialized(Grid grid)
@@ -220,7 +221,34 @@ namespace Managers
 
             return piecesOfType;
         }
- 
+        public List<Piece> GetPiecesInRow(int row)
+        {
+            List<Piece> piecesInRow = new List<Piece>();
+            for (int col = 0; col < _grid.Width; col++)
+            {
+                Piece piece = _grid.GetCellAt(row, col)?.CurrentPiece;
+                if (piece != null)
+                {
+                    piecesInRow.Add(piece);
+                }
+            }
+
+            return piecesInRow;
+        }
+        public bool AreAllCellsFilled()
+        {
+            for (int row = 0; row < _grid.Height; row++)
+            {
+                for (int col = 0; col < _grid.Width; col++)
+                {
+                    if (_grid.GetCellAt(row, col) == null)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
         
     }
 }

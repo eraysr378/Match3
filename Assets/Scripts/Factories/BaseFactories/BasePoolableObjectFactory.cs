@@ -8,13 +8,13 @@ namespace Factories.BaseFactories
     {
         [SerializeField] private T prefab;
         private ObjectPool<T> _pool;
-
+        
         public T Get()
         {
             // at first call pool will be created
-            if (_pool == null)
+            if (_pool == null )
             {
-                Debug.Log("Pool Created ");
+                // Debug.Log("Pool Created ");
                 _pool = new ObjectPool<T>(createFunc: Create,
                     actionOnGet: OnGetFromPool);
             }
@@ -38,6 +38,11 @@ namespace Factories.BaseFactories
         {
             T obj = Instantiate(prefab);
             return obj;
+        }
+        // Because this is a scriptable object, the pool will not be destroyed between scene changes
+        public void ResetPool()
+        {
+            _pool = null;
         }
     }
 }

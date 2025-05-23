@@ -20,6 +20,10 @@ namespace Factories.GeneralFactories
         private void OnDisable()
         {
             EventManager.OnParticleReturnToPool -= ReturnToPool;
+            foreach (var factory in particleFactoryList)
+            {
+                factory.ResetPool();
+            }
         }
 
         public PoolableParticle GetParticleBasedOnType(ParticleType particleType)

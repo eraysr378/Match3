@@ -6,7 +6,7 @@ namespace OperationBlockTrackers
     public abstract class OperationBlockTracker : MonoBehaviour
     {
         public event Action OnAllOperationsCompleted;
-        private int _activeOperations = 0;
+        [SerializeField]private int _activeOperations = 0;
         
         protected virtual void OnEnable()
         {

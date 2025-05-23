@@ -4,6 +4,7 @@ using Cells;
 using Interfaces;
 using Managers;
 using Misc;
+using Pieces.Behaviors;
 using Processes;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -11,24 +12,54 @@ using VisualEffects;
 
 namespace Pieces.SpecialPieces
 {
-    public class RainbowPiece : InteractablePiece, IActivatable, ISwappable, IExplodable, ICombinable
+    public class RainbowPiece : Piece, IActivatable, IExplodable, ICombinable
     {
         public event Action<IActivatable> OnActivationCompleted;
-        [FormerlySerializedAs("pieceLineRendererPrefab")] [SerializeField] private RainbowPieceLineRenderer rainbowPieceLineRendererPrefab;
+        
+        [SerializeField] private RainbowPieceLineRenderer rainbowPieceLineRendererPrefab;
         [SerializeField] private Transform radiusReferenceTransform;
         [SerializeField] private float destroyDuration;
         [SerializeField] private float timeBetweenDestroys;
         private PieceAnimationHandler _animationHandler;
         private PieceType _targetType;
         private float _radius;
+        private SwapHandler _swapHandler;
+        private FillHandler _fillHandler;
 
-
-        protected override void Awake()
+        protected  void Awake()
         {
-            base.Awake();
             _targetType = PieceTypeHelper.GetRandomNormalPieceType();
 
             _animationHandler = GetComponent<PieceAnimationHandler>();
+            _swapHandler = GetComponent<SwapHandler>();
+            _fillHandler = GetComponent<FillHandler>();
+            _swapHandler.OnSwapStarted += SwapHandler_OnSwapStarted;
+            _swapHandler.OnSwapCompleted += SwapHandler_OnSwapCompleted;
+            _fillHandler.OnFillStarted += FillHandler_OnFillStarted;
+            _fillHandler.OnFillCompleted += FillHandler_OnFillCompleted;
+        }
+
+        private void FillHandler_OnFillCompleted()
+        {
+            ClearOperation();
+        }
+
+        private void FillHandler_OnFillStarted()
+        {
+            SetOperation(PieceOperation.Filling);
+        }
+
+        private void SwapHandler_OnSwapCompleted(Piece otherPiece)
+        {
+            _targetType = otherPiece.GetPieceType();
+            TryActivate();
+            SetOperation(PieceOperation.Activating);
+
+        }
+
+        private void SwapHandler_OnSwapStarted()
+        {
+            SetOperation(PieceOperation.Swapping);
         }
 
         private void Start()
@@ -36,15 +67,17 @@ namespace Pieces.SpecialPieces
             _radius = Vector2.Distance(radiusReferenceTransform.position, transform.position);
         }
 
-        public void Activate()
+        public bool TryActivate()
         {
-            if (isBeingDestroyed) return;
+            if (isBeingDestroyed) return false;
             isBeingDestroyed = true;
+            SetOperation(PieceOperation.Activating);
 
             CurrentCell.MarkDirty();
             EventManager.OnPieceActivated?.Invoke(this);
             _animationHandler.PlayActivateAnimation(null);
             StartCoroutine(DestroyTargetPieces(_targetType));
+            return true;
         }
 
         public bool TryExplode()
@@ -52,19 +85,10 @@ namespace Pieces.SpecialPieces
             if (isBeingDestroyed)
                 return false;
 
-            Activate();
+            TryActivate();
             return true;
         }
 
-        public void OnSwap(Piece otherPiece)
-        {
-        }
-
-        public void OnPostSwap(Piece otherPiece)
-        {
-            _targetType = otherPiece.GetPieceType();
-            Activate();
-        }
 
         private IEnumerator DestroyTargetPieces(PieceType targetType)
         {
@@ -118,6 +142,7 @@ namespace Pieces.SpecialPieces
 
             _targetType = PieceTypeHelper.GetRandomNormalPieceType();
         }
+
 
         public void OnCombined(Piece piece)
         {

@@ -7,41 +7,42 @@ namespace Managers
 {
     public class FillManager : MonoBehaviour
     {
-        public static event Action OnFillStarted;
+        
         public static event Action OnAllFillsCompleted;
         public int _activeFills = 0;
-        public List<Fillable> fillables = new List<Fillable>();
+        public List<FillHandler> fillables = new List<FillHandler>();
 
         private void OnEnable()
         {
-            Fillable.OnFillStarted += HandleFillStarted;
-            Fillable.OnFillCompleted += HandleFillCompleted;
+            FillHandler.OnAnyFillStarted += HandleAnyFillStarted;
+            FillHandler.OnAnyFillCompleted += HandleAnyFillCompleted;
         }
-
+        
         private void OnDisable()
         {
-            Fillable.OnFillStarted -= HandleFillStarted;
-            Fillable.OnFillCompleted -= HandleFillCompleted;
+            FillHandler.OnAnyFillStarted -= HandleAnyFillStarted;
+            FillHandler.OnAnyFillCompleted -= HandleAnyFillCompleted;
         }
 
-        private void HandleFillStarted(Fillable fillable)
+        private void HandleAnyFillStarted(FillHandler fillHandler)
         {
-            fillables.Add(fillable);
-            if (_activeFills == 0)
-            {
-                OnFillStarted?.Invoke();
-            }
+            fillables.Add(fillHandler);
             _activeFills++;
         }
 
-        private void HandleFillCompleted(Fillable fillable)
+        private void HandleAnyFillCompleted(FillHandler fillHandler)
         {
-            fillables.Remove(fillable);
+            fillables.Remove(fillHandler);
             _activeFills--;
             if (_activeFills == 0)
             {
                 OnAllFillsCompleted?.Invoke();
             }
+        }
+
+        public bool IsBusy()
+        {
+            return _activeFills > 0;
         }
         
     }

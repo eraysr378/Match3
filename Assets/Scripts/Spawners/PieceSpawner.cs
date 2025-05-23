@@ -19,26 +19,31 @@ namespace Spawners
         public void OnEnable()
         {
             EventManager.OnPieceSpawnRequested += SpawnPiece;
-            EventManager.OnRandomNormalPieceSpawnRequested += SpawnRandomNormalPiece;
+            EventManager.OnFallingPieceSpawnRequested += SpawnRandomNormalPiece;
         }
 
         private void OnDisable()
         {
             EventManager.OnPieceSpawnRequested -= SpawnPiece;
-            EventManager.OnRandomNormalPieceSpawnRequested -= SpawnRandomNormalPiece;
+            EventManager.OnFallingPieceSpawnRequested -= SpawnRandomNormalPiece;
         }
   
-        private Piece SpawnPiece(PieceType pieceType, int row, int col)
+        private Piece SpawnPiece(PieceType pieceType, int row,int col)
         {
             Piece piece = pieceFactory.GetPieceBasedOnType(pieceType);
+            // Cell cell = GridManager.Instance.GetCellAt(row, col);
+            // piece?.Init(cell.transform.position);
+            // return piece;
+            Cell cell = GridManager.Instance.GetCellAt(0, 0);
+            Vector3 spawnPos = cell.transform.position + new Vector3(col,row,0);
+            piece?.Init(spawnPos);
+            return piece;
+        }
 
-            Vector2 pos = GridUtility.GridPositionToWorldPosition(row, col);
-            Cell referenceCell = GridManager.Instance.GetCellAt(0, 0); // just to make sure piece is resized
-            if (referenceCell != null)
-            {
-                piece?.transform.SetParent(referenceCell.transform);
-            }
-            piece?.Init(pos);
+        private Piece SpawnPieceAtPosition(PieceType pieceType,int row,int col ,Vector3 pos)
+        {
+            Piece piece = pieceFactory.GetPieceBasedOnType(pieceType);
+            piece?.Init(new Vector3(pos.x, pos.y, pos.z));
             return piece;
         }
 
@@ -48,8 +53,9 @@ namespace Spawners
             var random = new Random();
             NormalPieceType randomNormalPiece = (NormalPieceType)values.GetValue(random.Next(values.Length));
             PieceType randomPieceType = (PieceType)randomNormalPiece;
-
-            return SpawnPiece(randomPieceType, row, col);
+            Cell cell = GridManager.Instance.GetCellAt(row, col);
+            Vector3 spawnPos = cell.transform.position + Vector3.up;
+            return SpawnPieceAtPosition(randomPieceType, row, col, spawnPos);
         }
     }
 }

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 254bb370d8134574b95f3752bfe8cf02, type: 3}
+  m_Name: Level5
+  m_EditorClassIdentifier: 
+  totalMoveCount: 15
+  goalConfigs:
+  - goalPrefab: {fileID: 3980093929308990091, guid: 2d4e27fa604f8174798bea9cd02592c7, type: 3}
+    goalCount: 5
+  - goalPrefab: {fileID: 4415879714764313847, guid: ae7d29688fc25824b8aba7c6d763c37c, type: 3}
+    goalCount: 13
+  - goalPrefab: {fileID: 1412823919077789676, guid: 9e7a05ac0c1e6e64ca2f3614722fde2c, type: 3}
+    goalCount: 5
+  gridDataSo: {fileID: 11400000, guid: e76f00454a0bd164e9f37838cd460aae, type: 2}
+  levelName: level5

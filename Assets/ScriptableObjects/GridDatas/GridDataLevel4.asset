@@ -1,0 +1,821 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8781e11409af4eb2a219db3b9ba75fc8, type: 3}
+  m_Name: GridDataLevel4
+  m_EditorClassIdentifier: 
+  rows: 11
+  columns: 12
+  tilemapOrigin: {x: -6, y: -7}
+  bounds:
+    m_Position: {x: -6, y: -7, z: 0}
+    m_Size: {x: 12, y: 11, z: 1}
+  borderTileDataArray:
+  - row: 4
+    column: 0
+    borderTile: {fileID: 11400000, guid: 8d35356230284f4448e4833a31e6a4b3, type: 2}
+  - row: 5
+    column: 0
+    borderTile: {fileID: 11400000, guid: eb5e7993b429dcb4eb53c18bbda95631, type: 2}
+  - row: 6
+    column: 0
+    borderTile: {fileID: 11400000, guid: 2b4e7baf2e9a0064787d6b85543554be, type: 2}
+  - row: 3
+    column: 1
+    borderTile: {fileID: 11400000, guid: 8d35356230284f4448e4833a31e6a4b3, type: 2}
+  - row: 4
+    column: 1
+    borderTile: {fileID: 11400000, guid: 1e35aa2d31ae2eb4d85bcb916728e20a, type: 2}
+  - row: 6
+    column: 1
+    borderTile: {fileID: 11400000, guid: afc5ecd742923074fb171f87b402152d, type: 2}
+  - row: 7
+    column: 1
+    borderTile: {fileID: 11400000, guid: 2b4e7baf2e9a0064787d6b85543554be, type: 2}
+  - row: 2
+    column: 2
+    borderTile: {fileID: 11400000, guid: 8d35356230284f4448e4833a31e6a4b3, type: 2}
+  - row: 3
+    column: 2
+    borderTile: {fileID: 11400000, guid: 1e35aa2d31ae2eb4d85bcb916728e20a, type: 2}
+  - row: 7
+    column: 2
+    borderTile: {fileID: 11400000, guid: afc5ecd742923074fb171f87b402152d, type: 2}
+  - row: 8
+    column: 2
+    borderTile: {fileID: 11400000, guid: 2b4e7baf2e9a0064787d6b85543554be, type: 2}
+  - row: 1
+    column: 3
+    borderTile: {fileID: 11400000, guid: 8d35356230284f4448e4833a31e6a4b3, type: 2}
+  - row: 2
+    column: 3
+    borderTile: {fileID: 11400000, guid: 1e35aa2d31ae2eb4d85bcb916728e20a, type: 2}
+  - row: 8
+    column: 3
+    borderTile: {fileID: 11400000, guid: afc5ecd742923074fb171f87b402152d, type: 2}
+  - row: 9
+    column: 3
+    borderTile: {fileID: 11400000, guid: 2b4e7baf2e9a0064787d6b85543554be, type: 2}
+  - row: 0
+    column: 4
+    borderTile: {fileID: 11400000, guid: 8d35356230284f4448e4833a31e6a4b3, type: 2}
+  - row: 1
+    column: 4
+    borderTile: {fileID: 11400000, guid: 1e35aa2d31ae2eb4d85bcb916728e20a, type: 2}
+  - row: 9
+    column: 4
+    borderTile: {fileID: 11400000, guid: afc5ecd742923074fb171f87b402152d, type: 2}
+  - row: 10
+    column: 4
+    borderTile: {fileID: 11400000, guid: 2b4e7baf2e9a0064787d6b85543554be, type: 2}
+  - row: 0
+    column: 5
+    borderTile: {fileID: 11400000, guid: 388cdf2faf3f5ef4b9a944516d5f1350, type: 2}
+  - row: 10
+    column: 5
+    borderTile: {fileID: 11400000, guid: 6bd339258bdf6ec45969379e4c7cfc4f, type: 2}
+  - row: 0
+    column: 6
+    borderTile: {fileID: 11400000, guid: 388cdf2faf3f5ef4b9a944516d5f1350, type: 2}
+  - row: 10
+    column: 6
+    borderTile: {fileID: 11400000, guid: 6bd339258bdf6ec45969379e4c7cfc4f, type: 2}
+  - row: 0
+    column: 7
+    borderTile: {fileID: 11400000, guid: ac1a153b6f08d214981a44454213287d, type: 2}
+  - row: 1
+    column: 7
+    borderTile: {fileID: 11400000, guid: 362ea3fbc5521c147b73fbfc88599e08, type: 2}
+  - row: 9
+    column: 7
+    borderTile: {fileID: 11400000, guid: 240840fab8fb04847af844cd2156f675, type: 2}
+  - row: 10
+    column: 7
+    borderTile: {fileID: 11400000, guid: 71e5daae0d8bbf4418c321615477805e, type: 2}
+  - row: 1
+    column: 8
+    borderTile: {fileID: 11400000, guid: ac1a153b6f08d214981a44454213287d, type: 2}
+  - row: 2
+    column: 8
+    borderTile: {fileID: 11400000, guid: 362ea3fbc5521c147b73fbfc88599e08, type: 2}
+  - row: 8
+    column: 8
+    borderTile: {fileID: 11400000, guid: 240840fab8fb04847af844cd2156f675, type: 2}
+  - row: 9
+    column: 8
+    borderTile: {fileID: 11400000, guid: 71e5daae0d8bbf4418c321615477805e, type: 2}
+  - row: 2
+    column: 9
+    borderTile: {fileID: 11400000, guid: ac1a153b6f08d214981a44454213287d, type: 2}
+  - row: 3
+    column: 9
+    borderTile: {fileID: 11400000, guid: 362ea3fbc5521c147b73fbfc88599e08, type: 2}
+  - row: 7
+    column: 9
+    borderTile: {fileID: 11400000, guid: 240840fab8fb04847af844cd2156f675, type: 2}
+  - row: 8
+    column: 9
+    borderTile: {fileID: 11400000, guid: 71e5daae0d8bbf4418c321615477805e, type: 2}
+  - row: 3
+    column: 10
+    borderTile: {fileID: 11400000, guid: ac1a153b6f08d214981a44454213287d, type: 2}
+  - row: 4
+    column: 10
+    borderTile: {fileID: 11400000, guid: 362ea3fbc5521c147b73fbfc88599e08, type: 2}
+  - row: 6
+    column: 10
+    borderTile: {fileID: 11400000, guid: 240840fab8fb04847af844cd2156f675, type: 2}
+  - row: 7
+    column: 10
+    borderTile: {fileID: 11400000, guid: 71e5daae0d8bbf4418c321615477805e, type: 2}
+  - row: 4
+    column: 11
+    borderTile: {fileID: 11400000, guid: ac1a153b6f08d214981a44454213287d, type: 2}
+  - row: 5
+    column: 11
+    borderTile: {fileID: 11400000, guid: 3e431ee5d6e3fac4cbe4bec455edbddd, type: 2}
+  - row: 6
+    column: 11
+    borderTile: {fileID: 11400000, guid: 71e5daae0d8bbf4418c321615477805e, type: 2}
+  cellDataArray:
+  - row: 0
+    column: 0
+    cellType: 2
+  - row: 1
+    column: 0
+    cellType: 2
+  - row: 2
+    column: 0
+    cellType: 2
+  - row: 3
+    column: 0
+    cellType: 2
+  - row: 4
+    column: 0
+    cellType: 0
+  - row: 5
+    column: 0
+    cellType: 0
+  - row: 6
+    column: 0
+    cellType: 0
+  - row: 7
+    column: 0
+    cellType: 2
+  - row: 8
+    column: 0
+    cellType: 2
+  - row: 9
+    column: 0
+    cellType: 2
+  - row: 10
+    column: 0
+    cellType: 2
+  - row: 0
+    column: 1
+    cellType: 2
+  - row: 1
+    column: 1
+    cellType: 2
+  - row: 2
+    column: 1
+    cellType: 2
+  - row: 3
+    column: 1
+    cellType: 0
+  - row: 4
+    column: 1
+    cellType: 0
+  - row: 5
+    column: 1
+    cellType: 0
+  - row: 6
+    column: 1
+    cellType: 0
+  - row: 7
+    column: 1
+    cellType: 0
+  - row: 8
+    column: 1
+    cellType: 2
+  - row: 9
+    column: 1
+    cellType: 2
+  - row: 10
+    column: 1
+    cellType: 2
+  - row: 0
+    column: 2
+    cellType: 2
+  - row: 1
+    column: 2
+    cellType: 2
+  - row: 2
+    column: 2
+    cellType: 0
+  - row: 3
+    column: 2
+    cellType: 0
+  - row: 4
+    column: 2
+    cellType: 0
+  - row: 5
+    column: 2
+    cellType: 0
+  - row: 6
+    column: 2
+    cellType: 0
+  - row: 7
+    column: 2
+    cellType: 0
+  - row: 8
+    column: 2
+    cellType: 0
+  - row: 9
+    column: 2
+    cellType: 2
+  - row: 10
+    column: 2
+    cellType: 2
+  - row: 0
+    column: 3
+    cellType: 2
+  - row: 1
+    column: 3
+    cellType: 0
+  - row: 2
+    column: 3
+    cellType: 0
+  - row: 3
+    column: 3
+    cellType: 0
+  - row: 4
+    column: 3
+    cellType: 0
+  - row: 5
+    column: 3
+    cellType: 0
+  - row: 6
+    column: 3
+    cellType: 0
+  - row: 7
+    column: 3
+    cellType: 0
+  - row: 8
+    column: 3
+    cellType: 0
+  - row: 9
+    column: 3
+    cellType: 0
+  - row: 10
+    column: 3
+    cellType: 2
+  - row: 0
+    column: 4
+    cellType: 0
+  - row: 1
+    column: 4
+    cellType: 0
+  - row: 2
+    column: 4
+    cellType: 1
+  - row: 3
+    column: 4
+    cellType: 1
+  - row: 4
+    column: 4
+    cellType: 1
+  - row: 5
+    column: 4
+    cellType: 1
+  - row: 6
+    column: 4
+    cellType: 1
+  - row: 7
+    column: 4
+    cellType: 1
+  - row: 8
+    column: 4
+    cellType: 1
+  - row: 9
+    column: 4
+    cellType: 0
+  - row: 10
+    column: 4
+    cellType: 0
+  - row: 0
+    column: 5
+    cellType: 0
+  - row: 1
+    column: 5
+    cellType: 0
+  - row: 2
+    column: 5
+    cellType: 1
+  - row: 3
+    column: 5
+    cellType: 0
+  - row: 4
+    column: 5
+    cellType: 0
+  - row: 5
+    column: 5
+    cellType: 0
+  - row: 6
+    column: 5
+    cellType: 0
+  - row: 7
+    column: 5
+    cellType: 0
+  - row: 8
+    column: 5
+    cellType: 1
+  - row: 9
+    column: 5
+    cellType: 0
+  - row: 10
+    column: 5
+    cellType: 0
+  - row: 0
+    column: 6
+    cellType: 0
+  - row: 1
+    column: 6
+    cellType: 0
+  - row: 2
+    column: 6
+    cellType: 1
+  - row: 3
+    column: 6
+    cellType: 0
+  - row: 4
+    column: 6
+    cellType: 0
+  - row: 5
+    column: 6
+    cellType: 0
+  - row: 6
+    column: 6
+    cellType: 0
+  - row: 7
+    column: 6
+    cellType: 0
+  - row: 8
+    column: 6
+    cellType: 1
+  - row: 9
+    column: 6
+    cellType: 0
+  - row: 10
+    column: 6
+    cellType: 0
+  - row: 0
+    column: 7
+    cellType: 0
+  - row: 1
+    column: 7
+    cellType: 0
+  - row: 2
+    column: 7
+    cellType: 1
+  - row: 3
+    column: 7
+    cellType: 0
+  - row: 4
+    column: 7
+    cellType: 0
+  - row: 5
+    column: 7
+    cellType: 0
+  - row: 6
+    column: 7
+    cellType: 0
+  - row: 7
+    column: 7
+    cellType: 0
+  - row: 8
+    column: 7
+    cellType: 1
+  - row: 9
+    column: 7
+    cellType: 0
+  - row: 10
+    column: 7
+    cellType: 0
+  - row: 0
+    column: 8
+    cellType: 2
+  - row: 1
+    column: 8
+    cellType: 0
+  - row: 2
+    column: 8
+    cellType: 1
+  - row: 3
+    column: 8
+    cellType: 1
+  - row: 4
+    column: 8
+    cellType: 1
+  - row: 5
+    column: 8
+    cellType: 1
+  - row: 6
+    column: 8
+    cellType: 1
+  - row: 7
+    column: 8
+    cellType: 1
+  - row: 8
+    column: 8
+    cellType: 1
+  - row: 9
+    column: 8
+    cellType: 0
+  - row: 10
+    column: 8
+    cellType: 2
+  - row: 0
+    column: 9
+    cellType: 2
+  - row: 1
+    column: 9
+    cellType: 2
+  - row: 2
+    column: 9
+    cellType: 1
+  - row: 3
+    column: 9
+    cellType: 1
+  - row: 4
+    column: 9
+    cellType: 0
+  - row: 5
+    column: 9
+    cellType: 0
+  - row: 6
+    column: 9
+    cellType: 0
+  - row: 7
+    column: 9
+    cellType: 0
+  - row: 8
+    column: 9
+    cellType: 0
+  - row: 9
+    column: 9
+    cellType: 2
+  - row: 10
+    column: 9
+    cellType: 2
+  - row: 0
+    column: 10
+    cellType: 2
+  - row: 1
+    column: 10
+    cellType: 2
+  - row: 2
+    column: 10
+    cellType: 2
+  - row: 3
+    column: 10
+    cellType: 0
+  - row: 4
+    column: 10
+    cellType: 0
+  - row: 5
+    column: 10
+    cellType: 0
+  - row: 6
+    column: 10
+    cellType: 0
+  - row: 7
+    column: 10
+    cellType: 0
+  - row: 8
+    column: 10
+    cellType: 2
+  - row: 9
+    column: 10
+    cellType: 2
+  - row: 10
+    column: 10
+    cellType: 2
+  - row: 0
+    column: 11
+    cellType: 2
+  - row: 1
+    column: 11
+    cellType: 2
+  - row: 2
+    column: 11
+    cellType: 2
+  - row: 3
+    column: 11
+    cellType: 2
+  - row: 4
+    column: 11
+    cellType: 0
+  - row: 5
+    column: 11
+    cellType: 0
+  - row: 6
+    column: 11
+    cellType: 0
+  - row: 7
+    column: 11
+    cellType: 2
+  - row: 8
+    column: 11
+    cellType: 2
+  - row: 9
+    column: 11
+    cellType: 2
+  - row: 10
+    column: 11
+    cellType: 2
+  pieceDataArray:
+  - row: 4
+    column: 0
+    pieceType: 100
+  - row: 5
+    column: 0
+    pieceType: 100
+  - row: 6
+    column: 0
+    pieceType: 102
+  - row: 3
+    column: 1
+    pieceType: 100
+  - row: 4
+    column: 1
+    pieceType: 102
+  - row: 5
+    column: 1
+    pieceType: 102
+  - row: 6
+    column: 1
+    pieceType: 100
+  - row: 7
+    column: 1
+    pieceType: 100
+  - row: 2
+    column: 2
+    pieceType: 100
+  - row: 3
+    column: 2
+    pieceType: 101
+  - row: 4
+    column: 2
+    pieceType: 100
+  - row: 5
+    column: 2
+    pieceType: 103
+  - row: 6
+    column: 2
+    pieceType: 101
+  - row: 7
+    column: 2
+    pieceType: 100
+  - row: 8
+    column: 2
+    pieceType: 102
+  - row: 1
+    column: 3
+    pieceType: 101
+  - row: 2
+    column: 3
+    pieceType: 103
+  - row: 3
+    column: 3
+    pieceType: 101
+  - row: 4
+    column: 3
+    pieceType: 103
+  - row: 5
+    column: 3
+    pieceType: 101
+  - row: 6
+    column: 3
+    pieceType: 103
+  - row: 7
+    column: 3
+    pieceType: 101
+  - row: 8
+    column: 3
+    pieceType: 102
+  - row: 9
+    column: 3
+    pieceType: 101
+  - row: 0
+    column: 4
+    pieceType: 101
+  - row: 1
+    column: 4
+    pieceType: 103
+  - row: 2
+    column: 4
+    pieceType: 101
+  - row: 3
+    column: 4
+    pieceType: 102
+  - row: 4
+    column: 4
+    pieceType: 100
+  - row: 5
+    column: 4
+    pieceType: 102
+  - row: 6
+    column: 4
+    pieceType: 102
+  - row: 7
+    column: 4
+    pieceType: 103
+  - row: 8
+    column: 4
+    pieceType: 101
+  - row: 9
+    column: 4
+    pieceType: 100
+  - row: 10
+    column: 4
+    pieceType: 103
+  - row: 0
+    column: 5
+    pieceType: 101
+  - row: 1
+    column: 5
+    pieceType: 103
+  - row: 2
+    column: 5
+    pieceType: 100
+  - row: 3
+    column: 5
+    pieceType: 101
+  - row: 4
+    column: 5
+    pieceType: 100
+  - row: 5
+    column: 5
+    pieceType: 101
+  - row: 6
+    column: 5
+    pieceType: 102
+  - row: 7
+    column: 5
+    pieceType: 100
+  - row: 8
+    column: 5
+    pieceType: 103
+  - row: 9
+    column: 5
+    pieceType: 100
+  - row: 10
+    column: 5
+    pieceType: 103
+  - row: 0
+    column: 6
+    pieceType: 103
+  - row: 1
+    column: 6
+    pieceType: 101
+  - row: 2
+    column: 6
+    pieceType: 103
+  - row: 3
+    column: 6
+    pieceType: 102
+  - row: 4
+    column: 6
+    pieceType: 102
+  - row: 5
+    column: 6
+    pieceType: 103
+  - row: 6
+    column: 6
+    pieceType: 100
+  - row: 7
+    column: 6
+    pieceType: 103
+  - row: 8
+    column: 6
+    pieceType: 102
+  - row: 9
+    column: 6
+    pieceType: 101
+  - row: 10
+    column: 6
+    pieceType: 101
+  - row: 0
+    column: 7
+    pieceType: 101
+  - row: 1
+    column: 7
+    pieceType: 101
+  - row: 2
+    column: 7
+    pieceType: 103
+  - row: 3
+    column: 7
+    pieceType: 100
+  - row: 4
+    column: 7
+    pieceType: 102
+  - row: 5
+    column: 7
+    pieceType: 100
+  - row: 6
+    column: 7
+    pieceType: 101
+  - row: 7
+    column: 7
+    pieceType: 103
+  - row: 8
+    column: 7
+    pieceType: 102
+  - row: 9
+    column: 7
+    pieceType: 102
+  - row: 10
+    column: 7
+    pieceType: 100
+  - row: 1
+    column: 8
+    pieceType: 103
+  - row: 2
+    column: 8
+    pieceType: 100
+  - row: 3
+    column: 8
+    pieceType: 102
+  - row: 4
+    column: 8
+    pieceType: 100
+  - row: 5
+    column: 8
+    pieceType: 103
+  - row: 6
+    column: 8
+    pieceType: 102
+  - row: 7
+    column: 8
+    pieceType: 101
+  - row: 8
+    column: 8
+    pieceType: 101
+  - row: 9
+    column: 8
+    pieceType: 100
+  - row: 2
+    column: 9
+    pieceType: 102
+  - row: 3
+    column: 9
+    pieceType: 103
+  - row: 4
+    column: 9
+    pieceType: 102
+  - row: 5
+    column: 9
+    pieceType: 100
+  - row: 6
+    column: 9
+    pieceType: 102
+  - row: 7
+    column: 9
+    pieceType: 100
+  - row: 8
+    column: 9
+    pieceType: 100
+  - row: 3
+    column: 10
+    pieceType: 100
+  - row: 4
+    column: 10
+    pieceType: 100
+  - row: 5
+    column: 10
+    pieceType: 103
+  - row: 6
+    column: 10
+    pieceType: 103
+  - row: 7
+    column: 10
+    pieceType: 101
+  - row: 4
+    column: 11
+    pieceType: 102
+  - row: 5
+    column: 11
+    pieceType: 102
+  - row: 6
+    column: 11
+    pieceType: 100

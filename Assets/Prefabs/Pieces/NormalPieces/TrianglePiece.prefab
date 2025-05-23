@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: visual
       value: 
       objectReference: {fileID: 7836437159531061073}
+    - target: {fileID: 3337109798188946283, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
+      propertyPath: swapReactionPriority
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3974355282629726374, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
       propertyPath: m_Name
       value: TrianglePiece
@@ -72,78 +76,23 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5994504385315103092, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
+      propertyPath: goalType
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3974355282629726374, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2548690732850830310}
-    - targetCorrespondingSourceObject: {fileID: 3974355282629726374, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -8492707283531862192}
-    - targetCorrespondingSourceObject: {fileID: 3974355282629726374, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2364837415510532386}
-    - targetCorrespondingSourceObject: {fileID: 3974355282629726374, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
-      insertIndex: -1
       addedObject: {fileID: -596190197319503778}
   m_SourcePrefab: {fileID: 100100000, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
---- !u!114 &1075970712566844360 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2533268396648098342, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
-  m_PrefabInstance: {fileID: 3299282030900781550}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6261ed8fec1c443b9dd15c01fffcac02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1940726620851286344 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3974355282629726374, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
   m_PrefabInstance: {fileID: 3299282030900781550}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2548690732850830310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1940726620851286344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0d73657bd0440bca95fc34e69462f60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effects:
-  - type: 2
-    effect: {fileID: 1026491580330173383, guid: f8e38d5e5ef507647b413d9d5dda5616, type: 3}
---- !u!114 &-8492707283531862192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1940726620851286344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81d9758039f842b1b014a061e5eb4eff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2364837415510532386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1940726620851286344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de0328fdbea744e5b730a9f693b0e54e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-596190197319503778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,7 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pieceType: 102
-  visualController: {fileID: 1075970712566844360}
+  visual: {fileID: 7836437159531061073}
 --- !u!212 &7836437159531061073 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 4686551305990094527, guid: 4d31535684cec4148822c7d278d28af2, type: 3}

@@ -21,6 +21,10 @@ namespace Factories.GeneralFactories
         private void OnDisable()
         {
             EventManager.OnPieceReturnToPool -= ReturnToPool;
+            foreach (var factory in pieceFactoryList)
+            {
+                factory.ResetPool();
+            }
         }
 
         public Piece GetPieceBasedOnType(PieceType pieceType)

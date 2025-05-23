@@ -20,6 +20,10 @@ namespace Factories.GeneralFactories
         private void OnDisable()
         {
             EventManager.OnCombinationReturnToPool -= ReturnToPool;
+            foreach (var factory in combinationFactoryList)
+            {
+                factory.ResetPool();
+            }
         }
 
         public BaseCombination GetCombinationBasedOnType(CombinationType combinationType)

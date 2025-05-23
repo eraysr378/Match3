@@ -1,3 +1,4 @@
+using Cells;
 using Interfaces;
 using Managers;
 using OperationBlockTrackers;
@@ -8,7 +9,7 @@ namespace Handlers
 {
     public class UserInputHandler : InputHandler
     {
-        private Piece _selectedPiece;
+        private Cell _selectedCell;
         private UserInputBlockTracker _userInputBlockTracker;
 
         private void Awake()
@@ -26,79 +27,75 @@ namespace Handlers
             Disable();
         }
 
-        private void OnAnyPointerEnterCellEvent(Piece secondPiece)
+        private void OnAnyPointerEnterCellEvent(Cell cell)
         {
             if (_userInputBlockTracker.HasActiveOperations())
             {
-                _selectedPiece = null;
+                _selectedCell = null;
                 return;
             }
 
-            if (!_selectedPiece || _selectedPiece == secondPiece)
+            if (!_selectedCell || _selectedCell == cell)
                 return;
 
-            if (!_selectedPiece.gameObject.activeSelf || secondPiece is not ISwappable ||
-                !ArePiecesAdjacent(_selectedPiece, secondPiece))
+            if (!_selectedCell.gameObject.activeSelf ||
+                !AreCellsAdjacent(_selectedCell, cell))
             {
-                _selectedPiece = null;
+                _selectedCell = null;
                 return;
             }
-            ProcessInput(_selectedPiece, secondPiece);
-            _selectedPiece = null;
+            ProcessInput(_selectedCell, cell);
+            _selectedCell = null;
         }
     
 
-        private void OnAnyPointerUpCellEvent(Piece piece)
+        private void OnAnyPointerUpCellEvent(Cell cell)
         {
             if (_userInputBlockTracker.HasActiveOperations())
             {
-                _selectedPiece = null;
+                _selectedCell = null;
                 return;
             }
 
-            if (piece == _selectedPiece)
+            if (cell == _selectedCell && cell.CurrentPiece is IActivatable activatable)
             {
-                if (piece is IActivatable activatable)
+                if (moveManager.CanMakeMove() && activatable.TryActivate())
                 {
-                    activatable.Activate();
+                    moveManager.MakeMove();
                 }
             }
 
-            _selectedPiece = null;
+            _selectedCell = null;
         }
 
-        private void OnAnyPointerDownCellEvent(Piece piece)
+        private void OnAnyPointerDownCellEvent(Cell cell)
         {
             if (_userInputBlockTracker.HasActiveOperations())
             {
-                _selectedPiece = null;
+                _selectedCell = null;
                 return;
             }
-
-
-            if (piece is ISwappable)
-            {
-                _selectedPiece = piece;
-            }
+            
+            _selectedCell = cell;
         }
 
-        private bool ArePiecesAdjacent(Piece piece1, Piece piece2)
+        private bool AreCellsAdjacent(Cell cell1, Cell cell2)
         {
-            return Mathf.Abs(piece1.Row - piece2.Row) + Mathf.Abs(piece1.Col - piece2.Col) == 1;
+            return Mathf.Abs(cell1.Row - cell2.Row) + Mathf.Abs(cell1.Col - cell2.Col) == 1;
         }
 
         public override void Enable()
         {
-            InteractablePiece.OnAnyPointerDown += OnAnyPointerDownCellEvent;
-            InteractablePiece.OnAnyPointerUp += OnAnyPointerUpCellEvent;
-            InteractablePiece.OnAnyPointerEnter += OnAnyPointerEnterCellEvent;
+            Cell.OnAnyPointerDown += OnAnyPointerDownCellEvent;
+            Cell.OnAnyPointerUp += OnAnyPointerUpCellEvent;
+            Cell.OnAnyPointerEnter += OnAnyPointerEnterCellEvent;
         }
 
         public override void Disable()
         {
-            InteractablePiece.OnAnyPointerDown -= OnAnyPointerDownCellEvent;
-            InteractablePiece.OnAnyPointerUp -= OnAnyPointerUpCellEvent;
-            InteractablePiece.OnAnyPointerEnter -= OnAnyPointerEnterCellEvent;
+            Cell.OnAnyPointerDown -= OnAnyPointerDownCellEvent;
+            Cell.OnAnyPointerUp -= OnAnyPointerUpCellEvent;
+            Cell.OnAnyPointerEnter -= OnAnyPointerEnterCellEvent;
         }
     }
 }

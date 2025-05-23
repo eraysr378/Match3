@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: GridProperties
   m_EditorClassIdentifier: 
   grid:
-    width: 5
-    height: 5
-  width: 5
-  height: 5
-  elementSize: 0.84240997
+    width: 8
+    height: 8
+  width: 8
+  height: 8
+  cellSize: 1
   spacingRatio: 0.03
   gridOffset: {x: -1.7448199, y: -1.7448199}
   gridPlaygroundCenter: {x: 0, y: 0.09069502, z: 90}

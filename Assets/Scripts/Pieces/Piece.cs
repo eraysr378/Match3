@@ -1,26 +1,26 @@
+using System;
 using Cells;
 using Interfaces;
 using Managers;
 using Misc;
 using UnityEngine;
+
 namespace Pieces
 {
     public abstract class Piece : MonoBehaviour, IPoolableObject
     {
-    
+        public event Action OnDestroy;
         public Cell CurrentCell { get; private set; }
         public int Row => CurrentCell.Row;
         public int Col => CurrentCell.Col;
+
+        [SerializeField] private PieceType pieceType;
+
+        private PieceOperation _activeOperation;
+
         protected bool isBeingDestroyed = false;
-         [SerializeField]private PieceType pieceType;
-
-
-        private Collider2D _collider2D;
-
-        protected virtual void Awake()
-        {
-            _collider2D = GetComponent<Collider2D>();
-        }
+        
+        
 
         public virtual void Init(Vector3 position)
         {
@@ -31,7 +31,8 @@ namespace Pieces
         public virtual void Init(Cell cell)
         {
             SetCell(cell);
-            transform.SetParent(cell?.transform);
+            // transform.SetParent(cell?.transform);
+            transform.position = cell.transform.position;
             transform.localScale = Vector3.one;
         }
 
@@ -39,12 +40,15 @@ namespace Pieces
         {
             CurrentCell?.SetPiece(null);
             CurrentCell = newCell;
-            if (CurrentCell != null)
-            {
-                transform.SetParent(CurrentCell.transform);
-                transform.localScale = Vector3.one;
-                CurrentCell.SetPiece(this);
-            }
+            CurrentCell?.SetPiece(this);
+
+            // if (CurrentCell != null)
+            // {
+            //     // transform.SetParent(CurrentCell.transform);
+            //     transform.localScale = Vector3.one;
+            //     // transform.position = CurrentCell.transform.position;
+            //     CurrentCell.SetPiece(this);
+            // }
         }
 
         public PieceType GetPieceType() => pieceType;
@@ -54,16 +58,37 @@ namespace Pieces
             SetCell(null);
             OnReturnToPool();
         }
-        
+
         public virtual void OnSpawn()
         {
-            _collider2D.enabled = true;
             isBeingDestroyed = false;
+            ClearOperation();
         }
 
         public virtual void OnReturnToPool()
         {
+            OnDestroy?.Invoke();
             EventManager.OnPieceReturnToPool?.Invoke(this);
+        }
+
+        protected void SetOperation(PieceOperation operation)
+        {
+            _activeOperation = operation;
+        }
+
+        public PieceOperation GetActiveOperation()
+        {
+            return _activeOperation;
+        }
+
+        public bool IsBusy()
+        {
+            return _activeOperation != PieceOperation.None;
+        }
+
+        protected void ClearOperation()
+        {
+            _activeOperation = PieceOperation.None;
         }
     }
 }

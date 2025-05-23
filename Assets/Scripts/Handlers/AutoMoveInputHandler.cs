@@ -25,21 +25,21 @@ namespace Handlers
             while (enabled)
             {
                 yield return new WaitForSeconds(_autoMoveInterval);
-                AutoSwap();
+                // AutoSwap();
             }
         }
 
-        private void AutoSwap()
-        {
-            if (matchManager.TryGetMatchFormingSwap(out var swapPieces))
-            {
-                ProcessInput(swapPieces.Value.Item1, swapPieces.Value.Item2);
-            }
-
-            else
-            {
-                Debug.LogWarning("Can't swap");
-            }
-        }
+        // private void AutoSwap()
+        // {
+        //     if (matchManager.TryGetMatchFormingSwap(out var swapPieces))
+        //     {
+        //         ProcessInput(swapPieces.Value.Item1, swapPieces.Value.Item2);
+        //     }
+        //
+        //     else
+        //     {
+        //         Debug.LogWarning("Can't swap");
+        //     }
+        // }
     }
 }

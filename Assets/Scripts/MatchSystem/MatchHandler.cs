@@ -12,7 +12,7 @@ namespace MatchSystem
                 
         public static event Action OnMatchHandlingStarted;
         public static event Action OnMatchHandlingCompleted;
-        public bool IsHandlerActive {get; private set;} = false;
+        private bool _isHandlerActive = false;
 
         private int _activeProcessCount = 0;
         private int _startedProcessCount = 0;
@@ -21,10 +21,10 @@ namespace MatchSystem
         private readonly List<CellDirtyTracker> _cellDirtyTrackerList = new ();
         public void HandleMatches(List<(List<Piece>, Piece)> matchLists)
         {
-            if (!IsHandlerActive)
+            if (!_isHandlerActive)
             {
                 OnMatchHandlingStarted?.Invoke();
-                IsHandlerActive = true;
+                _isHandlerActive = true;
             }
             
             foreach (var (matchList, spawnPiece) in matchLists)
@@ -80,8 +80,13 @@ namespace MatchSystem
             _startedProcessCount = 0;
             _totalProcessCount = 0;
             _processList.Clear();
-            IsHandlerActive = false;
+            _isHandlerActive = false;
             OnMatchHandlingCompleted?.Invoke();
+        }
+
+        public bool IsBusy()
+        {
+            return _isHandlerActive;
         }
     }
 }

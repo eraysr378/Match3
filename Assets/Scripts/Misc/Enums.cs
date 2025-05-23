@@ -3,6 +3,8 @@ namespace Misc
     public enum CellType
     {
         Default,
+        Red,
+        Disabled,
     }
     public enum PieceType
     {
@@ -12,7 +14,6 @@ namespace Misc
         BombPiece,
         RocketPiece,
         RainbowPiece,
-
 
         
         
@@ -55,5 +56,26 @@ namespace Misc
         
         
     }
-
+    public enum SwapReactionPriority
+    {
+        NormalPiece = 10,
+        ActivatablePiece = 5,
+        PassivePiece = 0
+    }
+    public enum PieceOperation
+    {
+        None,
+        Swapping,
+        Filling,
+        Falling,
+        Activating,
+        
+    }
+    public enum GoalType
+    {
+        Square,
+        Circle,
+        Triangle,
+        Hexagon
+    }
 }

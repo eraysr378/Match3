@@ -18,6 +18,10 @@ namespace Factories.GeneralFactories
         private void OnDisable()
         {
             EventManager.OnVisualEffectReturnToPool -= ReturnToPool;
+            foreach (var factory in visualEffectFactoryList)
+            {
+                factory.ResetPool();
+            }
         }
 
         public BaseVisualEffect GetEffectBasedOnType(VisualEffectType effectType)

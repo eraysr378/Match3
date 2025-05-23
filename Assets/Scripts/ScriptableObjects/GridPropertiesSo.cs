@@ -14,6 +14,6 @@ namespace ScriptableObjects
         public float spacingRatio;
         public Vector2 gridOffset;
         public Vector3 gridPlaygroundCenter;
-        public CustomGridScriptableObject customGridSo;
+        public CustomGridSo customGridSo;
     }
 }

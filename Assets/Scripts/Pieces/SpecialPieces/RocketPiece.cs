@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Cells;
 using Interfaces;
 using Managers;
+using Misc;
+using Pieces.Behaviors;
 using Projectiles;
 using UnityEngine;
 using Utils;
@@ -10,7 +12,7 @@ using Random = UnityEngine.Random;
 
 namespace Pieces.SpecialPieces
 {
-    public class RocketPiece : InteractablePiece, IActivatable, ISwappable, IExplodable, ICombinable
+    public class RocketPiece : Piece, IActivatable, IExplodable, ICombinable
     {
         public event Action<IActivatable> OnActivationCompleted;
 
@@ -23,6 +25,37 @@ namespace Pieces.SpecialPieces
         private List<Cell> _leftPath;
         private List<Cell> _rightPath;
         private readonly CellDirtyTracker _cellDirtyTracker = new();
+        private SwapHandler _swapHandler;
+        private FillHandler _fillHandler;
+        protected  void Awake()
+        {
+            _swapHandler = GetComponent<SwapHandler>();
+            _fillHandler = GetComponent<FillHandler>();
+            _swapHandler.OnSwapStarted += SwapHandler_OnSwapStarted;
+            _swapHandler.OnSwapCompleted += SwapHandler_OnSwapCompleted;
+            _fillHandler.OnFillStarted += FillHandler_OnFillStarted;
+            _fillHandler.OnFillCompleted += FillHandler_OnFillCompleted;
+        }
+
+        private void FillHandler_OnFillCompleted()
+        {
+            ClearOperation();
+        }
+
+        private void FillHandler_OnFillStarted()
+        {
+            SetOperation(PieceOperation.Filling);
+        }
+
+        private void SwapHandler_OnSwapCompleted(Piece obj)
+        {
+            TryActivate();
+        }
+
+        private void SwapHandler_OnSwapStarted()
+        {
+            SetOperation(PieceOperation.Swapping);
+        }
 
         private void OnEnable()
         {
@@ -83,14 +116,15 @@ namespace Pieces.SpecialPieces
         {
             if (isBeingDestroyed)
                 return false;
-            Activate();
+            TryActivate();
             return true;
         }
 
-        public void ActivateAt(Cell activatedCell)
+        public bool ActivateAt(Cell activatedCell)
         {
             if (isBeingDestroyed)
-                return;
+                return false;
+            SetOperation(PieceOperation.Activating);
             isBeingDestroyed = true;
             if (activatedCell == null)
             {
@@ -98,7 +132,7 @@ namespace Pieces.SpecialPieces
                 _rightPath = null;
                 EventManager.OnPieceActivated?.Invoke(this);
                 LaunchProjectiles();
-                return;
+                return true;
             }
             if (_isVertical)
             {
@@ -117,11 +151,12 @@ namespace Pieces.SpecialPieces
 
             EventManager.OnPieceActivated?.Invoke(this);
             LaunchProjectiles();
+            return true;
         }
 
-        public void Activate()
+        public bool TryActivate()
         {
-            ActivateAt(CurrentCell);
+            return ActivateAt(CurrentCell);
         }
 
         private void LaunchProjectiles()
@@ -151,16 +186,6 @@ namespace Pieces.SpecialPieces
             _isVertical = true;
             transform.rotation = Quaternion.Euler(0, 0, -90);
         }
-
-        public void OnSwap(Piece otherPiece)
-        {
-        }
-
-        public void OnPostSwap(Piece otherPiece)
-        {
-            Activate();
-        }
-
         public void OnCombined(Piece piece)
         {
         }
