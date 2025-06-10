@@ -16,5 +16,9 @@ MonoBehaviour:
   goalConfigs:
   - goalPrefab: {fileID: 3336115390684935865, guid: ff9c68cd009b1ea4eb7dbab9d495f40c, type: 3}
     goalCount: 1555
-  gridDataSo: {fileID: 11400000, guid: 1fe3db5d229153941907619b1b0fadd9, type: 2}
+  - goalPrefab: {fileID: 9147618203201495598, guid: f27fa642129dafe48aea1bd7d4c0011d, type: 3}
+    goalCount: 3
+  - goalPrefab: {fileID: 790730504545922779, guid: 5815c396f149b464e9edbe8512057765, type: 3}
+    goalCount: 7
+  gridDataSo: {fileID: 11400000, guid: dbc962b3048bfc343871871a813a275f, type: 2}
   levelName: Level 1

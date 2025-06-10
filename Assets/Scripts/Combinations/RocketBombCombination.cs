@@ -14,13 +14,10 @@ namespace Combinations
         {
             
             SpawnRockets(row,col);
+            EventManager.OnSmallCameraShakeRequest?.Invoke();
             CompleteCombination();
         }
-
-        protected override void CompleteCombination()
-        {
-            base.CompleteCombination();
-        }
+        
         private void SpawnRocket(int row, int col, bool isHorizontal)
         {
             Piece piece = EventManager.OnPieceSpawnRequested?.Invoke(PieceType.RocketPiece, row, col);
@@ -30,8 +27,8 @@ namespace Combinations
             
             if (isHorizontal) rocketPiece.SetHorizontal();
             else rocketPiece.SetVertical();
-            Cell cellToSpawn = GridManager.Instance.GetCellAt(row, col);
-            rocketPiece.ActivateAt(cellToSpawn);
+            BaseCell baseCellToSpawn = GridManager.Instance.GetCellAt(row, col);
+            rocketPiece.ActivateAt(baseCellToSpawn);
         }
 
         private void SpawnRockets(int row,int col)

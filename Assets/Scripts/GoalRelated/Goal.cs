@@ -1,4 +1,5 @@
 using System;
+using Managers;
 using Misc;
 using TMPro;
 using UnityEngine;
@@ -32,6 +33,8 @@ namespace GoalRelated
             }
             goalText.gameObject.SetActive(false);
             completedTick.SetActive(true);
+            var starParticle = EventManager.OnParticleSpawnRequested?.Invoke(ParticleType.Stars,transform.position);
+            starParticle?.Play();
             OnGoalCompleted?.Invoke();
 
         }

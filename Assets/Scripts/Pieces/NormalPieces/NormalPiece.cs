@@ -16,6 +16,7 @@ namespace Pieces.NormalPieces
         public event Action OnMatchHandled;
 
         [SerializeField] private SpriteRenderer visual;
+        [SerializeField] private  SpriteRenderer providedColorSpriteRenderer;
         private Resizer _visualResizer;
         private Bouncer _visualBouncer;
         private readonly float _specialMatchMergeDuration = 0.25f;
@@ -155,7 +156,7 @@ namespace Pieces.NormalPieces
             OnReturnToPool();
         }
 
-        public bool TryHandleSpecialMatch(Cell spawnCell, Action onHandled)
+        public bool TryHandleSpecialMatch(BaseCell spawnBaseCell, Action onHandled)
         {
             if (isBeingDestroyed) return false;
             isBeingDestroyed = true;
@@ -163,7 +164,7 @@ namespace Pieces.NormalPieces
             _scoreHandler.ReportScore(this);
             _goalHandler.ReportGoal();
             OnMatchHandled += onHandled;
-            _movable.StartMovingWithDuration(spawnCell.transform.position, _specialMatchMergeDuration,
+            _movable.StartMovingWithDuration(spawnBaseCell.transform.position, _specialMatchMergeDuration,
                 onComplete: HandleMoveComplete);
 
             return true;
@@ -178,7 +179,7 @@ namespace Pieces.NormalPieces
     
         public Color GetColor()
         {
-            return visual.color;
+            return providedColorSpriteRenderer.color;
         }
     }
 }

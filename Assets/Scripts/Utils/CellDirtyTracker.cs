@@ -6,26 +6,30 @@ namespace Utils
 {
     public class CellDirtyTracker
     {
-        private readonly HashSet<Cell> _dirtyCells = new();
+        private readonly HashSet<BaseCell> _dirtyCells = new();
 
-        public void Mark(IEnumerable<Cell> cells)
+        public void Mark(IEnumerable<BaseCell> cells)
         {
             foreach (var cell in cells)
             {
-                if (_dirtyCells.Contains(cell)) continue;
+                if (cell == null || _dirtyCells.Contains(cell)) continue;
                 _dirtyCells.Add(cell);
                 cell.MarkDirty();
             }
         }
 
-        public void Mark(Cell cell)
+        public HashSet<BaseCell> GetDirtyCells()
         {
-            if (_dirtyCells.Contains(cell)) return;
+            return _dirtyCells;
+        }
+        public void Mark(BaseCell cell)
+        {
+            if (cell == null || _dirtyCells.Contains(cell)) return;
             cell.MarkDirty();
             _dirtyCells.Add(cell);
         }
 
-        public void Clear(Cell cell)
+        public void Clear(BaseCell cell)
         {
             if (!_dirtyCells.Contains(cell)) return;
             cell.ClearDirty();

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BuildSystem;
 using Cells;
 using GridRelated;
 using TileRelated;
@@ -16,14 +17,14 @@ namespace Pieces.Behaviors
         
         private void OnEnable()
         {
-            Cell.OnAnyRequestFill += OnAnyCellCleared;
-            TilemapLoader.OnCellsCreated += GridInitializerOnGridInitialized;
+            BaseCell.OnAnyRequestFill += OnAnyCellCleared;
+            GridBuilder.OnCellsCreated += GridInitializerOnGridInitialized;
 
         }
         private void OnDisable()
         {
-            Cell.OnAnyRequestFill -= OnAnyCellCleared;
-            TilemapLoader.OnCellsCreated -= GridInitializerOnGridInitialized;
+            BaseCell.OnAnyRequestFill -= OnAnyCellCleared;
+            GridBuilder.OnCellsCreated -= GridInitializerOnGridInitialized;
 
         }
         private void GridInitializerOnGridInitialized(Grid obj)
@@ -31,38 +32,38 @@ namespace Pieces.Behaviors
             _grid = obj;
         }
 
-        private void OnAnyCellCleared(Cell clearedCell)
+        private void OnAnyCellCleared(BaseCell clearedBaseCell)
         {
-            if (clearedCell == null) return;
-            if (clearedCell.CurrentPiece == null)
+            if (clearedBaseCell == null) return;
+            if (clearedBaseCell.CurrentPiece == null)
             {
-                NotifyAbove(clearedCell);
+                NotifyAbove(clearedBaseCell);
                 return;
             }
 
-            if (clearedCell.CurrentPiece.TryGetComponent<FillHandler>(out var fillable))
+            if (clearedBaseCell.CurrentPiece.TryGetComponent<FillHandler>(out var fillable))
             {
                 fillable.TryStartFill();
             }
         }
-        private void NotifyAbove(Cell clearedCell)
+        private void NotifyAbove(BaseCell clearedBaseCell)
         {
-            int startRow = clearedCell.Row + 1;
-            int col = clearedCell.Col;
-            Cell aboveCell = _grid.GetCellAt(startRow, col);
-            Cell leftAboveCell = _grid.GetCellAt(startRow, col-1);
-            Cell rightAboveCell = _grid.GetCellAt(startRow, col+1);
-            OnAnyCellCleared(aboveCell);
+            int startRow = clearedBaseCell.Row + 1;
+            int col = clearedBaseCell.Col;
+            BaseCell aboveBaseCell = _grid.GetCellAt(startRow, col);
+            BaseCell leftAboveBaseCell = _grid.GetCellAt(startRow, col-1);
+            BaseCell rightAboveBaseCell = _grid.GetCellAt(startRow, col+1);
+            OnAnyCellCleared(aboveBaseCell);
             // If above is blocked then cell should be filled diagonally, make it filled from left or right randomly.
             if (Random.Range(0, 2) == 0)
             {
-                OnAnyCellCleared(leftAboveCell);
-                OnAnyCellCleared(rightAboveCell);
+                OnAnyCellCleared(leftAboveBaseCell);
+                OnAnyCellCleared(rightAboveBaseCell);
             }
             else
             {
-                OnAnyCellCleared(rightAboveCell);
-                OnAnyCellCleared(leftAboveCell);
+                OnAnyCellCleared(rightAboveBaseCell);
+                OnAnyCellCleared(leftAboveBaseCell);
             }
             
         }

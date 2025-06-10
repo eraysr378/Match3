@@ -8,8 +8,9 @@ namespace Pieces.NormalPieces
     {
         protected override void PlayParticleEffect()
         {
-            var particle = EventManager.OnParticleSpawnRequested?.Invoke(ParticleType.TriangleExplosion,transform,transform.position,Vector3.one);
-            particle?.transform.SetParent(null);
+            var particle = EventManager.OnParticleSpawnRequested?.Invoke(ParticleType.TriangleExplosion,transform.position);
+            particle?.SetParticleColor(GetColor());
+            particle?.Play();
         }
     }
 }

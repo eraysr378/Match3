@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using CameraRelated;
 using Cells;
 using Interfaces;
 using Managers;
@@ -7,6 +8,7 @@ using Misc;
 using ParticleEffects;
 using Pieces;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utils;
 
 
@@ -33,35 +35,27 @@ namespace Combinations
         {
             visual.enabled = false;
             _particleHandler.Play(ParticleType.Activation);
+            EventManager.OnBigCameraShakeRequest?.Invoke();
             DestroyAll(row, col);
         }
 
         private void DestroyAll(int row, int col)
         {
-            List<Cell> allCells = GridManager.Instance.GetAllCells();
+            List<BaseCell> allCells = GridManager.Instance.GetAllCells();
             _dirtyTracker.Mark(allCells);
             float delayPerDistance = 0.05f;
             _explosionCount = allCells.Count;
             foreach (var cell in allCells)
             {
-                var piece = cell.CurrentPiece;
-                if (piece == null || !piece.gameObject.activeSelf ||
-                    !piece.TryGetComponent<IExplodable>(out var explodable))
-                {
-                    _explosionCount--;
-                }
-                else
-                {
-                    var distance = Mathf.Abs(piece.Row - row) + Mathf.Abs(piece.Col - col);
-                    StartCoroutine(ExplodeDelayed(explodable, distance * delayPerDistance));
-                }
+                var distance = Mathf.Abs(cell.Row - row) + Mathf.Abs(cell.Col - col);
+                StartCoroutine(ExplodeDelayed(cell, distance * delayPerDistance));
             }
         }
 
-        private IEnumerator ExplodeDelayed(IExplodable explodable, float delay)
+        private IEnumerator ExplodeDelayed(BaseCell cell, float delay)
         {
             yield return new WaitForSeconds(delay);
-            explodable.TryExplode();
+            cell.TriggerExplosion();
             _explosionCount--;
             if (_explosionCount == 0)
             {

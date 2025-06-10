@@ -12,7 +12,7 @@ using Random = UnityEngine.Random;
 
 namespace Pieces.SpecialPieces
 {
-    public class RocketPiece : Piece, IActivatable, IExplodable, ICombinable
+    public class RocketPiece : Piece, IActivatable, IExplodable, ICombinable,IControlledActivatable
     {
         public event Action<IActivatable> OnActivationCompleted;
 
@@ -22,15 +22,17 @@ namespace Pieces.SpecialPieces
         private bool _isVertical;
         private int _exitedProjectileCount;
         private int _outOfViewProjectileCount;
-        private List<Cell> _leftPath;
-        private List<Cell> _rightPath;
+        private List<BaseCell> _leftPath;
+        private List<BaseCell> _rightPath;
         private readonly CellDirtyTracker _cellDirtyTracker = new();
         private SwapHandler _swapHandler;
         private FillHandler _fillHandler;
+        private Shaker _shaker;
         protected  void Awake()
         {
             _swapHandler = GetComponent<SwapHandler>();
             _fillHandler = GetComponent<FillHandler>();
+            _shaker = GetComponent<Shaker>();
             _swapHandler.OnSwapStarted += SwapHandler_OnSwapStarted;
             _swapHandler.OnSwapCompleted += SwapHandler_OnSwapCompleted;
             _fillHandler.OnFillStarted += FillHandler_OnFillStarted;
@@ -62,8 +64,8 @@ namespace Pieces.SpecialPieces
             projectileLeft.OnPathCleared += OnProjectilePathCleared;
             projectileRight.OnPathCleared += OnProjectilePathCleared;
 
-            projectileLeft.OnOutOfView += OnProjectileOutOfView;
-            projectileRight.OnOutOfView += OnProjectileOutOfView;
+            projectileLeft.OnReadyToDisable += OnProjectileReadyToDisable;
+            projectileRight.OnReadyToDisable += OnProjectileReadyToDisable;
         }
 
         private void OnDisable()
@@ -71,8 +73,8 @@ namespace Pieces.SpecialPieces
             projectileLeft.OnPathCleared -= OnProjectilePathCleared;
             projectileRight.OnPathCleared -= OnProjectilePathCleared;
 
-            projectileLeft.OnOutOfView -= OnProjectileOutOfView;
-            projectileRight.OnOutOfView -= OnProjectileOutOfView;
+            projectileLeft.OnReadyToDisable -= OnProjectileReadyToDisable;
+            projectileRight.OnReadyToDisable -= OnProjectileReadyToDisable;
         }
 
         public override void Init(Vector3 position)
@@ -81,9 +83,9 @@ namespace Pieces.SpecialPieces
             SetRandomOrientation();
         }
 
-        public override void Init(Cell cell)
+        public override void Init(BaseCell baseCell)
         {
-            base.Init(cell);
+            base.Init(baseCell);
             SetRandomOrientation();
         }
 
@@ -96,7 +98,7 @@ namespace Pieces.SpecialPieces
             _outOfViewProjectileCount = 0;
         }
 
-        private void OnProjectileOutOfView()
+        private void OnProjectileReadyToDisable()
         {
             _outOfViewProjectileCount++;
             if (_outOfViewProjectileCount != 2) return;
@@ -114,19 +116,16 @@ namespace Pieces.SpecialPieces
 
         public bool TryExplode()
         {
-            if (isBeingDestroyed)
-                return false;
-            TryActivate();
-            return true;
+            return TryActivate();
         }
 
-        public bool ActivateAt(Cell activatedCell)
+        public bool ActivateAt(BaseCell activatedBaseCell)
         {
-            if (isBeingDestroyed)
+            if (isBeingDestroyed || IsWaitingForActivation())
                 return false;
             SetOperation(PieceOperation.Activating);
             isBeingDestroyed = true;
-            if (activatedCell == null)
+            if (activatedBaseCell == null)
             {
                 _leftPath = null;
                 _rightPath = null;
@@ -134,21 +133,21 @@ namespace Pieces.SpecialPieces
                 LaunchProjectiles();
                 return true;
             }
+            _leftPath = new List<BaseCell>();
+            _rightPath = new List<BaseCell>();
+            _leftPath.Add(activatedBaseCell);
             if (_isVertical)
             {
-                _leftPath = GridManager.Instance.GetCellsAbove(activatedCell.Row, activatedCell.Col);
-                _rightPath = GridManager.Instance.GetCellsBelow(activatedCell.Row, activatedCell.Col);
+                _leftPath.AddRange(GridManager.Instance.GetCellsAbove(activatedBaseCell.Row, activatedBaseCell.Col));
+                _rightPath.AddRange(GridManager.Instance.GetCellsBelow(activatedBaseCell.Row, activatedBaseCell.Col)) ;
             }
             else
             {
-                _leftPath = GridManager.Instance.GetCellsLeft(activatedCell.Row, activatedCell.Col);
-                _rightPath = GridManager.Instance.GetCellsRight(activatedCell.Row, activatedCell.Col);
+                _leftPath.AddRange(GridManager.Instance.GetCellsLeft(activatedBaseCell.Row, activatedBaseCell.Col));
+                _rightPath.AddRange(GridManager.Instance.GetCellsRight(activatedBaseCell.Row, activatedBaseCell.Col)) ;
             }
-
-            _cellDirtyTracker.Mark(activatedCell);
             _cellDirtyTracker.Mark(_leftPath);
             _cellDirtyTracker.Mark(_rightPath);
-
             EventManager.OnPieceActivated?.Invoke(this);
             LaunchProjectiles();
             return true;
@@ -158,7 +157,25 @@ namespace Pieces.SpecialPieces
         {
             return ActivateAt(CurrentCell);
         }
-
+        public void WaitForActivation()
+        {
+            Debug.Log("Rocket is waiting for activation...");
+            
+            SetOperation(PieceOperation.WaitingForActivation);
+            _shaker.Shake();
+        }
+        
+        public void ForceActivate()
+        {
+            Debug.Log("Rocket is force activated");
+            _shaker.Stop();
+            ClearOperation();
+            TryActivate();
+        }
+        private bool IsWaitingForActivation()
+        {
+            return GetActiveOperation() == PieceOperation.WaitingForActivation;
+        }
         private void LaunchProjectiles()
         {
             transform.SetParent(null);

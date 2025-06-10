@@ -29,8 +29,8 @@ namespace Spawners
             if (combination == null) return null;
             
             // Vector2 pos = GridUtility.GridPositionToWorldPosition(row, col);
-            Cell cell = GridManager.Instance.GetCellAt(row, col);
-            combination.transform.position = cell.transform.position;
+            BaseCell baseCell = GridManager.Instance.GetCellAt(row, col);
+            combination.transform.position = baseCell.transform.position;
             
             return combination;
         }

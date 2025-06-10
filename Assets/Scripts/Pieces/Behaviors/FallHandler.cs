@@ -31,13 +31,13 @@ namespace Pieces.Behaviors
             OnAnyFallCompleted?.Invoke(this);
         }
 
-        public void FallTo(Cell cell)
+        public void FallTo(BaseCell baseCell)
         {
             _isFalling = true;
             OnAnyFallStarted?.Invoke(this);
             OnFallStarted?.Invoke();
             _movable.StartMovingWithSpeed(
-                cell.transform.position,
+                baseCell.transform.position,
                 _fallSpeed,
                 OnComplete
             );

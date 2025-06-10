@@ -9,7 +9,7 @@ namespace Factories.CellFactories
     {
         [SerializeField] private DisabledCell prefab;
 
-        public override Cell CreateCell(CellType cellType)
+        public override BaseCell CreateCell(CellType cellType)
         {
             DisabledCell disabledCell = Instantiate(prefab);
             return disabledCell;

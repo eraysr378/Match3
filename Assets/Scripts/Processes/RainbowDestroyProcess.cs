@@ -1,4 +1,5 @@
 using Interfaces;
+using Managers;
 using Pieces;
 using Utils;
 using VisualEffects;
@@ -27,12 +28,22 @@ namespace Processes
                 var targetPieceCell = _targetPiece.CurrentCell;
                 if (!hittable.TryHandleRainbowHit(OnRainbowHitHandled))
                     return;
-
+                targetPieceCell.TriggerRainbowHit();
                 _cellDirtyTracker.Mark(targetPieceCell);
                 _visualEffect.Play();
+                NotifyAdjacentCells(targetPieceCell.Row,targetPieceCell.Col);
+                
             }
         }
 
+        private void NotifyAdjacentCells(int row,int col)
+        {
+            var adjacentCells = GridManager.Instance.GetAdjacentCells(row, col);
+            foreach (var cell in adjacentCells)
+            {
+                cell.TriggerAdjacentExplosion();
+            }
+        }
         private void OnRainbowHitHandled()
         {
             _cellDirtyTracker.ClearAll();

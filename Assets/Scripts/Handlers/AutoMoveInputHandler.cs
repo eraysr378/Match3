@@ -9,16 +9,16 @@ namespace Handlers
         [SerializeField] private MatchManager matchManager;
         private float _autoMoveInterval = 1.0f;
 
-        public override void Enable()
-        {
-            enabled = true;
-            StartCoroutine(AutoMoveRoutine());
-        }
-
-        public override void Disable()
-        {
-            enabled = false;
-        }
+        // public void Enable()
+        // {
+        //     enabled = true;
+        //     StartCoroutine(AutoMoveRoutine());
+        // }
+        //
+        // public void Disable()
+        // {
+        //     enabled = false;
+        // }
 
         private IEnumerator AutoMoveRoutine()
         {

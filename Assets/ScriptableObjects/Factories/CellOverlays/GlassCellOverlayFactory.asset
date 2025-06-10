@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6431a08407a947a4a736ac7f6f02dd6e, type: 3}
+  m_Name: GlassCellOverlayFactory
+  m_EditorClassIdentifier: 
+  prefab: {fileID: -332786344796676053, guid: 681385f8d71768d418dd06ba886c3f54, type: 3}

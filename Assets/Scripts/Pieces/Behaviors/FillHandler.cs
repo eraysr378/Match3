@@ -36,7 +36,6 @@ namespace Pieces.Behaviors
 
         private void OnDisable()
         {
-            
             if (!_isFilling) return;
             OnAnyFillCompleted?.Invoke(this);
             // // Disabled when filling
@@ -50,11 +49,11 @@ namespace Pieces.Behaviors
             {
                 return false;
             }
+
             _isFilling = true;
             OnFillStarted?.Invoke();
             OnAnyFillStarted?.Invoke(this);
             return true;
-
         }
 
         private void EndFill()
@@ -63,7 +62,6 @@ namespace Pieces.Behaviors
             _isFilling = false;
             OnFillCompleted?.Invoke();
             OnAnyFillCompleted?.Invoke(this);
-
         }
 
         private bool TryFill()
@@ -77,17 +75,17 @@ namespace Pieces.Behaviors
             int col = _piece.CurrentCell.Col;
 
             // Try vertical first
-            Cell below = GridManager.Instance.GetCellAt(row - 1, col);
+            BaseCell below = GridManager.Instance.GetCellAt(row - 1, col);
 
             if (TryMoveTo(below) || TryMoveDiagonally(row, col)) return true;
 
             return false;
         }
 
-        private bool TryMoveTo(Cell targetCell)
+        private bool TryMoveTo(BaseCell targetBaseCell)
         {
-            if (targetCell == null || targetCell.IsDisabled()|| targetCell.CurrentPiece != null || targetCell.IsDirty()) return false;
-            Fill(targetCell);
+            if (targetBaseCell == null || targetBaseCell.CurrentPiece != null || targetBaseCell.IsDirty()) return false;
+            Fill(targetBaseCell);
             return true;
         }
 
@@ -98,12 +96,12 @@ namespace Pieces.Behaviors
                 int diagCol = col + offset;
                 if (diagCol < 0 || diagCol >= GridManager.Instance.Width) continue;
 
-                Cell targetCell = GridManager.Instance.GetCellAt(row - 1, diagCol);
-                if (targetCell.CurrentPiece != null || targetCell.IsDisabled()|| targetCell.IsDirty()) continue;
+                BaseCell targetBaseCell = GridManager.Instance.GetCellAt(row - 1, diagCol);
+                if (targetBaseCell == null || targetBaseCell.CurrentPiece != null || targetBaseCell.IsDirty()) continue;
 
                 if (IsPathBlockedAbove(row, diagCol))
                 {
-                    Fill(targetCell);
+                    Fill(targetBaseCell);
                     return true;
                 }
             }
@@ -115,19 +113,18 @@ namespace Pieces.Behaviors
         {
             for (int aboveRow = row; aboveRow < GridManager.Instance.Height; aboveRow++)
             {
-                Cell cellAbove = GridManager.Instance.GetCellAt(aboveRow, col);
-                Piece pieceAbove = cellAbove.CurrentPiece;
-                if (cellAbove.IsDisabled() || (pieceAbove != null &&  !pieceAbove.TryGetComponent<FillHandler>(out _)))
+                BaseCell baseCellAbove = GridManager.Instance.GetCellAt(aboveRow, col);
+                if (baseCellAbove == null || (baseCellAbove.CurrentPiece != null && !baseCellAbove.CurrentPiece.TryGetComponent<FillHandler>(out _)))
                     return true;
             }
 
             return false;
         }
 
-        private void Fill(Cell targetCell)
+        private void Fill(BaseCell targetBaseCell)
         {
-            Cell prev = _piece.CurrentCell;
-            _piece.SetCell(targetCell);
+            BaseCell prev = _piece.CurrentCell;
+            _piece.SetCell(targetBaseCell);
 
             prev.FillIfClean();
 

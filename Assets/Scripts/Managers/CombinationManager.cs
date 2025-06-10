@@ -7,6 +7,7 @@ using Misc;
 using Pieces;
 using Pieces.Behaviors;
 using UnityEngine;
+using Utils;
 
 namespace Managers
 {
@@ -16,6 +17,12 @@ namespace Managers
         public static event Action OnCombinationCompleted;
         private readonly CombinationRuleSet _ruleSet = new CombinationRuleSet();
         private BaseCombination _baseCombination;
+        private CellDirtyTracker _cellDirtyTracker;
+
+        private void Start()
+        {
+            _cellDirtyTracker = new CellDirtyTracker();
+        }
 
         private void OnEnable()
         {
@@ -29,6 +36,7 @@ namespace Managers
         private void StartCombination(Piece pieceA, Piece pieceB)
         {
             OnCombinationStarted?.Invoke();
+            Debug.LogWarning("Combination Started");
             if (!pieceA.TryGetComponent<Movable>(out var movable))
             {
                 Debug.LogError("Movable component not found on pieceA!");
@@ -39,29 +47,29 @@ namespace Managers
         }
         private void ActivateCombinationEffect(Piece pieceA, Piece pieceB)
         {
-            if (pieceA is not ICombinable combinableA || pieceB is not ICombinable combinableB)
-                return;
             if (!_ruleSet.TryGetCombinationResult(pieceA.GetPieceType(), pieceB.GetPieceType(), out var combinationType))
             {
                 Debug.LogWarning("Combination result not found");
                 return;
             }
             _baseCombination = EventManager.OnCombinationSpawnRequested(combinationType, pieceB.Row,pieceB.Col);
-            Cell spawnCell = pieceB.CurrentCell;
+            BaseCell spawnBaseCell = pieceB.CurrentCell;
+            _cellDirtyTracker.Mark(pieceA.CurrentCell);
+            _cellDirtyTracker.Mark(pieceB.CurrentCell);
             pieceA.DestroyPieceInstantly();
             pieceB.DestroyPieceInstantly();
-            _baseCombination.Init(spawnCell);
+            _baseCombination.Init(spawnBaseCell);
             _baseCombination.OnCombinationCompleted += CompleteCombination;
-            _baseCombination.StartCombination(spawnCell.Row, spawnCell.Col);
+            _baseCombination.StartCombination(spawnBaseCell.Row, spawnBaseCell.Col);
 
         }
 
         private void CompleteCombination()
         {
             _baseCombination.OnCombinationCompleted -= CompleteCombination;
+            _cellDirtyTracker.ClearAll();
             OnCombinationCompleted?.Invoke();
-
+            Debug.LogWarning("Combination Completed");
         }
-        
     }
 }

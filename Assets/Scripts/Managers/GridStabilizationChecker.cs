@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BuildSystem;
 using TileRelated;
 using UnityEngine;
 
@@ -24,12 +25,12 @@ namespace Managers
 
         private void OnEnable()
         {
-            TilemapLoader.OnCellsCreated += Initialize;
+            GridBuilder.OnCellsCreated += Initialize;
         }
 
         private void OnDisable()
         {
-            TilemapLoader.OnCellsCreated -= Initialize;
+            GridBuilder.OnCellsCreated -= Initialize;
         }
 
         private void Initialize(GridRelated.Grid grid)
@@ -103,13 +104,9 @@ namespace Managers
             for (int col = 0; col < _grid.Width; col++)
             {
                 var cell = _grid.GetCellAt(row, col);
-                if (cell == null)
-                {
-                    Debug.LogWarning($"Cell at {row}, {col} was null.");
-                }
 
-                if ((!cell.IsDisabled() && cell.CurrentPiece == null) ||
-                    (cell.CurrentPiece != null && cell.CurrentPiece.IsBusy()))
+                if ((cell !=null && cell.CurrentPiece == null) ||
+                    (cell != null && cell.CurrentPiece != null && cell.CurrentPiece.IsBusy()))
                     return false;
             }
 
@@ -121,8 +118,8 @@ namespace Managers
             for (int row = 0; row < _grid.Height; row++)
             {
                 var cell = _grid.GetCellAt(row, col);
-                if ((!cell.IsDisabled() && cell.CurrentPiece == null) ||
-                    (cell.CurrentPiece != null && cell.CurrentPiece.IsBusy()))
+                if ((cell !=null && cell.CurrentPiece == null) ||
+                    (cell != null && cell.CurrentPiece != null && cell.CurrentPiece.IsBusy()))
                     return false;
             }
 

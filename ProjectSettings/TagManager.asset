@@ -44,6 +44,9 @@ TagManager:
   - name: Cell
     uniqueID: 1742616449
     locked: 0
+  - name: CellOverlay
+    uniqueID: 3523286029
+    locked: 0
   - name: Piece
     uniqueID: 2799095281
     locked: 0
@@ -64,6 +67,9 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 436625215
+    locked: 0
+  - name: UIParticle
+    uniqueID: 3364060195
     locked: 0
   m_RenderingLayers:
   - Default

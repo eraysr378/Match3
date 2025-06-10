@@ -129,8 +129,9 @@ namespace Pieces.SpecialPieces
 
         private void CompleteDestruction()
         {
-            Cell cellToClear = CurrentCell;
+            BaseCell cellToClear = CurrentCell;
             SetCell(null);
+            cellToClear.TriggerExplosion();
             cellToClear.ClearDirty();
             OnActivationCompleted?.Invoke(this);
             OnReturnToPool();

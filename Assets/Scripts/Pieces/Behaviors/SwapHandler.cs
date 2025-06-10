@@ -20,19 +20,19 @@ namespace Pieces.Behaviors
             _movable = GetComponent<Movable>();
         }
         
-        public void OnValidSwap(Cell cell,float swapDuration,Action onComplete)
+        public void OnValidSwap(BaseCell baseCell,float swapDuration,Action onComplete)
         {
             _swapDuration = swapDuration;
             OnSwapStarted?.Invoke();
-            _movable.StartMovingWithDuration(cell.transform.position,_swapDuration,onComplete);
+            _movable.StartMovingWithDuration(baseCell.transform.position,_swapDuration,onComplete);
         }
 
-        public void OnInvalidSwap(Cell cell,float swapDuration, Action onComplete)
+        public void OnInvalidSwap(BaseCell baseCell,float swapDuration, Action onComplete)
         {
             _swapDuration = swapDuration;
             OnSwapStarted?.Invoke();
             _startPosition = transform.position;
-            _movable.StartMovingWithDuration(cell.transform.position, _swapDuration/2, 
+            _movable.StartMovingWithDuration(baseCell.transform.position, _swapDuration/2, 
                 () => GoBackToStart(onComplete));
         }
 

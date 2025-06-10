@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2e1691c4a744f37ac4fc048544bdada, type: 3}
   m_Name: BombBombExplosionParticleFactory
   m_EditorClassIdentifier: 
-  prefab: {fileID: 375675617764637675, guid: 810da74f489cfa84fa524e150d03df26, type: 3}
+  prefab: {fileID: 6766208618841719989, guid: 440df22343a0c49428b9dfd2d0b807a8, type: 3}

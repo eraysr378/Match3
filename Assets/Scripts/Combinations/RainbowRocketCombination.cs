@@ -10,7 +10,14 @@ namespace Combinations
         protected override RocketPiece SpawnSpecialPiece(int row, int col)
         {
             Piece piece = EventManager.OnPieceSpawnRequested?.Invoke(PieceType.RocketPiece, row, col);
-            return piece as RocketPiece;
+            RocketPiece rocketPiece = piece as RocketPiece;
+            return rocketPiece;
+        }
+
+        protected override void ActivateAllSpecialPieces()
+        {
+            base.ActivateAllSpecialPieces();
+            CompleteCombination();
         }
     }
 }

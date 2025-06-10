@@ -3,7 +3,7 @@ using Misc;
 
 namespace Cells
 {
-    public class DefaultCell : Cell
+    public class DefaultCell : BaseCell
     {
         private void Awake()
         {

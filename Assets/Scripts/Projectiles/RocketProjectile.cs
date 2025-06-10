@@ -9,74 +9,98 @@ using UnityEngine.Serialization;
 
 namespace Projectiles
 {
+    public enum Direction
+    {
+        Left,Right,Up,Down
+    }
     [RequireComponent(typeof(Movable))]
     public class RocketProjectile : MonoBehaviour
     {
         public event Action OnPathCleared;
-        public event Action OnOutOfView;
-        [SerializeField]private Vector3 defaultPosition;
+        public event Action OnReadyToDisable;
+        [SerializeField] private Direction direction;
+        [SerializeField] private ParticleSystem particle;
+        [SerializeField] private Transform hitPoint;
         private float _moveSpeed;
-        private Queue<Cell> _cellPath;
+        private Queue<BaseCell> _cellPath;
         private Movable _movable;
-        private Cell _currentTargetCell;
+        private BaseCell _currentTargetBaseCell;
+        private float _waitTimeBeforeDisabling = 1f;
+        private Vector3 _hitOffset;
 
         private void Awake()
         {
             _movable = GetComponent<Movable>();
         }
-        public void Launch(List<Cell> path, float moveSpeed)
+        public void Launch(List<BaseCell> path, float moveSpeed)
         {
             _moveSpeed = moveSpeed;
+            particle.gameObject.SetActive(true);
             if (path == null)
             {
                 WhenPathCleared();
                 return;
             }
-            _cellPath = new Queue<Cell>(path);
-            StartClearingPath();
+            _cellPath = new Queue<BaseCell>(path);
+            _hitOffset = hitPoint.position - transform.position;
+            ClearPath();
         }
 
-        private void StartClearingPath()
+        private void ClearPath()
         {
             if (_cellPath.Count == 0)
             {
                 WhenPathCleared();
                 return;
             }
-            _currentTargetCell = _cellPath.Dequeue();
-            _movable.StartMovingWithSpeed(_currentTargetCell.transform.position,_moveSpeed,ExplodeCurrentCellPiece);
+            _currentTargetBaseCell = _cellPath.Dequeue();
+            Vector3 targetPosition = _currentTargetBaseCell.transform.position - _hitOffset;
+            _movable.StartMovingWithSpeed(targetPosition,_moveSpeed,ExplodeCurrentCell);
         }
 
-        private void ExplodeCurrentCellPiece()
+        private void ExplodeCurrentCell()
         {
-            if (_currentTargetCell.CurrentPiece is IExplodable explodable)
-            {
-                explodable.TryExplode();
-            }
-            MoveToNextCell();
+            _currentTargetBaseCell.TriggerExplosion();
+            ClearPath();
         }
-        private void MoveToNextCell()
-        {
-            if (_cellPath.Count == 0)
-            {
-                WhenPathCleared();
-                return;
-            }
-            _currentTargetCell = _cellPath.Dequeue();
-            _movable.StartMovingWithSpeed(_currentTargetCell.transform.position,_moveSpeed,ExplodeCurrentCellPiece);
-            
-        }
+ 
         private IEnumerator ContinueStraight()
         {
             while (!IsOutOfView())
             {
-                transform.position += (transform.up * (_moveSpeed * Time.deltaTime));
+                if (direction == Direction.Right)
+                {
+                    transform.position += (transform.right * (_moveSpeed * Time.deltaTime));
+                }
+                else
+                {
+                    transform.position += (-transform.right * (_moveSpeed * Time.deltaTime));
+                }
                 yield return null;
             }
-            OnOutOfView?.Invoke();
-            gameObject.SetActive(false);
+
+            float elapsedTime = 0f;
+            while (elapsedTime < _waitTimeBeforeDisabling)
+            {
+                elapsedTime += Time.deltaTime;
+                if (direction == Direction.Right)
+                {
+                    transform.position += (transform.right * (_moveSpeed * Time.deltaTime));
+                }
+                else
+                {
+                    transform.position += (-transform.right * (_moveSpeed * Time.deltaTime));
+                }
+                yield return null;
+            }
+            Disable();
         }
 
+        private void Disable()
+        {
+            OnReadyToDisable?.Invoke();
+            gameObject.SetActive(false);
+        }
         private void WhenPathCleared()
         {
             StartCoroutine(ContinueStraight());
@@ -85,8 +109,9 @@ namespace Projectiles
         
         public void Reset()
         {
+            particle.gameObject.SetActive(false);
             gameObject.SetActive(true);
-            transform.localPosition = defaultPosition;
+            transform.localPosition = Vector3.zero;
         }
         private bool IsOutOfView()
         {

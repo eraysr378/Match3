@@ -16,18 +16,13 @@ namespace Combinations
         protected override void ActivateCombination(int row, int col)
         {
             var cellsInRadius = GridManager.Instance.GetCellsInRadius(row, col, explosionRadius);
-            PlayParticle();
-
             _cellDirtyTracker.Mark(cellsInRadius);
-
-            List<IExplodable> explodables =
-                GridManager.Instance.GetPiecesInRadius<IExplodable>(row, col, explosionRadius);
-
-            foreach (var explodable in explodables)
+            foreach (var cell in cellsInRadius)
             {
-                explodable.TryExplode();
+                cell.TriggerExplosion();
             }
-
+            PlayParticle();
+            EventManager.OnBigCameraShakeRequest?.Invoke();
             CompleteCombination();
         }
 
@@ -36,11 +31,13 @@ namespace Combinations
             _cellDirtyTracker.ClearAll();
             base.CompleteCombination();
         }
+
         private void PlayParticle()
         {
-            var particle = EventManager.OnParticleSpawnRequested?.Invoke(ParticleType.BombBombExplosion, transform,
-                transform.position, Vector3.one);
+            var particle = EventManager.OnParticleSpawnRequested?.Invoke(ParticleType.BombBombExplosion,
+                transform.position);
             particle?.transform.SetParent(null);
+            particle?.Play();
         }
     }
 }

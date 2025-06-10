@@ -23,13 +23,21 @@ namespace ParticleEffects
 
         public void OnSpawn()
         {
+        }
+        public void Play()
+        {
             _particleSystem.Play(true);
         }
-
         public void OnReturnToPool()
         {
             _particleSystem.Clear(true);
             EventManager.OnParticleReturnToPool?.Invoke(this);
+        }
+
+        public void SetParticleColor(Color color)
+        {
+            var main = _particleSystem.main;
+            main.startColor = color;
         }
     }
 }

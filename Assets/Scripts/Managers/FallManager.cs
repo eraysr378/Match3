@@ -13,20 +13,20 @@ namespace Managers
     public class FallManager : MonoBehaviour
     {
         public static event Action OnAllFallsCompleted;
-        private Dictionary<int,Queue<Cell> > _queueDict = new Dictionary<int, Queue<Cell>>();
+        private Dictionary<int,Queue<BaseCell> > _queueDict = new Dictionary<int, Queue<BaseCell>>();
         private float minDelay = 0.02f;
         private float maxDelay = 0.1f;
         private float _activeFalls;
         private void OnEnable()
         {
-            Cell.OnAnyRequestFall += HandlePieceFall;
+            BaseCell.OnAnyRequestFall += HandlePieceFall;
             // FallHandler.OnAnyFallStarted += HandleAnyFallStarted;
             FallHandler.OnAnyFallCompleted += HandleAnyFallCompleted;
         }
 
         private void OnDisable()
         {
-            Cell.OnAnyRequestFall -= HandlePieceFall;
+            BaseCell.OnAnyRequestFall -= HandlePieceFall;
             // FallHandler.OnAnyFallStarted -= HandleAnyFallStarted;
             FallHandler.OnAnyFallCompleted -= HandleAnyFallCompleted;
         }
@@ -46,11 +46,11 @@ namespace Managers
 
         
 
-        private void HandlePieceFall(Cell cell)
+        private void HandlePieceFall(BaseCell baseCell)
         {
-            if (cell.CurrentPiece == null)
+            if (baseCell.CurrentPiece == null)
             {
-                SpawnNewPiece(cell);
+                SpawnNewPiece(baseCell);
                 // _queueDict.TryAdd(cell.Col, new Queue<Cell>());
                 // _activeFalls++;
                 // _queueDict[cell.Col].Enqueue(cell);
@@ -61,7 +61,7 @@ namespace Managers
             }
         }
 
-        private IEnumerator SpawnNewPieceDelayed(Queue<Cell> queue)
+        private IEnumerator SpawnNewPieceDelayed(Queue<BaseCell> queue)
         {
             while (queue.Count != 0)
             {
@@ -71,12 +71,12 @@ namespace Managers
             }
         }
 
-        private void SpawnNewPiece(Cell cell)
+        private void SpawnNewPiece(BaseCell baseCell)
         {
-            Piece newPiece = EventManager.OnFallingPieceSpawnRequested(cell.Row, cell.Col);
-            newPiece.SetCell(cell);
+            Piece newPiece = EventManager.OnFallingPieceSpawnRequested(baseCell.Row, baseCell.Col);
+            newPiece.SetCell(baseCell);
             newPiece.TryGetComponent<FallHandler>(out var fallHandler);
-            fallHandler.FallTo(cell);
+            fallHandler.FallTo(baseCell);
         }
 
         public bool IsBusy()

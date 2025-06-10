@@ -20,9 +20,9 @@ namespace Combinations
         {
             _animationHandler = GetComponent<CombinationAnimationHandler>();
         }
-        public void Init(Cell spawnCell)
+        public void Init(BaseCell spawnBaseCell)
         {
-            transform.SetParent(spawnCell.transform);
+            transform.SetParent(spawnBaseCell.transform);
             transform.localScale = Vector3.one;
         }
 

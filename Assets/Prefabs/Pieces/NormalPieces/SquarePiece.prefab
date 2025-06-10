@@ -8,6 +8,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1722846114598716752, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1722846114598716752, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
+      propertyPath: m_Color.g
+      value: 0.40784317
+      objectReference: {fileID: 0}
+    - target: {fileID: 1722846114598716752, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
+      propertyPath: m_Color.r
+      value: 0.9921569
+      objectReference: {fileID: 0}
     - target: {fileID: 2533268396648098342, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
       propertyPath: visual
       value: 
@@ -61,8 +73,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4686551305990094527, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 8517821782338798336, guid: c290ffdb5f06efa4ba2cd39a216fb551, type: 3}
+    - target: {fileID: 4686551305990094527, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4686551305990094527, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
       propertyPath: m_Color.g
@@ -70,7 +86,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4686551305990094527, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
       propertyPath: m_Color.r
-      value: 0.1417892
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9110447159632071317, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
       propertyPath: m_LocalScale.x
@@ -116,3 +132,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pieceType: 100
   visual: {fileID: 2628293134981970625}
+  providedColorSpriteRenderer: {fileID: 8257539387190772014}
+--- !u!212 &8257539387190772014 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1722846114598716752, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
+  m_PrefabInstance: {fileID: 7309460097495467134}
+  m_PrefabAsset: {fileID: 0}

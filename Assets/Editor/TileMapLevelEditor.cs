@@ -16,6 +16,7 @@ namespace Editor
         public List<CellTile> cellTiles = new List<CellTile>();
         public List<PieceTile> pieceTiles = new List<PieceTile>();
         public List<TileBase> borderTiles = new List<TileBase>();
+        public List<CellOverlayTile> cellOverlayTiles = new List<CellOverlayTile>();
 
         [MenuItem("Tools/Tilemap Level Editor")]
         public static void Open()
@@ -35,9 +36,11 @@ namespace Editor
 
             SerializedObject so = new SerializedObject(this);
             SerializedProperty cellTilesProp = so.FindProperty("cellTiles");
+            SerializedProperty cellOverlayTilesProp = so.FindProperty("cellOverlayTiles");
             SerializedProperty pieceTilesProp = so.FindProperty("pieceTiles");
             SerializedProperty borderTilesProp = so.FindProperty("borderTiles");  // Add this line
             EditorGUILayout.PropertyField(cellTilesProp, new GUIContent("Cell Tiles"), true);
+            EditorGUILayout.PropertyField(cellOverlayTilesProp, new GUIContent("Cell Overlay Tiles"), true);
             EditorGUILayout.PropertyField(pieceTilesProp, new GUIContent("Piece Tiles"), true);
             EditorGUILayout.PropertyField(borderTilesProp, new GUIContent("Border Tiles"), true);  // Add this line
             so.ApplyModifiedProperties();
@@ -68,6 +71,7 @@ namespace Editor
             _gridData.tilemapOrigin = new Vector2Int(bounds.xMin, bounds.yMin);
             _gridData.bounds = bounds;
             var cellList = new List<GridDataSo.CellData>();
+            var cellOverlayList = new List<GridDataSo.CellOverlayData>();
             var pieceList = new List<GridDataSo.PieceData>();
             var borderTileList = new List<BorderTileData>();
         
@@ -97,10 +101,19 @@ namespace Editor
                         {
                             row = row,
                             column = col,
-                            cellType = CellType.Disabled,
+                            cellType = CellType.None,
                         });
                     }
-
+                    var cellOverlayTile = _baker.cellOverlayTilemap.GetTile(pos) as CellOverlayTile;
+                    if (cellOverlayTile != null)
+                    {
+                        cellOverlayList.Add(new GridDataSo.CellOverlayData
+                        {
+                            row = row,
+                            column = col,
+                            overlayType = cellOverlayTile.cellOverlayType
+                        });
+                    }
                     var pieceTile = _baker.pieceTilemap.GetTile(pos) as PieceTile;
                     if (pieceTile != null)
                     {
@@ -126,6 +139,7 @@ namespace Editor
             }
 
             _gridData.cellDataArray = cellList.ToArray();
+            _gridData.cellOverlayDataArray = cellOverlayList.ToArray();
             _gridData.pieceDataArray = pieceList.ToArray();
             _gridData.borderTileDataArray = borderTileList.ToArray();  // Store border tile data
 
@@ -136,24 +150,26 @@ namespace Editor
         private void RebuildTilemap()
         {
             var cellDict = new Dictionary<CellType, CellTile>();
+            var cellOverlayDict = new Dictionary<CellOverlayType, CellOverlayTile>();
             var pieceDict = new Dictionary<PieceType, PieceTile>();
-            var borderTileDict = new Dictionary<string, TileBase>();  // Dictionary to store border tiles
+            var borderTileDict = new Dictionary<string, TileBase>();
 
             foreach (var ct in cellTiles)
-                if (!cellDict.ContainsKey(ct.cellType)) cellDict[ct.cellType] = ct;
-
+                cellDict.TryAdd(ct.cellType, ct);
+            foreach (var cot in cellOverlayTiles)
+                cellOverlayDict.TryAdd(cot.cellOverlayType, cot);
             foreach (var pt in pieceTiles)
-                if (!pieceDict.ContainsKey(pt.pieceType)) pieceDict[pt.pieceType] = pt;
+                pieceDict.TryAdd(pt.pieceType, pt);
 
             foreach (var bt in borderTiles)
-                if (!borderTileDict.ContainsKey(bt.name)) borderTileDict[bt.name] = bt; // Use the name or unique identifier for border tiles
+                borderTileDict.TryAdd(bt.name, bt); // Use the name or unique identifier for border tiles
 
             // Clear old tiles first
             _baker.cellTilemap.ClearAllTiles();
+            _baker.cellOverlayTilemap.ClearAllTiles();
             _baker.pieceTilemap.ClearAllTiles();
             _baker.tileFrameTilemap.ClearAllTiles(); // Clear the border tilemap as well
 
-            // Set the cell tiles
             foreach (var cell in _gridData.cellDataArray)
             {
                 if (cellDict.TryGetValue(cell.cellType, out var tile))
@@ -164,8 +180,17 @@ namespace Editor
                     _baker.cellTilemap.SetTile(pos, tile);
                 }
             }
+            foreach (var cellOverlay in _gridData.cellOverlayDataArray)
+            {
+                if (cellOverlayDict.TryGetValue(cellOverlay.overlayType, out var tile))
+                {
+                    int x = cellOverlay.column + _gridData.tilemapOrigin.x;
+                    int y = cellOverlay.row + _gridData.tilemapOrigin.y;
+                    Vector3Int pos = new Vector3Int(x, y, 0);
+                    _baker.cellOverlayTilemap.SetTile(pos, tile);
+                }
+            }
 
-            // Set the piece tiles
             foreach (var piece in _gridData.pieceDataArray)
             {
                 if (pieceDict.TryGetValue(piece.pieceType, out var tile))
@@ -176,8 +201,6 @@ namespace Editor
                     _baker.pieceTilemap.SetTile(pos, tile);
                 }
             }
-
-            // Set the border tiles (tileframe)
             foreach (var borderTile in _gridData.borderTileDataArray)
             {
                 if (borderTileDict.TryGetValue(borderTile.borderTile.name, out var tile))

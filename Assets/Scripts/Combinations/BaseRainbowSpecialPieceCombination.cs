@@ -44,29 +44,38 @@ namespace Combinations
                 SpawnProjectile(piece);
                 yield return new WaitForSeconds(0.1f);
             }
+
+            yield break;
         }
 
         private RainbowProjectile SpawnProjectile(Piece targetPiece)
         {
             var projectile = Instantiate(rainbowProjectilePrefab, transform.position, Quaternion.identity);
-            projectile.Initialize(targetPiece);
             projectile.OnReachedTarget += RainbowProjectileOnReachedTarget;
+            projectile.Initialize(targetPiece);
             return projectile;
         }
 
         private void RainbowProjectileOnReachedTarget(RainbowProjectile projectile, Piece targetPiece)
         {
             projectile.OnReachedTarget -= RainbowProjectileOnReachedTarget;
+            if (targetPiece.CurrentCell == null)
+            {
+                Debug.LogWarning("target piece has no cell");
+                _projectileCount--;
+                if (_projectileCount == 0)
+                {
+                    Invoke(nameof(ActivateAllSpecialPieces),1f);
+                }
 
-            T specialPiece = SpawnSpecialPiece(targetPiece.Row, targetPiece.Col);
-            if (specialPiece == null)
                 return;
-
+            }
+            T specialPiece = SpawnSpecialPiece(targetPiece.Row, targetPiece.Col);
+            (specialPiece as IControlledActivatable)?.WaitForActivation();
             _spawnedSpecialPieces.Add(specialPiece);
-
-            Cell cell = targetPiece.CurrentCell;
+            BaseCell baseCell = targetPiece.CurrentCell;
             targetPiece.DestroyPieceInstantly();
-            specialPiece.SetCell(cell);
+            specialPiece.SetCell(baseCell);
 
             _projectileCount--;
             if (_projectileCount == 0)
@@ -81,10 +90,8 @@ namespace Combinations
         {
             foreach (var piece in _spawnedSpecialPieces)
             {
-                (piece as IActivatable)?.TryActivate();
+                (piece as IControlledActivatable)?.ForceActivate();
             }
-            CompleteCombination();
-
         }
 
         public override void OnSpawn()

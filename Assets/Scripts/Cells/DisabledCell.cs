@@ -3,11 +3,11 @@ using Misc;
 
 namespace Cells
 {
-    public class DisabledCell : Cell
+    public class DisabledCell : BaseCell
     {
         private void Awake()
         {
-            cellType = CellType.Disabled;
+            cellType = CellType.None;
         }
     }
 }

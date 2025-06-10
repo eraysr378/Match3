@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Cells;
+using CameraRelated;
 using Interfaces;
 using Managers;
 using Misc;
@@ -11,20 +10,21 @@ using Utils;
 
 namespace Pieces.SpecialPieces
 {
-    public class BombPiece : Piece, IActivatable, IExplodable, ICombinable
+    public class BombPiece : Piece, IActivatable, IExplodable, ICombinable,IControlledActivatable
     {
         public event Action<IActivatable> OnActivationCompleted;
         [SerializeField] private int explosionRadius = 1;
         [SerializeField] private float explosionDelay = 0.1f;
-        [SerializeField] private float destroyDelay = 0.5f;
         private readonly CellDirtyTracker _cellDirtyTracker = new();
         private SwapHandler _swapHandler;
         private FillHandler _fillHandler;
+        private Shaker _shaker;
 
         protected  void Awake()
         {
             _swapHandler = GetComponent<SwapHandler>();
             _fillHandler = GetComponent<FillHandler>();
+            _shaker = GetComponent<Shaker>();
             _swapHandler.OnSwapStarted += SwapHandler_OnSwapStarted;
             _swapHandler.OnSwapCompleted += SwapHandler_OnSwapCompleted;
             _fillHandler.OnFillStarted += FillHandler_OnFillStarted;
@@ -53,63 +53,74 @@ namespace Pieces.SpecialPieces
 
         public bool TryActivate()
         {
-            return TriggerExplosion(0);
+            return TriggerExplosion();
         }
 
         public bool TryExplode()
         {
-            return TriggerExplosion(explosionDelay);
+            return TriggerExplosion();
         }
 
-        private bool TriggerExplosion(float delay)
+        public void WaitForActivation()
         {
-            if (isBeingDestroyed)
+            SetOperation(PieceOperation.WaitingForActivation);
+            _shaker.Shake();
+        }
+        public void ForceActivate()
+        {
+            ClearOperation();
+            _shaker.Stop();
+            TryActivate();
+        }
+        private bool IsWaitingForActivation()
+        {
+            return GetActiveOperation() == PieceOperation.WaitingForActivation;
+        }
+        private bool TriggerExplosion()
+        {
+            if (isBeingDestroyed || IsWaitingForActivation())
                 return false;
             SetOperation(PieceOperation.Activating);
             isBeingDestroyed = true;
-            StartCoroutine(TriggerExplosionCoroutine(delay));
+            StartCoroutine(TriggerExplosionCoroutine());
             return true;
         }
 
-        private IEnumerator TriggerExplosionCoroutine(float delay)
+        private IEnumerator TriggerExplosionCoroutine()
         {
             EventManager.OnPieceActivated?.Invoke(this);
-
-            yield return new WaitForSeconds(delay);
+            
             PlayParticle();
+            EventManager.OnSmallCameraShakeRequest?.Invoke();
+            yield return new WaitForSeconds(explosionDelay);
             var cellsInRadius = GridManager.Instance.GetCellsInRadius(Row, Col, explosionRadius);
-            List<IExplodable> explodables =
-                GridManager.Instance.GetPiecesInRadius<IExplodable>(Row, Col, explosionRadius);
-            explodables.Remove(this);
             _cellDirtyTracker.Mark(cellsInRadius);
-            foreach (var explodable in explodables)
+            
+            cellsInRadius.Remove(CurrentCell);
+            foreach (var cell in cellsInRadius)
             {
-                explodable.TryExplode();
+                cell.TriggerExplosion();
             }
-
-            Invoke(nameof(OnExplosionCompleted), destroyDelay);
+            OnExplosionCompleted();
         }
 
         private void PlayParticle()
         {
-            var particle = EventManager.OnParticleSpawnRequested?.Invoke(ParticleType.BombExplosion, transform,
-                transform.position, Vector3.one);
-            particle?.transform.SetParent(null);
+            var particle = EventManager.OnParticleSpawnRequested?.Invoke(ParticleType.BombExplosion,
+                transform.position);
+            particle?.Play();
         }
 
         private void OnExplosionCompleted()
         {
+            var cell = CurrentCell;
             SetCell(null);
+            cell.TriggerExplosion();
             _cellDirtyTracker.ClearAll();
             OnActivationCompleted?.Invoke(this);
             OnReturnToPool();
         }
-
-
-        public override void OnSpawn()
-        {
-            base.OnSpawn();
-        }
+        
 
         public void OnCombined(Piece piece)
         {

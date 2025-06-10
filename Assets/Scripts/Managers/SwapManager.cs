@@ -120,12 +120,12 @@ namespace Managers
 
         private void SwapPieceCells(Piece firstPiece, Piece secondPiece)
         {
-            Cell firstCell = firstPiece.CurrentCell;
-            Cell secondCell = secondPiece.CurrentCell;
+            BaseCell firstBaseCell = firstPiece.CurrentCell;
+            BaseCell secondBaseCell = secondPiece.CurrentCell;
 
             secondPiece.SetCell(null);
-            firstPiece.SetCell(secondCell);
-            secondPiece.SetCell(firstCell);
+            firstPiece.SetCell(secondBaseCell);
+            secondPiece.SetCell(firstBaseCell);
         }
     }
 }

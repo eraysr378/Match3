@@ -1,7 +1,10 @@
+using CameraRelated;
 using Managers;
 using Misc;
 using Pieces;
 using Pieces.SpecialPieces;
+using UnityEngine;
+using Utils;
 
 namespace Combinations
 {
@@ -10,7 +13,15 @@ namespace Combinations
         protected override BombPiece SpawnSpecialPiece(int row, int col)
         {
             Piece piece = EventManager.OnPieceSpawnRequested?.Invoke(PieceType.BombPiece, row, col);
-            return piece as BombPiece;
+            BombPiece bombPiece= piece as BombPiece;
+            return bombPiece;
+        }
+
+        protected override void ActivateAllSpecialPieces()
+        {
+            base.ActivateAllSpecialPieces();
+            EventManager.OnBigCameraShakeRequest?.Invoke();
+            CompleteCombination();
         }
     }
 }

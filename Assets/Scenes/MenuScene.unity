@@ -916,6 +916,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 49f9a86ea4e791449a81b72494ec4a57, type: 2}
   - {fileID: 11400000, guid: b40a567f7d402dc4c99b458b71a6895f, type: 2}
   - {fileID: 11400000, guid: c3dd62b7ef61c1241991f8c938ae8978, type: 2}
+  - {fileID: 11400000, guid: f6768e3a55bfe14418486fe9b6f52487, type: 2}
   levelButtonPrefab: {fileID: 1842609570764832477, guid: 1c82bb40b152cfb4ca979f372ee4c554, type: 3}
   buttonContainer: {fileID: 376333643}
 --- !u!1 &1985301998

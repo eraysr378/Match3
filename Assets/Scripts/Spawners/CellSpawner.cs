@@ -23,19 +23,19 @@ namespace Spawners
         }
 
  
-        private Cell SpawnCell(CellType cellType, Vector3 position)
+        private BaseCell SpawnCell(CellType cellType, Vector3 position)
         {
-            Cell cell = cellFactory.CreateCellBasedOnType(cellType);
-            if (cell == null) return null;
+            BaseCell baseCell = cellFactory.CreateCellBasedOnType(cellType);
+            if (baseCell == null) return null;
             
             // Vector2 pos = GridUtility.GridPositionToWorldPosition(row, col);
-            cell.transform.position = position;
+            baseCell.transform.position = position;
             // cell.transform.localScale = Vector3.one * GridUtility.PropertiesSo.cellSize;
-            cell.transform.localScale = Vector3.one;
+            baseCell.transform.localScale = Vector3.one;
 
             // cell.SetPosition(row,col);
 
-            return cell;
+            return baseCell;
         }
         
         

@@ -9,7 +9,7 @@ namespace Factories.CellFactories
     {
         [SerializeField] private DefaultCell prefab;
 
-        public override Cell CreateCell(CellType cellType)
+        public override BaseCell CreateCell(CellType cellType)
         {
             DefaultCell defaultCell = Instantiate(prefab);
             return defaultCell;

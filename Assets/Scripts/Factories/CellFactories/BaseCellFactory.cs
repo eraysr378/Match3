@@ -6,7 +6,7 @@ namespace Factories.CellFactories
 {
     public abstract class BaseCellFactory: ScriptableObject
     {
-        public abstract Cell CreateCell(CellType cellType);
+        public abstract BaseCell CreateCell(CellType cellType);
 
     }
 }

@@ -10,7 +10,7 @@ namespace Pieces
     public abstract class Piece : MonoBehaviour, IPoolableObject
     {
         public event Action OnDestroy;
-        public Cell CurrentCell { get; private set; }
+        public BaseCell CurrentCell { get; private set; }
         public int Row => CurrentCell.Row;
         public int Col => CurrentCell.Col;
 
@@ -28,18 +28,18 @@ namespace Pieces
             transform.localScale = Vector3.one;
         }
 
-        public virtual void Init(Cell cell)
+        public virtual void Init(BaseCell baseCell)
         {
-            SetCell(cell);
+            SetCell(baseCell);
             // transform.SetParent(cell?.transform);
-            transform.position = cell.transform.position;
+            transform.position = baseCell.transform.position;
             transform.localScale = Vector3.one;
         }
 
-        public void SetCell(Cell newCell)
+        public void SetCell(BaseCell newBaseCell)
         {
             CurrentCell?.SetPiece(null);
-            CurrentCell = newCell;
+            CurrentCell = newBaseCell;
             CurrentCell?.SetPiece(this);
 
             // if (CurrentCell != null)

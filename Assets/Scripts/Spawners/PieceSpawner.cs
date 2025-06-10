@@ -34,8 +34,9 @@ namespace Spawners
             // Cell cell = GridManager.Instance.GetCellAt(row, col);
             // piece?.Init(cell.transform.position);
             // return piece;
-            Cell cell = GridManager.Instance.GetCellAt(0, 0);
-            Vector3 spawnPos = cell.transform.position + new Vector3(col,row,0);
+            // BaseCell baseCell = GridManager.Instance.GetCellAt(0, 0);
+            // Vector3 spawnPos = baseCell.transform.position + new Vector3(col,row,0);
+            Vector3 spawnPos = GridManager.Instance.GridOrigin + new Vector3(col,row,0);
             piece?.Init(spawnPos);
             return piece;
         }
@@ -53,8 +54,8 @@ namespace Spawners
             var random = new Random();
             NormalPieceType randomNormalPiece = (NormalPieceType)values.GetValue(random.Next(values.Length));
             PieceType randomPieceType = (PieceType)randomNormalPiece;
-            Cell cell = GridManager.Instance.GetCellAt(row, col);
-            Vector3 spawnPos = cell.transform.position + Vector3.up;
+            BaseCell baseCell = GridManager.Instance.GetCellAt(row, col);
+            Vector3 spawnPos = baseCell.transform.position + Vector3.up;
             return SpawnPieceAtPosition(randomPieceType, row, col, spawnPos);
         }
     }

@@ -19,7 +19,7 @@ namespace MatchSystem
         private int _totalProcessCount = 0;
         private readonly List<MatchProcess> _processList = new();
         private readonly List<CellDirtyTracker> _cellDirtyTrackerList = new ();
-        public void HandleMatches(List<(List<Piece>, Piece)> matchLists)
+        public void HandleMatches(List<Match> matchList)
         {
             if (!_isHandlerActive)
             {
@@ -27,9 +27,9 @@ namespace MatchSystem
                 _isHandlerActive = true;
             }
             
-            foreach (var (matchList, spawnPiece) in matchLists)
+            foreach (var match in matchList)
             {
-                CreateMatchProcess(matchList, spawnPiece);
+                CreateMatchProcess(match);
             }
             foreach (var process in _processList)
             {
@@ -38,10 +38,10 @@ namespace MatchSystem
             _processList.Clear();
         }
         
-        private void CreateMatchProcess(List<Piece> matchList, Piece spawnPiece)
+        private void CreateMatchProcess(Match match)
         {
             var cellDirtyTracker = new CellDirtyTracker();
-            var process = new MatchProcess(matchList, spawnPiece,cellDirtyTracker);
+            var process = new MatchProcess(match,cellDirtyTracker);
             process.OnAllMatchablesNotified += OnAllMatchablesNotified;
             process.OnMatchProcessCompleted += OnMatchProcessCompleted;
             _processList.Add(process);

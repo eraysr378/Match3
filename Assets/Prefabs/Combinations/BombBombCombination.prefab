@@ -123,7 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visual: {fileID: 7721485588654803280}
   combinationType: 1
-  explosionRadius: 2
+  explosionRadius: 4
 --- !u!212 &7721485588654803280 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 7771473178951756347, guid: fa607e4b259232947862a88ee74b5c8d, type: 3}

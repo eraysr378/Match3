@@ -4,7 +4,7 @@ namespace Misc
     {
         Default,
         Red,
-        Disabled,
+        None,
     }
     public enum PieceType
     {
@@ -14,6 +14,7 @@ namespace Misc
         BombPiece,
         RocketPiece,
         RainbowPiece,
+        WoodBox,
 
         
         
@@ -53,6 +54,7 @@ namespace Misc
         BombExplosion,
         BombBombExplosion,
         HexagonExplosion,
+        Stars,
         
         
     }
@@ -69,6 +71,7 @@ namespace Misc
         Filling,
         Falling,
         Activating,
+        WaitingForActivation
         
     }
     public enum GoalType
@@ -76,6 +79,21 @@ namespace Misc
         Square,
         Circle,
         Triangle,
-        Hexagon
+        Hexagon,
+        WoodBox,
+        Glass
+    }
+
+    public enum CellOverlayType
+    {
+        None,
+        Glass
+    }
+
+    public enum MatchShape
+    {
+        Line,
+        T,
+        L
     }
 }

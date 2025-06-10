@@ -21,12 +21,10 @@ namespace Spawners
         }
 
 
-        private PoolableParticle SpawnParticle(ParticleType particleType,Transform parent,Vector3 position,Vector3 scale)
+        private PoolableParticle SpawnParticle(ParticleType particleType,Vector3 position)
         {
             PoolableParticle particle = particleFactory.GetParticleBasedOnType(particleType);
             if (particle == null) return null;
-            particle.transform.SetParent(parent);
-            particle.transform.localScale = scale;
             particle.transform.position = position;
             return particle;
         }

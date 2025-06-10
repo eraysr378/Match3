@@ -2,6 +2,7 @@ using UnityEngine;
 using Cells;
 using Misc;
 using Pieces;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 [System.Serializable]
@@ -21,6 +22,7 @@ public class GridDataSo : ScriptableObject
     public BorderTileData[] borderTileDataArray; 
     public CellData[] cellDataArray;
     public PieceData[] pieceDataArray;
+    public CellOverlayData[] cellOverlayDataArray;
     [System.Serializable]
     public struct CellData
     {
@@ -35,6 +37,14 @@ public class GridDataSo : ScriptableObject
         public int row;
         public int column;
         public PieceType pieceType;
+    }
+    [System.Serializable]
+
+    public struct CellOverlayData
+    {
+        public int row;
+        public int column;
+        public CellOverlayType overlayType;
     }
 
 

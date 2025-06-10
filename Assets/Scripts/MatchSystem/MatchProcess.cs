@@ -13,39 +13,34 @@ namespace MatchSystem
     public class MatchProcess
     {
         public event Action OnAllMatchablesNotified;
-
         public event Action<CellDirtyTracker> OnMatchProcessCompleted;
         private int _remainingPieces;
-        private readonly Cell _spawnCell;
-        private readonly List<Cell> _dirtyCells = new();
-        private readonly List<Piece> _matchList;
         private readonly CellDirtyTracker _cellDirtyTracker;
-        public MatchProcess(List<Piece> matchList, Piece spawnPiece,CellDirtyTracker cellDirtyTracker)
+        private readonly Match _match;
+        public MatchProcess(Match match,CellDirtyTracker cellDirtyTracker)
         {
-            _matchList = matchList;
-            _spawnCell = spawnPiece.CurrentCell;
-            _remainingPieces = matchList.Count;
+            _match = match;
+            _remainingPieces = match.PieceList.Count;
             _cellDirtyTracker = cellDirtyTracker;
         }
 
         public void Begin()
         {
-            foreach (var piece in _matchList)
+            foreach (var piece in _match.PieceList)
             {
                 if (piece is not IMatchable matchable)
                 {
                     Debug.LogError($"Piece {piece.name} does not implement IMatchable!");
                     continue;
                 }
-
                 if (piece.CurrentCell == null)
                 {
-                    Debug.LogWarning($"{piece.name} does not have a cell!");
+                    Debug.LogError($"{piece.name} does not have a cell!");
                 }
 
                 _cellDirtyTracker.Mark(piece.CurrentCell);
 
-                if (_matchList.Count == 3)
+                if (_match.Length == 3)
                 {
                     if (!matchable.TryHandleNormalMatch(OnPieceMatchHandled))
                     {
@@ -54,12 +49,14 @@ namespace MatchSystem
                 }
                 else
                 {
-                    if (!matchable.TryHandleSpecialMatch(_spawnCell, OnPieceMatchHandled))
+                    if (!matchable.TryHandleSpecialMatch(_match.OriginCell, OnPieceMatchHandled))
                     {
                         Debug.LogError("TryHandleSpecialMatch failed");
                     }
-                }   
+                }
             }
+            NotifyMatchCells();
+            NotifyAdjacentCells();
             OnAllMatchablesNotified?.Invoke();
         }
 
@@ -67,29 +64,44 @@ namespace MatchSystem
         {
             _remainingPieces--;
             if (_remainingPieces != 0) return;
-            SpawnCorrespondingPiece(_matchList.Count, _spawnCell);
+            if(_match.Length > 3)
+                SpawnSpecialPiece();
             OnMatchProcessCompleted?.Invoke(_cellDirtyTracker);
         }
 
-        private void RequestSpecialPieceSpawn(Cell cell, PieceType pieceType)
+        private void RequestSpecialPieceSpawn(BaseCell cell, PieceType pieceType)
         {
             Piece piece = EventManager.OnPieceSpawnRequested?.Invoke(pieceType, cell.Row, cell.Col);
             piece?.SetCell(cell);
         }
 
-        private void SpawnCorrespondingPiece(int count, Cell spawnCell)
+        private void SpawnSpecialPiece()
         {
-            switch (count)
+            PieceType pieceType = MatchRewardDecider.DecideReward(_match);
+            RequestSpecialPieceSpawn(_match.OriginCell, pieceType);
+
+        }
+        private void NotifyMatchCells()
+        {
+            var matchedCells = _cellDirtyTracker.GetDirtyCells();
+            foreach (var cell in matchedCells)
             {
-                case > 5:
-                    RequestSpecialPieceSpawn(spawnCell, PieceType.RainbowPiece);
-                    break;
-                case > 4:
-                    RequestSpecialPieceSpawn(spawnCell, PieceType.BombPiece);
-                    break;
-                case > 3:
-                    RequestSpecialPieceSpawn(spawnCell, PieceType.RocketPiece);
-                    break;
+                cell.OnPieceMatched();
+            }
+        }
+        private void NotifyAdjacentCells()
+        {
+            var matchedCells = _cellDirtyTracker.GetDirtyCells();
+            foreach (var cell in matchedCells)
+            {
+                var adjacentCells = GridManager.Instance.GetAdjacentCells(cell.Row, cell.Col);
+                foreach (var adjacentCell in adjacentCells)
+                {
+                    if (!matchedCells.Contains(adjacentCell))
+                    {
+                        adjacentCell?.TriggerAdjacentMatch();
+                    }
+                }
             }
         }
     }

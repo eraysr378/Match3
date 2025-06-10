@@ -1,5 +1,6 @@
 using Managers;
 using Misc;
+using ParticleEffects;
 using UnityEngine;
 
 namespace Pieces.NormalPieces
@@ -8,9 +9,10 @@ namespace Pieces.NormalPieces
     {
         protected override void PlayParticleEffect()
         {
-            var particle = EventManager.OnParticleSpawnRequested?.Invoke(ParticleType.SquareExplosion, transform,
-                transform.position, Vector3.one);
-            particle?.transform.SetParent(null);
+            PoolableParticle particle = EventManager.OnParticleSpawnRequested?.Invoke(ParticleType.SquareExplosion,
+                transform.position);
+            particle?.SetParticleColor(GetColor());
+            particle?.Play();
         }
     }
 }

@@ -10,6 +10,6 @@ namespace Interfaces
         public event Action OnMatchHandled;
 
         public bool TryHandleNormalMatch(Action onHandled);
-        public bool TryHandleSpecialMatch(Cell spawnCell,Action onHandled);
+        public bool TryHandleSpecialMatch(BaseCell spawnBaseCell,Action onHandled);
     }
 }

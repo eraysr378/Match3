@@ -12,14 +12,20 @@ namespace Managers
     {
         public event Action OnAllGoalsCompleted;
         [SerializeField] private DynamicElementResizer goalContainer;
-        private List<GoalConfig> goalConfigList;
+        private List<GoalConfig> _goalConfigList;
         private readonly Dictionary<GoalType, Goal> _goalDict = new ();
         private int _totalGoalAmount;
 
-        private void Awake()
+        private void OnEnable()
         {
             EventManager.OnGoalProgressed += OnGoalProgressed;
         }
+
+        private void OnDisable()
+        {
+            EventManager.OnGoalProgressed -= OnGoalProgressed;
+        }
+
         private void OnGoalProgressed(GoalType goalType)
         {
             if (_goalDict.TryGetValue(goalType, out var goal))
@@ -45,12 +51,12 @@ namespace Managers
 
         public void InitializeGoals(List<GoalConfig> goalConfigs)
         {
-            goalConfigList = goalConfigs;
+            _goalConfigList = goalConfigs;
             Setup();
         }
         private void Setup()
         {
-            foreach (var goalConfig in goalConfigList)
+            foreach (var goalConfig in _goalConfigList)
             {
                 var goal = goalContainer.AddItem(goalConfig.goalPrefab);
                 goal.SetGoalCount(goalConfig.goalCount);

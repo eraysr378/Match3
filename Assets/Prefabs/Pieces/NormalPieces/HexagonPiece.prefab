@@ -8,6 +8,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1722846114598716752, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
+      propertyPath: m_Color.b
+      value: 0.027450982
+      objectReference: {fileID: 0}
+    - target: {fileID: 1722846114598716752, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
+      propertyPath: m_Color.g
+      value: 0.91372555
+      objectReference: {fileID: 0}
+    - target: {fileID: 1722846114598716752, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
+      propertyPath: m_Color.r
+      value: 0.45882356
+      objectReference: {fileID: 0}
     - target: {fileID: 2533268396648098342, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
       propertyPath: visual
       value: 
@@ -63,14 +75,14 @@ PrefabInstance:
     - target: {fileID: 4686551305990094527, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 2753684c7f3f8464d9c396483e7c6b05, type: 2}
+      objectReference: {fileID: 2506258167897451137, guid: c290ffdb5f06efa4ba2cd39a216fb551, type: 3}
     - target: {fileID: 4686551305990094527, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4686551305990094527, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4686551305990094527, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
       propertyPath: m_Color.r
@@ -93,6 +105,11 @@ SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 4686551305990094527, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
   m_PrefabInstance: {fileID: 6241242789983562278}
   m_PrefabAsset: {fileID: 0}
+--- !u!212 &4716850277928513398 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1722846114598716752, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
+  m_PrefabInstance: {fileID: 6241242789983562278}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7042194050134817408 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3974355282629726374, guid: 4d31535684cec4148822c7d278d28af2, type: 3}
@@ -112,3 +129,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pieceType: 103
   visual: {fileID: 1699159615370859673}
+  providedColorSpriteRenderer: {fileID: 4716850277928513398}

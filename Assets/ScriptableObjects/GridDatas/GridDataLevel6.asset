@@ -1,0 +1,663 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8781e11409af4eb2a219db3b9ba75fc8, type: 3}
+  m_Name: GridDataLevel6
+  m_EditorClassIdentifier: 
+  rows: 10
+  columns: 10
+  tilemapOrigin: {x: -3, y: -7}
+  bounds:
+    m_Position: {x: -3, y: -7, z: 0}
+    m_Size: {x: 10, y: 10, z: 1}
+  borderTileDataArray: []
+  cellDataArray:
+  - row: 0
+    column: 0
+    cellType: 0
+  - row: 1
+    column: 0
+    cellType: 0
+  - row: 2
+    column: 0
+    cellType: 0
+  - row: 3
+    column: 0
+    cellType: 0
+  - row: 4
+    column: 0
+    cellType: 0
+  - row: 5
+    column: 0
+    cellType: 0
+  - row: 6
+    column: 0
+    cellType: 0
+  - row: 7
+    column: 0
+    cellType: 0
+  - row: 8
+    column: 0
+    cellType: 0
+  - row: 9
+    column: 0
+    cellType: 0
+  - row: 0
+    column: 1
+    cellType: 0
+  - row: 1
+    column: 1
+    cellType: 0
+  - row: 2
+    column: 1
+    cellType: 0
+  - row: 3
+    column: 1
+    cellType: 0
+  - row: 4
+    column: 1
+    cellType: 0
+  - row: 5
+    column: 1
+    cellType: 0
+  - row: 6
+    column: 1
+    cellType: 0
+  - row: 7
+    column: 1
+    cellType: 0
+  - row: 8
+    column: 1
+    cellType: 0
+  - row: 9
+    column: 1
+    cellType: 0
+  - row: 0
+    column: 2
+    cellType: 0
+  - row: 1
+    column: 2
+    cellType: 0
+  - row: 2
+    column: 2
+    cellType: 0
+  - row: 3
+    column: 2
+    cellType: 0
+  - row: 4
+    column: 2
+    cellType: 0
+  - row: 5
+    column: 2
+    cellType: 0
+  - row: 6
+    column: 2
+    cellType: 0
+  - row: 7
+    column: 2
+    cellType: 0
+  - row: 8
+    column: 2
+    cellType: 0
+  - row: 9
+    column: 2
+    cellType: 0
+  - row: 0
+    column: 3
+    cellType: 0
+  - row: 1
+    column: 3
+    cellType: 0
+  - row: 2
+    column: 3
+    cellType: 0
+  - row: 3
+    column: 3
+    cellType: 0
+  - row: 4
+    column: 3
+    cellType: 0
+  - row: 5
+    column: 3
+    cellType: 0
+  - row: 6
+    column: 3
+    cellType: 0
+  - row: 7
+    column: 3
+    cellType: 0
+  - row: 8
+    column: 3
+    cellType: 0
+  - row: 9
+    column: 3
+    cellType: 0
+  - row: 0
+    column: 4
+    cellType: 0
+  - row: 1
+    column: 4
+    cellType: 0
+  - row: 2
+    column: 4
+    cellType: 0
+  - row: 3
+    column: 4
+    cellType: 0
+  - row: 4
+    column: 4
+    cellType: 0
+  - row: 5
+    column: 4
+    cellType: 0
+  - row: 6
+    column: 4
+    cellType: 0
+  - row: 7
+    column: 4
+    cellType: 0
+  - row: 8
+    column: 4
+    cellType: 0
+  - row: 9
+    column: 4
+    cellType: 0
+  - row: 0
+    column: 5
+    cellType: 0
+  - row: 1
+    column: 5
+    cellType: 0
+  - row: 2
+    column: 5
+    cellType: 0
+  - row: 3
+    column: 5
+    cellType: 0
+  - row: 4
+    column: 5
+    cellType: 0
+  - row: 5
+    column: 5
+    cellType: 0
+  - row: 6
+    column: 5
+    cellType: 0
+  - row: 7
+    column: 5
+    cellType: 0
+  - row: 8
+    column: 5
+    cellType: 0
+  - row: 9
+    column: 5
+    cellType: 0
+  - row: 0
+    column: 6
+    cellType: 0
+  - row: 1
+    column: 6
+    cellType: 0
+  - row: 2
+    column: 6
+    cellType: 0
+  - row: 3
+    column: 6
+    cellType: 0
+  - row: 4
+    column: 6
+    cellType: 0
+  - row: 5
+    column: 6
+    cellType: 0
+  - row: 6
+    column: 6
+    cellType: 0
+  - row: 7
+    column: 6
+    cellType: 0
+  - row: 8
+    column: 6
+    cellType: 0
+  - row: 9
+    column: 6
+    cellType: 0
+  - row: 0
+    column: 7
+    cellType: 0
+  - row: 1
+    column: 7
+    cellType: 0
+  - row: 2
+    column: 7
+    cellType: 0
+  - row: 3
+    column: 7
+    cellType: 0
+  - row: 4
+    column: 7
+    cellType: 0
+  - row: 5
+    column: 7
+    cellType: 0
+  - row: 6
+    column: 7
+    cellType: 0
+  - row: 7
+    column: 7
+    cellType: 0
+  - row: 8
+    column: 7
+    cellType: 0
+  - row: 9
+    column: 7
+    cellType: 0
+  - row: 0
+    column: 8
+    cellType: 0
+  - row: 1
+    column: 8
+    cellType: 0
+  - row: 2
+    column: 8
+    cellType: 0
+  - row: 3
+    column: 8
+    cellType: 0
+  - row: 4
+    column: 8
+    cellType: 0
+  - row: 5
+    column: 8
+    cellType: 0
+  - row: 6
+    column: 8
+    cellType: 0
+  - row: 7
+    column: 8
+    cellType: 0
+  - row: 8
+    column: 8
+    cellType: 0
+  - row: 9
+    column: 8
+    cellType: 0
+  - row: 0
+    column: 9
+    cellType: 0
+  - row: 1
+    column: 9
+    cellType: 0
+  - row: 2
+    column: 9
+    cellType: 0
+  - row: 3
+    column: 9
+    cellType: 0
+  - row: 4
+    column: 9
+    cellType: 0
+  - row: 5
+    column: 9
+    cellType: 0
+  - row: 6
+    column: 9
+    cellType: 0
+  - row: 7
+    column: 9
+    cellType: 0
+  - row: 8
+    column: 9
+    cellType: 0
+  - row: 9
+    column: 9
+    cellType: 0
+  pieceDataArray:
+  - row: 0
+    column: 0
+    pieceType: 103
+  - row: 1
+    column: 0
+    pieceType: 101
+  - row: 2
+    column: 0
+    pieceType: 103
+  - row: 3
+    column: 0
+    pieceType: 101
+  - row: 4
+    column: 0
+    pieceType: 4
+  - row: 5
+    column: 0
+    pieceType: 102
+  - row: 6
+    column: 0
+    pieceType: 2
+  - row: 7
+    column: 0
+    pieceType: 101
+  - row: 8
+    column: 0
+    pieceType: 101
+  - row: 9
+    column: 0
+    pieceType: 102
+  - row: 0
+    column: 1
+    pieceType: 101
+  - row: 1
+    column: 1
+    pieceType: 2
+  - row: 2
+    column: 1
+    pieceType: 101
+  - row: 3
+    column: 1
+    pieceType: 103
+  - row: 4
+    column: 1
+    pieceType: 2
+  - row: 5
+    column: 1
+    pieceType: 103
+  - row: 6
+    column: 1
+    pieceType: 101
+  - row: 7
+    column: 1
+    pieceType: 103
+  - row: 8
+    column: 1
+    pieceType: 102
+  - row: 9
+    column: 1
+    pieceType: 101
+  - row: 0
+    column: 2
+    pieceType: 103
+  - row: 1
+    column: 2
+    pieceType: 4
+  - row: 2
+    column: 2
+    pieceType: 103
+  - row: 3
+    column: 2
+    pieceType: 101
+  - row: 4
+    column: 2
+    pieceType: 103
+  - row: 5
+    column: 2
+    pieceType: 101
+  - row: 6
+    column: 2
+    pieceType: 103
+  - row: 7
+    column: 2
+    pieceType: 101
+  - row: 8
+    column: 2
+    pieceType: 2
+  - row: 9
+    column: 2
+    pieceType: 101
+  - row: 0
+    column: 3
+    pieceType: 101
+  - row: 1
+    column: 3
+    pieceType: 5
+  - row: 2
+    column: 3
+    pieceType: 2
+  - row: 3
+    column: 3
+    pieceType: 103
+  - row: 4
+    column: 3
+    pieceType: 5
+  - row: 5
+    column: 3
+    pieceType: 103
+  - row: 6
+    column: 3
+    pieceType: 101
+  - row: 7
+    column: 3
+    pieceType: 5
+  - row: 8
+    column: 3
+    pieceType: 101
+  - row: 9
+    column: 3
+    pieceType: 100
+  - row: 0
+    column: 4
+    pieceType: 103
+  - row: 1
+    column: 4
+    pieceType: 101
+  - row: 2
+    column: 4
+    pieceType: 103
+  - row: 3
+    column: 4
+    pieceType: 101
+  - row: 4
+    column: 4
+    pieceType: 103
+  - row: 5
+    column: 4
+    pieceType: 4
+  - row: 6
+    column: 4
+    pieceType: 100
+  - row: 7
+    column: 4
+    pieceType: 101
+  - row: 8
+    column: 4
+    pieceType: 100
+  - row: 9
+    column: 4
+    pieceType: 101
+  - row: 0
+    column: 5
+    pieceType: 101
+  - row: 1
+    column: 5
+    pieceType: 103
+  - row: 2
+    column: 5
+    pieceType: 2
+  - row: 3
+    column: 5
+    pieceType: 103
+  - row: 4
+    column: 5
+    pieceType: 101
+  - row: 5
+    column: 5
+    pieceType: 4
+  - row: 6
+    column: 5
+    pieceType: 103
+  - row: 7
+    column: 5
+    pieceType: 5
+  - row: 8
+    column: 5
+    pieceType: 103
+  - row: 9
+    column: 5
+    pieceType: 103
+  - row: 0
+    column: 6
+    pieceType: 103
+  - row: 1
+    column: 6
+    pieceType: 5
+  - row: 2
+    column: 6
+    pieceType: 103
+  - row: 3
+    column: 6
+    pieceType: 101
+  - row: 4
+    column: 6
+    pieceType: 5
+  - row: 5
+    column: 6
+    pieceType: 101
+  - row: 6
+    column: 6
+    pieceType: 100
+  - row: 7
+    column: 6
+    pieceType: 103
+  - row: 8
+    column: 6
+    pieceType: 100
+  - row: 9
+    column: 6
+    pieceType: 101
+  - row: 0
+    column: 7
+    pieceType: 101
+  - row: 1
+    column: 7
+    pieceType: 4
+  - row: 2
+    column: 7
+    pieceType: 101
+  - row: 3
+    column: 7
+    pieceType: 103
+  - row: 4
+    column: 7
+    pieceType: 2
+  - row: 5
+    column: 7
+    pieceType: 100
+  - row: 6
+    column: 7
+    pieceType: 101
+  - row: 7
+    column: 7
+    pieceType: 103
+  - row: 8
+    column: 7
+    pieceType: 4
+  - row: 9
+    column: 7
+    pieceType: 100
+  - row: 0
+    column: 8
+    pieceType: 103
+  - row: 1
+    column: 8
+    pieceType: 3
+  - row: 2
+    column: 8
+    pieceType: 103
+  - row: 3
+    column: 8
+    pieceType: 101
+  - row: 4
+    column: 8
+    pieceType: 102
+  - row: 5
+    column: 8
+    pieceType: 103
+  - row: 6
+    column: 8
+    pieceType: 103
+  - row: 7
+    column: 8
+    pieceType: 101
+  - row: 8
+    column: 8
+    pieceType: 103
+  - row: 9
+    column: 8
+    pieceType: 103
+  - row: 0
+    column: 9
+    pieceType: 101
+  - row: 1
+    column: 9
+    pieceType: 103
+  - row: 2
+    column: 9
+    pieceType: 101
+  - row: 3
+    column: 9
+    pieceType: 103
+  - row: 4
+    column: 9
+    pieceType: 101
+  - row: 5
+    column: 9
+    pieceType: 2
+  - row: 6
+    column: 9
+    pieceType: 101
+  - row: 7
+    column: 9
+    pieceType: 2
+  - row: 8
+    column: 9
+    pieceType: 101
+  - row: 9
+    column: 9
+    pieceType: 2
+  cellOverlayDataArray:
+  - row: 0
+    column: 0
+    overlayType: 1
+  - row: 5
+    column: 0
+    overlayType: 1
+  - row: 9
+    column: 0
+    overlayType: 1
+  - row: 1
+    column: 1
+    overlayType: 1
+  - row: 2
+    column: 2
+    overlayType: 1
+  - row: 6
+    column: 3
+    overlayType: 1
+  - row: 6
+    column: 4
+    overlayType: 1
+  - row: 3
+    column: 5
+    overlayType: 1
+  - row: 6
+    column: 5
+    overlayType: 1
+  - row: 6
+    column: 6
+    overlayType: 1
+  - row: 4
+    column: 8
+    overlayType: 1
+  - row: 9
+    column: 8
+    overlayType: 1
+  - row: 7
+    column: 9
+    overlayType: 1

@@ -10,24 +10,24 @@ namespace GridRelated
         public int Width => width;
         [SerializeField] private int width;
         [SerializeField] private int height;
-        private Cell[,] _gridArray;
+        private BaseCell[,] _gridArray;
 
         public Grid(int rows, int columns)
         {
             height = rows;
             width = columns;
-            _gridArray = new Cell[rows, columns];
+            _gridArray = new BaseCell[rows, columns];
         }
 
-        public void SetCellAt(int row, int col, Cell cell)
+        public void SetCellAt(int row, int col, BaseCell baseCell)
         {
             if (row >= 0 && row < height && col >= 0 && col < width)
             {
-                _gridArray[row, col] = cell;
+                _gridArray[row, col] = baseCell;
             }
         }
 
-        public Cell GetCellAt(int row, int col)
+        public BaseCell GetCellAt(int row, int col)
         {
             if (row >= 0 && row < height && col >= 0 && col < width)
             {

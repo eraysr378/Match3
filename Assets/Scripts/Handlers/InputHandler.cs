@@ -11,7 +11,8 @@ namespace Handlers
     {
         [SerializeField] protected MoveManager moveManager;
         [SerializeField] protected SwapManager swapManager;
-        protected void ProcessInput(Cell cell1, Cell cell2)
+        protected bool isEnabled;
+        protected void ProcessInput(BaseCell cell1, BaseCell cell2)
         {
             var piece1 = cell1.CurrentPiece;
             var piece2 = cell2.CurrentPiece;
@@ -43,7 +44,14 @@ namespace Handlers
             }
         }
 
-        public abstract void Enable();
-        public abstract void Disable();
+        public void Enable()
+        {
+            isEnabled = true;
+        }
+
+        public void Disable()
+        {
+            isEnabled = false;
+        }
     }
 }

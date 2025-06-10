@@ -1,3 +1,4 @@
+using BuildSystem;
 using MatchSystem;
 using Pieces;
 using SwapSystem;
@@ -16,7 +17,7 @@ namespace Managers
         private SwapFinder _swapFinder;
         public void OnEnable()
         {
-            TilemapLoader.OnCellsCreated += Initialize;
+            GridBuilder.OnCellsCreated += Initialize;
             SwapValidator.OnSwapWillCauseMatch += WouldSwapCauseMatch;
             EventManager.OnMatchCheckRequested += OnMatchCheckRequested;
             gridStabilizationChecker.OnRowStabilized += HandleRowStabilized;
@@ -25,7 +26,7 @@ namespace Managers
         
         public void OnDisable()
         {
-            TilemapLoader.OnCellsCreated -= Initialize;
+            GridBuilder.OnCellsCreated -= Initialize;
             SwapValidator.OnSwapWillCauseMatch -= WouldSwapCauseMatch;
             EventManager.OnMatchCheckRequested -= OnMatchCheckRequested;
             gridStabilizationChecker.OnRowStabilized -= HandleRowStabilized;

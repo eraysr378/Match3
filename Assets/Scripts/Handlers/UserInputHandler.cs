@@ -1,15 +1,13 @@
 using Cells;
 using Interfaces;
-using Managers;
 using OperationBlockTrackers;
-using Pieces;
 using UnityEngine;
 
 namespace Handlers
 {
     public class UserInputHandler : InputHandler
     {
-        private Cell _selectedCell;
+        private BaseCell _selectedBaseCell;
         private UserInputBlockTracker _userInputBlockTracker;
 
         private void Awake()
@@ -19,45 +17,50 @@ namespace Handlers
 
         private void OnEnable()
         {
-            Enable();
+            BaseCell.OnAnyPointerDown += OnAnyPointerDownCellEvent;
+            BaseCell.OnAnyPointerUp += OnAnyPointerUpCellEvent;
+            BaseCell.OnAnyPointerEnter += OnAnyPointerEnterCellEvent;
         }
 
         private void OnDisable()
         {
-            Disable();
+            BaseCell.OnAnyPointerDown -= OnAnyPointerDownCellEvent;
+            BaseCell.OnAnyPointerUp -= OnAnyPointerUpCellEvent;
+            BaseCell.OnAnyPointerEnter -= OnAnyPointerEnterCellEvent;
         }
 
-        private void OnAnyPointerEnterCellEvent(Cell cell)
+        private void OnAnyPointerEnterCellEvent(BaseCell baseCell)
         {
             if (_userInputBlockTracker.HasActiveOperations())
             {
-                _selectedCell = null;
+                _selectedBaseCell = null;
                 return;
             }
 
-            if (!_selectedCell || _selectedCell == cell)
+            if (!_selectedBaseCell || _selectedBaseCell == baseCell)
                 return;
 
-            if (!_selectedCell.gameObject.activeSelf ||
-                !AreCellsAdjacent(_selectedCell, cell))
+            if (!_selectedBaseCell.gameObject.activeSelf ||
+                !AreCellsAdjacent(_selectedBaseCell, baseCell))
             {
-                _selectedCell = null;
+                _selectedBaseCell = null;
                 return;
             }
-            ProcessInput(_selectedCell, cell);
-            _selectedCell = null;
-        }
-    
 
-        private void OnAnyPointerUpCellEvent(Cell cell)
+            ProcessInput(_selectedBaseCell, baseCell);
+            _selectedBaseCell = null;
+        }
+
+
+        private void OnAnyPointerUpCellEvent(BaseCell baseCell)
         {
             if (_userInputBlockTracker.HasActiveOperations())
             {
-                _selectedCell = null;
+                _selectedBaseCell = null;
                 return;
             }
 
-            if (cell == _selectedCell && cell.CurrentPiece is IActivatable activatable)
+            if (baseCell == _selectedBaseCell && baseCell.CurrentPiece is IActivatable activatable)
             {
                 if (moveManager.CanMakeMove() && activatable.TryActivate())
                 {
@@ -65,37 +68,37 @@ namespace Handlers
                 }
             }
 
-            _selectedCell = null;
+            _selectedBaseCell = null;
         }
 
-        private void OnAnyPointerDownCellEvent(Cell cell)
+        private void OnAnyPointerDownCellEvent(BaseCell baseCell)
         {
             if (_userInputBlockTracker.HasActiveOperations())
             {
-                _selectedCell = null;
+                _selectedBaseCell = null;
                 return;
             }
-            
-            _selectedCell = cell;
+
+            _selectedBaseCell = baseCell;
         }
 
-        private bool AreCellsAdjacent(Cell cell1, Cell cell2)
+        private bool AreCellsAdjacent(BaseCell cell1, BaseCell cell2)
         {
             return Mathf.Abs(cell1.Row - cell2.Row) + Mathf.Abs(cell1.Col - cell2.Col) == 1;
         }
 
-        public override void Enable()
-        {
-            Cell.OnAnyPointerDown += OnAnyPointerDownCellEvent;
-            Cell.OnAnyPointerUp += OnAnyPointerUpCellEvent;
-            Cell.OnAnyPointerEnter += OnAnyPointerEnterCellEvent;
-        }
-
-        public override void Disable()
-        {
-            Cell.OnAnyPointerDown -= OnAnyPointerDownCellEvent;
-            Cell.OnAnyPointerUp -= OnAnyPointerUpCellEvent;
-            Cell.OnAnyPointerEnter -= OnAnyPointerEnterCellEvent;
-        }
+        // public void Enable()
+        // {
+        //     BaseCell.OnAnyPointerDown += OnAnyPointerDownCellEvent;
+        //     BaseCell.OnAnyPointerUp += OnAnyPointerUpCellEvent;
+        //     BaseCell.OnAnyPointerEnter += OnAnyPointerEnterCellEvent;
+        // }
+        //
+        // public void Disable()
+        // {
+        //     BaseCell.OnAnyPointerDown -= OnAnyPointerDownCellEvent;
+        //     BaseCell.OnAnyPointerUp -= OnAnyPointerUpCellEvent;
+        //     BaseCell.OnAnyPointerEnter -= OnAnyPointerEnterCellEvent;
+        // }
     }
 }
