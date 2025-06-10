@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pieceType: 3
-  projectileSpeed: 12
+  projectileSpeed: 15
   projectileLeft: {fileID: 6771798552085876367}
   projectileRight: {fileID: 443770389715026524}
 --- !u!114 &8822063657004602986

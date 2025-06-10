@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 254bb370d8134574b95f3752bfe8cf02, type: 3}
+  m_Name: Level8
+  m_EditorClassIdentifier: 
+  totalMoveCount: 15
+  goalConfigs:
+  - goalPrefab: {fileID: 9147618203201495598, guid: f27fa642129dafe48aea1bd7d4c0011d, type: 3}
+    goalCount: 12
+  gridDataSo: {fileID: 11400000, guid: 0fa064941a71d494fb60b620f7c38f87, type: 2}
+  levelName: Level8
