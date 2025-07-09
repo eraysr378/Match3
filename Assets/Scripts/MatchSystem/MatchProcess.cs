@@ -71,7 +71,7 @@ namespace MatchSystem
 
         private void RequestSpecialPieceSpawn(BaseCell cell, PieceType pieceType)
         {
-            Piece piece = EventManager.OnPieceSpawnRequested?.Invoke(pieceType, cell.Row, cell.Col);
+            Piece piece = EventManager.RequestPieceSpawn?.Invoke(pieceType, cell.Row, cell.Col);
             piece?.SetCell(cell);
         }
 

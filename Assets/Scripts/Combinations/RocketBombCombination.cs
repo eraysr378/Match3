@@ -20,7 +20,7 @@ namespace Combinations
         
         private void SpawnRocket(int row, int col, bool isHorizontal)
         {
-            Piece piece = EventManager.OnPieceSpawnRequested?.Invoke(PieceType.RocketPiece, row, col);
+            Piece piece = EventManager.RequestPieceSpawn?.Invoke(PieceType.RocketPiece, row, col);
    
             if (piece is not RocketPiece rocketPiece)
                 return;

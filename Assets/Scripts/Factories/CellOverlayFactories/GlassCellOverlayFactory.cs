@@ -10,9 +10,9 @@ namespace Factories.CellOverlayFactories
     {
         [SerializeField] private GlassCellOverlay prefab;
 
-        public override BaseCellOverlay CreateCellOverlay(CellOverlayType cellOverlayType)
+        public override BaseCellOverlay CreateCellOverlay(CellOverlayType cellOverlayType,Transform parent = null)
         {
-            GlassCellOverlay cellOverlay = Instantiate(prefab);
+            GlassCellOverlay cellOverlay = Instantiate(prefab,parent);
             return cellOverlay;
         }
     }

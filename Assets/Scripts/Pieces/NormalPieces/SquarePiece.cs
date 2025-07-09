@@ -9,7 +9,7 @@ namespace Pieces.NormalPieces
     {
         protected override void PlayParticleEffect()
         {
-            PoolableParticle particle = EventManager.OnParticleSpawnRequested?.Invoke(ParticleType.SquareExplosion,
+            PoolableParticle particle = EventManager.RequestParticleSpawn?.Invoke(ParticleType.SquareExplosion,
                 transform.position);
             particle?.SetParticleColor(GetColor());
             particle?.Play();

@@ -10,22 +10,25 @@ namespace UI
 {
     public class LevelSelectionButton : MonoBehaviour
     {
-        [FormerlySerializedAs("levelData")] [SerializeField] private ScriptableObjects.LevelDataSo levelDataSo;
+        [SerializeField] private int level;
+        private Button _button;
         private void Awake()
         {
-            GetComponent<Button>().onClick.AddListener(() =>
+            _button = GetComponent<Button>();
+            _button.onClick.AddListener(() =>
             {
-                EventManager.OnLevelSelected?.Invoke(levelDataSo);
+                EventManager.OnLevelSelected?.Invoke(level);
             });
         }
         
-        public void SetLevelData(ScriptableObjects.LevelDataSo dataSo)
+        public void SetLevel(int level)
         {
-            levelDataSo = dataSo;
-            GetComponentInChildren<TextMeshProUGUI>().text = dataSo.levelName;
-            GetComponent<Button>().onClick.AddListener(() =>
+            this.level = level;
+
+            GetComponentInChildren<TextMeshProUGUI>().text = $"Level {level}";
+            _button.onClick.AddListener(() =>
             {
-                EventManager.OnLevelSelected?.Invoke(levelDataSo);
+                EventManager.OnLevelSelected?.Invoke(level);
             });
         }
     }

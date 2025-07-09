@@ -6,6 +6,7 @@ using Managers;
 using Misc;
 using Pieces.Behaviors;
 using Processes;
+using SoundRelated;
 using UnityEngine;
 using UnityEngine.Serialization;
 using VisualEffects;
@@ -110,7 +111,7 @@ namespace Pieces.SpecialPieces
 
         private void StartDestroyProcessForPiece(Piece piece)
         {
-            var visualEffect = EventManager.OnVisualEffectSpawnRequested(VisualEffectType.RainbowPieceLineRenderer);
+            var visualEffect = EventManager.RequestVisualEffectSpawn(VisualEffectType.RainbowPieceLineRenderer);
             if (visualEffect is not IRainbowLineEffect lineEffect)
             {
                 Debug.LogError("Effect is not rainbow line effect");
@@ -122,7 +123,7 @@ namespace Pieces.SpecialPieces
             {
                 lineEffect.SetColor(colorProvider.GetColor());
             }
-
+            SoundManager.Instance.PlaySound(SoundType.RainbowLaser);
             var process = new RainbowDestroyProcess(piece, visualEffect);
             process.Execute();
         }

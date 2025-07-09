@@ -7,7 +7,7 @@ namespace Factories.CellOverlayFactories
 {
     public abstract class BaseCellOverlayFactory : ScriptableObject
     {
-        public abstract BaseCellOverlay CreateCellOverlay(CellOverlayType cellOverlayType);
+        public abstract BaseCellOverlay CreateCellOverlay(CellOverlayType cellOverlayType,Transform parent);
 
     }
 }

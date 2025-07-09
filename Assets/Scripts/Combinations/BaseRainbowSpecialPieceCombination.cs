@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cells;
+using Factories;
 using Interfaces;
 using Managers;
 using Misc;
@@ -13,7 +14,7 @@ namespace Combinations
 {
     public abstract class BaseRainbowSpecialPieceCombination<T> : BaseCombination where T : Piece
     {
-        [SerializeField] private RainbowProjectile rainbowProjectilePrefab;
+        // [SerializeField] private RainbowProjectile rainbowProjectilePrefab;
         private readonly List<T> _spawnedSpecialPieces = new();
         private int _projectileCount = 0;
         private PieceType _targetType;
@@ -48,12 +49,11 @@ namespace Combinations
             yield break;
         }
 
-        private RainbowProjectile SpawnProjectile(Piece targetPiece)
+        private void SpawnProjectile(Piece targetPiece)
         {
-            var projectile = Instantiate(rainbowProjectilePrefab, transform.position, Quaternion.identity);
+            var projectile = EventManager.RequestRainbowProjectileSpawn.Invoke(transform.position);
             projectile.OnReachedTarget += RainbowProjectileOnReachedTarget;
             projectile.Initialize(targetPiece);
-            return projectile;
         }
 
         private void RainbowProjectileOnReachedTarget(RainbowProjectile projectile, Piece targetPiece)

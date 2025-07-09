@@ -5,6 +5,7 @@ using Interfaces;
 using Managers;
 using Misc;
 using Pieces.Behaviors;
+using SoundRelated;
 using UnityEngine;
 using Utils;
 
@@ -82,6 +83,7 @@ namespace Pieces.SpecialPieces
                 return false;
             SetOperation(PieceOperation.Activating);
             isBeingDestroyed = true;
+            SoundManager.Instance.PlaySound(SoundType.BombExplosion);
             StartCoroutine(TriggerExplosionCoroutine());
             return true;
         }
@@ -106,7 +108,7 @@ namespace Pieces.SpecialPieces
 
         private void PlayParticle()
         {
-            var particle = EventManager.OnParticleSpawnRequested?.Invoke(ParticleType.BombExplosion,
+            var particle = EventManager.RequestParticleSpawn?.Invoke(ParticleType.BombExplosion,
                 transform.position);
             particle?.Play();
         }

@@ -24,7 +24,7 @@ namespace BuildSystem
                     continue;
                 }
 
-                var glass = EventManager.OnCellOverlaySpawnRequested(overlayData.overlayType,cell.transform.position);
+                var glass = EventManager.RequestCellOverlaySpawn(overlayData.overlayType,cell.transform.position);
                 cell.SetOverlay(glass);
                 glass.SetCell(cell);
             }

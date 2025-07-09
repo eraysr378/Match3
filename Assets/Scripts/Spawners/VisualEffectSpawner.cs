@@ -10,12 +10,12 @@ namespace Spawners
         [SerializeField] private GeneralVisualEffectFactory visualEffectFactory;
         public void OnEnable()
         {
-            EventManager.OnVisualEffectSpawnRequested += SpawnEffect;
+            EventManager.RequestVisualEffectSpawn += SpawnEffect;
         }
 
         private void OnDisable()
         {
-            EventManager.OnVisualEffectSpawnRequested -= SpawnEffect;
+            EventManager.RequestVisualEffectSpawn -= SpawnEffect;
         }
 
  

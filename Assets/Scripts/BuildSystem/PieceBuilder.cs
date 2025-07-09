@@ -18,7 +18,7 @@ namespace BuildSystem
                 int col = pieceData.column;
                 
                 BaseCell baseCell = grid.GetCellAt(row, col);
-                Piece createdPiece = EventManager.OnPieceSpawnRequested?.Invoke(pieceType, row, col);
+                Piece createdPiece = EventManager.RequestPieceSpawn?.Invoke(pieceType, row, col);
                
                 baseCell.SetPiece(createdPiece);
                 createdPiece?.Init(baseCell);

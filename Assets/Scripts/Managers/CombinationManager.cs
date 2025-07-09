@@ -26,17 +26,17 @@ namespace Managers
 
         private void OnEnable()
         {
-            EventManager.OnCombinationRequested += StartCombination;
+            EventManager.RequestCombination += StartCombination;
         }
 
         private void OnDisable()
         {
-            EventManager.OnCombinationRequested -= StartCombination;
+            EventManager.RequestCombination -= StartCombination;
         }
         private void StartCombination(Piece pieceA, Piece pieceB)
         {
             OnCombinationStarted?.Invoke();
-            Debug.LogWarning("Combination Started");
+            // Debug.LogWarning("Combination Started");
             if (!pieceA.TryGetComponent<Movable>(out var movable))
             {
                 Debug.LogError("Movable component not found on pieceA!");
@@ -52,7 +52,7 @@ namespace Managers
                 Debug.LogWarning("Combination result not found");
                 return;
             }
-            _baseCombination = EventManager.OnCombinationSpawnRequested(combinationType, pieceB.Row,pieceB.Col);
+            _baseCombination = EventManager.RequestCombinationSpawn(combinationType, pieceB.Row,pieceB.Col);
             BaseCell spawnBaseCell = pieceB.CurrentCell;
             _cellDirtyTracker.Mark(pieceA.CurrentCell);
             _cellDirtyTracker.Mark(pieceB.CurrentCell);
@@ -69,7 +69,7 @@ namespace Managers
             _baseCombination.OnCombinationCompleted -= CompleteCombination;
             _cellDirtyTracker.ClearAll();
             OnCombinationCompleted?.Invoke();
-            Debug.LogWarning("Combination Completed");
+            // Debug.LogWarning("Combination Completed");
         }
     }
 }

@@ -180,17 +180,7 @@ namespace Editor
                     _baker.cellTilemap.SetTile(pos, tile);
                 }
             }
-            foreach (var cellOverlay in _gridData.cellOverlayDataArray)
-            {
-                if (cellOverlayDict.TryGetValue(cellOverlay.overlayType, out var tile))
-                {
-                    int x = cellOverlay.column + _gridData.tilemapOrigin.x;
-                    int y = cellOverlay.row + _gridData.tilemapOrigin.y;
-                    Vector3Int pos = new Vector3Int(x, y, 0);
-                    _baker.cellOverlayTilemap.SetTile(pos, tile);
-                }
-            }
-
+         
             foreach (var piece in _gridData.pieceDataArray)
             {
                 if (pieceDict.TryGetValue(piece.pieceType, out var tile))
@@ -209,6 +199,16 @@ namespace Editor
                     int y = borderTile.row + _gridData.tilemapOrigin.y;
                     Vector3Int pos = new Vector3Int(x, y, 0);
                     _baker.tileFrameTilemap.SetTile(pos, tile);
+                }
+            }
+            foreach (var cellOverlay in _gridData.cellOverlayDataArray)
+            {
+                if (cellOverlayDict.TryGetValue(cellOverlay.overlayType, out var tile))
+                {
+                    int x = cellOverlay.column + _gridData.tilemapOrigin.x;
+                    int y = cellOverlay.row + _gridData.tilemapOrigin.y;
+                    Vector3Int pos = new Vector3Int(x, y, 0);
+                    _baker.cellOverlayTilemap.SetTile(pos, tile);
                 }
             }
 

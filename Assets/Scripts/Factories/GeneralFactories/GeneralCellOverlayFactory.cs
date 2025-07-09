@@ -11,6 +11,7 @@ namespace Factories.GeneralFactories
 {
     public class GeneralCellOverlayFactory : MonoBehaviour
     {
+        [SerializeField] private Transform cellOverlayParent;
         [SerializeField] private List<CellOverlayType> cellOverlayTypeKeys;
         [SerializeField] private List<BaseCellOverlayFactory> cellOverlayFactoryValues;
         private Dictionary<CellOverlayType, BaseCellOverlayFactory> _cellFactoriesByType;
@@ -36,7 +37,7 @@ namespace Factories.GeneralFactories
         {
             if (_cellFactoriesByType.TryGetValue(cellOverlayType, out var factory))
             {
-                return factory.CreateCellOverlay(cellOverlayType);
+                return factory.CreateCellOverlay(cellOverlayType, cellOverlayParent);
             }
             return null;
         }

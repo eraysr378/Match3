@@ -1,23 +1,36 @@
+using Database;
 using LevelSystem;
 using ScriptableObjects;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UI
 {
     public class LevelSelectionPanelUI : MonoBehaviour
     {
-        [SerializeField] private ScriptableObjects.LevelDataSo[] allLevels;
         [SerializeField] private GameObject levelButtonPrefab;
         [SerializeField] private Transform buttonContainer;
+        [SerializeField] private int maxLevelCompleted;
 
-        private void Start()
+        public void Init()
         {
-            foreach (ScriptableObjects.LevelDataSo level in allLevels)
+            if (!PlayerPrefs.HasKey("MaxLevel"))
+            {
+                PlayerPrefs.SetInt("MaxLevel", 1);
+            }
+            maxLevelCompleted =  PlayerPrefs.GetInt("MaxLevel");
+            int totalLevelCount = LevelDatabase.Instance.GetTotalLevelCount();
+            for (int level = 1; level <= totalLevelCount; level++)
             {
                 GameObject buttonObj = Instantiate(levelButtonPrefab, buttonContainer);
                 LevelSelectionButton selectionButton = buttonObj.GetComponent<LevelSelectionButton>();
-                selectionButton.SetLevelData(level); // You can create this method
+                selectionButton.SetLevel(level);
+                if (level > maxLevelCompleted)
+                {
+                    selectionButton.GetComponent<Button>().interactable = false;
+                }
             }
+          
         }
     }
 }

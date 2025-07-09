@@ -27,8 +27,8 @@ namespace Handlers
             }
             if (piece1 is ICombinable && piece2 is ICombinable)
             {
-                Debug.Log("Combination requested");
-                EventManager.OnCombinationRequested?.Invoke(piece1, piece2);
+                // Debug.Log("Combination requested");
+                EventManager.RequestCombination?.Invoke(piece1, piece2);
                 moveManager.MakeMove();
                 return;
             }

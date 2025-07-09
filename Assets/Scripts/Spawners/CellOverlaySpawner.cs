@@ -10,12 +10,12 @@ namespace Spawners
         [SerializeField] private GeneralCellOverlayFactory cellOverlayFactory;
         public void OnEnable()
         {
-            EventManager.OnCellOverlaySpawnRequested += SpawnCellOverlay;
+            EventManager.RequestCellOverlaySpawn += SpawnCellOverlay;
         }
 
         private void OnDisable()
         {
-            EventManager.OnCellOverlaySpawnRequested -= SpawnCellOverlay;
+            EventManager.RequestCellOverlaySpawn -= SpawnCellOverlay;
         }
 
  

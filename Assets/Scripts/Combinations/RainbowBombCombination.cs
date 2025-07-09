@@ -12,7 +12,7 @@ namespace Combinations
     {
         protected override BombPiece SpawnSpecialPiece(int row, int col)
         {
-            Piece piece = EventManager.OnPieceSpawnRequested?.Invoke(PieceType.BombPiece, row, col);
+            Piece piece = EventManager.RequestPieceSpawn?.Invoke(PieceType.BombPiece, row, col);
             BombPiece bombPiece= piece as BombPiece;
             return bombPiece;
         }

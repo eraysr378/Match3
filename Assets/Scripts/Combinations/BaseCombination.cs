@@ -56,7 +56,7 @@ namespace Combinations
 
         public virtual void OnReturnToPool()
         {
-            EventManager.OnCombinationReturnToPool?.Invoke(this);
+            EventManager.ReturnCombinationToPool?.Invoke(this);
         }
     }
 }

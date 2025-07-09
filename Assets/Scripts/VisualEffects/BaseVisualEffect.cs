@@ -20,7 +20,7 @@ namespace VisualEffects
 
         public void OnReturnToPool()
         {
-            EventManager.OnVisualEffectReturnToPool?.Invoke(this);
+            EventManager.ReturnVisualEffectToPool?.Invoke(this);
         }
         public VisualEffectType GetEffectType() => effectType;
     }

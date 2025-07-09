@@ -1,15 +1,15 @@
 using System;
 using DG.Tweening;
+using Interfaces;
+using Managers;
 using Pieces;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Projectiles
 {
-    public class RainbowProjectile : MonoBehaviour
+    public class RainbowProjectile : MonoBehaviour, IPoolableObject
     {
         public event Action<RainbowProjectile, Piece> OnReachedTarget;
-
         [SerializeField] private float speed = 6f;
         [SerializeField] private float amplitude = 1.25f;
         [SerializeField] private float frequency = 1;
@@ -19,7 +19,7 @@ namespace Projectiles
         private Piece _targetPiece;
         private Tween _moveTween;
 
-        public void Initialize(Piece targetPiece)
+        public void Initialize(Piece targetPiece) 
         {
             
             _targetPiece = targetPiece;
@@ -35,13 +35,11 @@ namespace Projectiles
 
             float distance = Vector3.Distance(startPos, endPos);
             float duration = distance / speed;
-            
             trailEffect.gameObject.SetActive(true);
             
             _moveTween = DOVirtual.Float(0f, 1f, duration, t =>
             {
                 Vector3 linearPos = Vector3.Lerp(startPos, endPos, t);
-                
                 // Sine wave offset
                 float wave = Mathf.Sin(t * frequency * 2 * Mathf.PI) * amplitude;
                 transform.position = linearPos + perpendicular * wave;
@@ -52,13 +50,21 @@ namespace Projectiles
                 OnReachedTarget?.Invoke(this, _targetPiece);
                 trailEffect.gameObject.SetActive(false);
                 impactEffect.gameObject.SetActive(true);
-                Destroy(gameObject,impactEffect.main.duration);
+                Invoke(nameof(OnReturnToPool),impactEffect.main.duration);
             });
         }
+        
+        public void OnSpawn()
+        {
+        }
 
-        private void OnDisable()
+        public void OnReturnToPool()
         {
             _moveTween?.Kill();
+            impactEffect.gameObject.SetActive(false);
+            trailEffect.gameObject.SetActive(false);
+            EventManager.ReturnRainbowProjectileToPool?.Invoke(this);
+
         }
     }
 }

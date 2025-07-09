@@ -286,25 +286,25 @@ MonoBehaviour:
     cellType: 0
   - row: 2
     column: 4
-    cellType: 1
+    cellType: 0
   - row: 3
     column: 4
-    cellType: 1
+    cellType: 0
   - row: 4
     column: 4
-    cellType: 1
+    cellType: 0
   - row: 5
     column: 4
-    cellType: 1
+    cellType: 0
   - row: 6
     column: 4
-    cellType: 1
+    cellType: 0
   - row: 7
     column: 4
-    cellType: 1
+    cellType: 0
   - row: 8
     column: 4
-    cellType: 1
+    cellType: 0
   - row: 9
     column: 4
     cellType: 0
@@ -319,7 +319,7 @@ MonoBehaviour:
     cellType: 0
   - row: 2
     column: 5
-    cellType: 1
+    cellType: 0
   - row: 3
     column: 5
     cellType: 0
@@ -337,7 +337,7 @@ MonoBehaviour:
     cellType: 0
   - row: 8
     column: 5
-    cellType: 1
+    cellType: 0
   - row: 9
     column: 5
     cellType: 0
@@ -352,7 +352,7 @@ MonoBehaviour:
     cellType: 0
   - row: 2
     column: 6
-    cellType: 1
+    cellType: 0
   - row: 3
     column: 6
     cellType: 0
@@ -370,7 +370,7 @@ MonoBehaviour:
     cellType: 0
   - row: 8
     column: 6
-    cellType: 1
+    cellType: 0
   - row: 9
     column: 6
     cellType: 0
@@ -385,7 +385,7 @@ MonoBehaviour:
     cellType: 0
   - row: 2
     column: 7
-    cellType: 1
+    cellType: 0
   - row: 3
     column: 7
     cellType: 0
@@ -403,7 +403,7 @@ MonoBehaviour:
     cellType: 0
   - row: 8
     column: 7
-    cellType: 1
+    cellType: 0
   - row: 9
     column: 7
     cellType: 0
@@ -418,25 +418,25 @@ MonoBehaviour:
     cellType: 0
   - row: 2
     column: 8
-    cellType: 1
+    cellType: 0
   - row: 3
     column: 8
-    cellType: 1
+    cellType: 0
   - row: 4
     column: 8
-    cellType: 1
+    cellType: 0
   - row: 5
     column: 8
-    cellType: 1
+    cellType: 0
   - row: 6
     column: 8
-    cellType: 1
+    cellType: 0
   - row: 7
     column: 8
-    cellType: 1
+    cellType: 0
   - row: 8
     column: 8
-    cellType: 1
+    cellType: 0
   - row: 9
     column: 8
     cellType: 0
@@ -451,10 +451,10 @@ MonoBehaviour:
     cellType: 2
   - row: 2
     column: 9
-    cellType: 1
+    cellType: 0
   - row: 3
     column: 9
-    cellType: 1
+    cellType: 0
   - row: 4
     column: 9
     cellType: 0
@@ -819,3 +819,4 @@ MonoBehaviour:
   - row: 6
     column: 11
     pieceType: 100
+  cellOverlayDataArray: []

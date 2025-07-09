@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23eec14d110042b68f879d41fe0e6d41, type: 3}
+  m_Name: RainbowRainbowCombinationFactory
+  m_EditorClassIdentifier: 
+  initialPoolSize: 2
+  prefab: {fileID: 936292513417176554, guid: 45e778afe674f974983b94f02c5b1c48, type: 3}

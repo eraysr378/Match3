@@ -1,3 +1,4 @@
+using UnityEngine;
 using VisualEffects;
 
 namespace Factories.BaseFactories

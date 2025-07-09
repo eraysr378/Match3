@@ -4,14 +4,14 @@ using Pieces;
 using Pieces.Behaviors;
 using SwapSystem;
 using UnityEngine;
+using Utils;
 
 namespace Managers
 {
     public class SwapManager : MonoBehaviour
     {
-
         [SerializeField] private float swapDuration;
-    
+
         private Piece _swappedFirstPiece;
         private Piece _swappedSecondPiece;
         private bool _canSwap = true;
@@ -21,22 +21,28 @@ namespace Managers
         private SwapValidator _swapValidator;
         private SwapHandler _firstSwapHandler;
         private SwapHandler _secondSwapHandler;
+        private CellDirtyTracker _cellDirtyTracker;
 
         private void Awake()
         {
             _swapBlockTracker = GetComponent<SwapBlockTracker>();
             _swapValidator = new SwapValidator();
+            _cellDirtyTracker = new CellDirtyTracker();
         }
-        
 
-        public bool TryHandleSwap(SwapHandler firstSwappable,Piece firstPiece, SwapHandler secondSwappable, Piece secondPiece)
+
+        public bool TryHandleSwap(SwapHandler firstSwappable, Piece firstPiece, SwapHandler secondSwappable,
+            Piece secondPiece)
         {
             if (_swapBlockTracker.HasActiveOperations() || !_canSwap)
             {
                 Debug.LogWarning("SwapManager is blocked");
                 return false;
             }
+
             _canSwap = false;
+            _cellDirtyTracker.Mark(firstPiece.CurrentCell);
+            _cellDirtyTracker.Mark(secondPiece.CurrentCell);
             _isValidSwap = _swapValidator.IsValidSwap(firstPiece, secondPiece);
             _firstSwapHandler = firstSwappable;
             _secondSwapHandler = secondSwappable;
@@ -47,15 +53,14 @@ namespace Managers
             if (_isValidSwap)
             {
                 SwapPieceCells(firstPiece, secondPiece);
-                firstSwappable.OnValidSwap(firstPiece.CurrentCell,swapDuration, HandleValidPostSwap);
-                secondSwappable.OnValidSwap(secondPiece.CurrentCell,swapDuration, HandleValidPostSwap);
+                firstSwappable.OnValidSwap(firstPiece.CurrentCell, swapDuration, HandleValidPostSwap);
+                secondSwappable.OnValidSwap(secondPiece.CurrentCell, swapDuration, HandleValidPostSwap);
                 return true;
             }
-            firstSwappable.OnInvalidSwap(secondPiece.CurrentCell,swapDuration, HandleInvalidPostSwap);
-            secondSwappable.OnInvalidSwap(firstPiece.CurrentCell,swapDuration, HandleInvalidPostSwap);
+
+            firstSwappable.OnInvalidSwap(secondPiece.CurrentCell, swapDuration, HandleInvalidPostSwap);
+            secondSwappable.OnInvalidSwap(firstPiece.CurrentCell, swapDuration, HandleInvalidPostSwap);
             return false;
-            
-  
         }
 
         private void SwappedSecondPiece_OnDestroy()
@@ -64,7 +69,7 @@ namespace Managers
             _swappedSecondPiece = null;
             _count++;
             _secondSwapHandler = null;
-            if(_count == 2) ResetSwapState();
+            if (_count == 2) ResetSwapState();
         }
 
         private void SwappedFirstPiece_OnDestroy()
@@ -73,21 +78,22 @@ namespace Managers
             _swappedFirstPiece = null;
             _count++;
             _firstSwapHandler = null;
-            if(_count == 2) ResetSwapState();
+            if (_count == 2) ResetSwapState();
         }
 
         private void HandleInvalidPostSwap()
         {
             _count++;
-            if(_count < 2) return;
+            if (_count < 2) return;
             _firstSwapHandler?.OnInvalidSwapCompleted();
             _secondSwapHandler?.OnInvalidSwapCompleted();
             ResetSwapState();
         }
+
         private void HandleValidPostSwap()
         {
             _count++;
-            if(_count < 2) return;
+            if (_count < 2) return;
             if (_firstSwapHandler.GetReactionPriority() > _secondSwapHandler.GetReactionPriority())
             {
                 _firstSwapHandler?.OnValidSwapCompleted(_swappedSecondPiece);
@@ -98,9 +104,10 @@ namespace Managers
                 _secondSwapHandler?.OnValidSwapCompleted(_swappedFirstPiece);
                 _firstSwapHandler?.OnValidSwapCompleted(_swappedSecondPiece);
             }
+
             ResetSwapState();
-            
         }
+
         private void ResetSwapState()
         {
             if (_swappedFirstPiece != null)
@@ -109,13 +116,13 @@ namespace Managers
             if (_swappedSecondPiece != null)
                 _swappedSecondPiece.OnDestroy -= SwappedSecondPiece_OnDestroy;
 
+            _cellDirtyTracker.ClearAll();
             _count = 0;
             _swappedFirstPiece = null;
             _swappedSecondPiece = null;
             _firstSwapHandler = null;
             _secondSwapHandler = null;
             _canSwap = true;
-
         }
 
         private void SwapPieceCells(Piece firstPiece, Piece secondPiece)

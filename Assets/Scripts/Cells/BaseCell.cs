@@ -27,7 +27,7 @@ namespace Cells
 
         [SerializeField] private SpriteRenderer spriteRenderer;
 
-        private int _dirtyCount = 0;
+        [SerializeField] private int _dirtyCount = 0;
         private BaseCellOverlay _overlay;
 
 

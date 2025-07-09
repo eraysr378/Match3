@@ -73,7 +73,7 @@ namespace Managers
 
         private void SpawnNewPiece(BaseCell baseCell)
         {
-            Piece newPiece = EventManager.OnFallingPieceSpawnRequested(baseCell.Row, baseCell.Col);
+            Piece newPiece = EventManager.RequestFallingPieceSpawn(baseCell.Row, baseCell.Col);
             newPiece.SetCell(baseCell);
             newPiece.TryGetComponent<FallHandler>(out var fallHandler);
             fallHandler.FallTo(baseCell);

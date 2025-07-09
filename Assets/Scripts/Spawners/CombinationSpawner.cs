@@ -14,12 +14,12 @@ namespace Spawners
         [SerializeField] private GeneralCombinationFactory combinationFactory;
         public void OnEnable()
         {
-            EventManager.OnCombinationSpawnRequested += SpawnCombination;
+            EventManager.RequestCombinationSpawn += SpawnCombination;
         }
 
         private void OnDisable()
         {
-            EventManager.OnCombinationSpawnRequested -= SpawnCombination;
+            EventManager.RequestCombinationSpawn -= SpawnCombination;
         }
 
  

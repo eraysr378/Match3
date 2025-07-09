@@ -13,7 +13,7 @@ namespace Pieces.Behaviors
 
         public event Action OnFillStarted;
         public event Action OnFillCompleted;
-        private readonly float _baseSpeed = 15;
+        private readonly float _baseSpeed = 3; // 15
         private float _currentSpeed;
         private readonly float _speedMultiplier = 1.2f;
 

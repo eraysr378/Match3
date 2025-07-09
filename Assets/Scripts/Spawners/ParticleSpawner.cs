@@ -12,12 +12,12 @@ namespace Spawners
 
         public void OnEnable()
         {
-            EventManager.OnParticleSpawnRequested += SpawnParticle;
+            EventManager.RequestParticleSpawn += SpawnParticle;
         }
 
         private void OnDisable()
         {
-            EventManager.OnParticleSpawnRequested -= SpawnParticle;
+            EventManager.RequestParticleSpawn -= SpawnParticle;
         }
 
 

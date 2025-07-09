@@ -31,7 +31,7 @@ namespace ParticleEffects
         public void OnReturnToPool()
         {
             _particleSystem.Clear(true);
-            EventManager.OnParticleReturnToPool?.Invoke(this);
+            EventManager.ReturnParticleToPool?.Invoke(this);
         }
 
         public void SetParticleColor(Color color)

@@ -34,9 +34,8 @@ namespace Combinations
 
         private void PlayParticle()
         {
-            var particle = EventManager.OnParticleSpawnRequested?.Invoke(ParticleType.BombBombExplosion,
+            var particle = EventManager.RequestParticleSpawn?.Invoke(ParticleType.BombBombExplosion,
                 transform.position);
-            particle?.transform.SetParent(null);
             particle?.Play();
         }
     }

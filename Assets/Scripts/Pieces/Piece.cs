@@ -68,7 +68,7 @@ namespace Pieces
         public virtual void OnReturnToPool()
         {
             OnDestroy?.Invoke();
-            EventManager.OnPieceReturnToPool?.Invoke(this);
+            EventManager.ReturnPieceToPool?.Invoke(this);
         }
 
         protected void SetOperation(PieceOperation operation)

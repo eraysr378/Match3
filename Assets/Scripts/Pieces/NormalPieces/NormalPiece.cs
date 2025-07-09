@@ -80,7 +80,7 @@ namespace Pieces.NormalPieces
 
         private void SwapHandler_OnSwapCompleted(Piece obj)
         {
-            EventManager.OnMatchCheckRequested?.Invoke(this);
+            EventManager.RequestMatchCheck?.Invoke(this);
             ClearOperation();
             _fillHandler.TryStartFill();
 

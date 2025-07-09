@@ -8,7 +8,7 @@ namespace Pieces.NormalPieces
     {
         protected override void PlayParticleEffect()
         {
-            var particle = EventManager.OnParticleSpawnRequested?.Invoke(ParticleType.HexagonExplosion,
+            var particle = EventManager.RequestParticleSpawn?.Invoke(ParticleType.HexagonExplosion,
                 transform.position);
             particle?.SetParticleColor(GetColor());
             particle?.Play();

@@ -53,6 +53,7 @@ namespace Misc
         CircleExplosion,
         BombExplosion,
         BombBombExplosion,
+        RainbowRainbowExplosion,
         HexagonExplosion,
         Stars,
         

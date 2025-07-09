@@ -16,16 +16,9 @@ namespace Combinations
 {
     public class RainbowRainbowCombination : BaseCombination
     {
-        private ParticleHandler _particleHandler;
         private int _explosionCount;
         private readonly CellDirtyTracker _dirtyTracker = new();
-
-        public override void Awake()
-        {
-            base.Awake();
-            _particleHandler = GetComponent<ParticleHandler>();
-        }
-
+        
         public override void OnSpawn()
         {
             visual.enabled = true;
@@ -34,7 +27,7 @@ namespace Combinations
         protected override void ActivateCombination(int row, int col)
         {
             visual.enabled = false;
-            _particleHandler.Play(ParticleType.Activation);
+            PlayParticle();
             EventManager.OnBigCameraShakeRequest?.Invoke();
             DestroyAll(row, col);
         }
@@ -62,6 +55,12 @@ namespace Combinations
                 _dirtyTracker.ClearAll();
                 CompleteCombination();
             }
+        }
+        private void PlayParticle()
+        {
+            var particle = EventManager.RequestParticleSpawn?.Invoke(ParticleType.RainbowRainbowExplosion,
+                transform.position);
+            particle?.Play();
         }
     }
 }

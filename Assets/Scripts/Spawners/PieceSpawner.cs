@@ -18,14 +18,14 @@ namespace Spawners
 
         public void OnEnable()
         {
-            EventManager.OnPieceSpawnRequested += SpawnPiece;
-            EventManager.OnFallingPieceSpawnRequested += SpawnRandomNormalPiece;
+            EventManager.RequestPieceSpawn += SpawnPiece;
+            EventManager.RequestFallingPieceSpawn += SpawnRandomNormalPiece;
         }
 
         private void OnDisable()
         {
-            EventManager.OnPieceSpawnRequested -= SpawnPiece;
-            EventManager.OnFallingPieceSpawnRequested -= SpawnRandomNormalPiece;
+            EventManager.RequestPieceSpawn -= SpawnPiece;
+            EventManager.RequestFallingPieceSpawn -= SpawnRandomNormalPiece;
         }
   
         private Piece SpawnPiece(PieceType pieceType, int row,int col)

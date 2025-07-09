@@ -11,7 +11,7 @@ namespace Pieces.Behaviors
         public event Action OnFallStarted;
         public event Action OnFallCompleted;
         
-        private readonly float _fallSpeed = 14f;
+        private readonly float _fallSpeed = 2f; //14
         private Movable _movable;
         private bool _isFalling;
 

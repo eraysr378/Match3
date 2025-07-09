@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      nail-bgremoved_0: 4034062550679160252
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

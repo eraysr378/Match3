@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Factories.BaseFactories;
 using Managers;
@@ -9,18 +10,27 @@ namespace Factories.GeneralFactories
     public class GeneralVisualEffectFactory : MonoBehaviour
     {
         [SerializeField] private List<BaseVisualEffectFactory> visualEffectFactoryList;
+        [SerializeField] private Transform visualEffectParent;
 
         private void OnEnable()
         {
-            EventManager.OnVisualEffectReturnToPool += ReturnToPool;
+            EventManager.ReturnVisualEffectToPool += ReturnToPool;
         }
 
         private void OnDisable()
         {
-            EventManager.OnVisualEffectReturnToPool -= ReturnToPool;
+            EventManager.ReturnVisualEffectToPool -= ReturnToPool;
             foreach (var factory in visualEffectFactoryList)
             {
                 factory.ResetPool();
+            }
+        }
+
+        private void Awake()
+        {
+            foreach (var factory in visualEffectFactoryList)
+            {
+                factory.Initialize(visualEffectParent);
             }
         }
 

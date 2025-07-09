@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Combinations;
 using Factories.BaseFactories;
@@ -11,17 +12,25 @@ namespace Factories.GeneralFactories
     {
 
         [SerializeField] private List<BaseCombinationFactory> combinationFactoryList;
-        
+        [SerializeField] private Transform combinationParent;
         private void OnEnable()
         {
-            EventManager.OnCombinationReturnToPool += ReturnToPool;
+            EventManager.ReturnCombinationToPool += ReturnToPool;
         }
         private void OnDisable()
         {
-            EventManager.OnCombinationReturnToPool -= ReturnToPool;
+            EventManager.ReturnCombinationToPool -= ReturnToPool;
             foreach (var factory in combinationFactoryList)
             {
                 factory.ResetPool();
+            }
+        }
+
+        private void Awake()
+        {
+            foreach (var factory in combinationFactoryList)
+            {
+                factory.Initialize(combinationParent);
             }
         }
 

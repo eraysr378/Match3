@@ -33,7 +33,7 @@ namespace GoalRelated
             }
             goalText.gameObject.SetActive(false);
             completedTick.SetActive(true);
-            var starParticle = EventManager.OnParticleSpawnRequested?.Invoke(ParticleType.Stars,transform.position);
+            var starParticle = EventManager.RequestParticleSpawn?.Invoke(ParticleType.Stars,transform.position);
             starParticle?.Play();
             OnGoalCompleted?.Invoke();
 

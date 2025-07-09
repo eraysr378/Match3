@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a29f8237fc35468d814a3dc1dcd558bc, type: 3}
+  m_Name: RainbowProjectileFactory
+  m_EditorClassIdentifier: 
+  initialPoolSize: 20
+  prefab: {fileID: 5749810183598339020, guid: cacf3618493819944982f2e431c2b861, type: 3}

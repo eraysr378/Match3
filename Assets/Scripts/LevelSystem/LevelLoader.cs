@@ -1,3 +1,4 @@
+using Database;
 using Managers;
 using ScriptableObjects;
 using UnityEngine;
@@ -17,8 +18,9 @@ namespace LevelSystem
             EventManager.OnLevelSelected -= LoadLevel;
         }
 
-        private void LoadLevel(LevelDataSo levelDataSo)
+        private void LoadLevel(int level)
         {
+            var levelDataSo = LevelDatabase.Instance.GetLevelDataSo(level);
             currentLevelDataSo.SetFrom(levelDataSo);
             SceneManager.LoadScene("GameScene"); 
         }

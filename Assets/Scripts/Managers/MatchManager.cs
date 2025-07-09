@@ -19,7 +19,7 @@ namespace Managers
         {
             GridBuilder.OnCellsCreated += Initialize;
             SwapValidator.OnSwapWillCauseMatch += WouldSwapCauseMatch;
-            EventManager.OnMatchCheckRequested += OnMatchCheckRequested;
+            EventManager.RequestMatchCheck += OnMatchCheckRequested;
             gridStabilizationChecker.OnRowStabilized += HandleRowStabilized;
 
         }
@@ -28,7 +28,7 @@ namespace Managers
         {
             GridBuilder.OnCellsCreated -= Initialize;
             SwapValidator.OnSwapWillCauseMatch -= WouldSwapCauseMatch;
-            EventManager.OnMatchCheckRequested -= OnMatchCheckRequested;
+            EventManager.RequestMatchCheck -= OnMatchCheckRequested;
             gridStabilizationChecker.OnRowStabilized -= HandleRowStabilized;
         }
     

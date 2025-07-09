@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using GoalRelated;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace ScriptableObjects
 {
@@ -11,7 +10,7 @@ namespace ScriptableObjects
         public int totalMoveCount;
         public List<GoalConfig> goalConfigs;
         public GridDataSo gridDataSo;
-        public string levelName;
+        public int level;
         
         
         public void SetFrom(LevelDataSo dataSo)
@@ -19,7 +18,7 @@ namespace ScriptableObjects
             gridDataSo = dataSo.gridDataSo;
             goalConfigs = dataSo.goalConfigs;
             totalMoveCount = dataSo.totalMoveCount;
-            levelName = dataSo.levelName;
+            level = dataSo.level;
         }
     }
     

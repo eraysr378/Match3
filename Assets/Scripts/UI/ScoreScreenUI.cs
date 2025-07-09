@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,6 +14,7 @@ namespace UI
         [SerializeField] private TextMeshProUGUI titleText;
         [SerializeField] private TextMeshProUGUI scoreText;
         [SerializeField] private Button menuButton;
+        [SerializeField] private Button nextButton;
         [SerializeField] private List<GameObject> starList;
 
         private void Awake()
@@ -20,6 +22,10 @@ namespace UI
             menuButton.onClick.AddListener(() =>
             {
                 SceneManager.LoadScene(0);
+            });
+            nextButton.onClick.AddListener(() =>
+            {
+                EventManager.OnNextLevelSelected?.Invoke();
             });
             menuButton.gameObject.SetActive(false);
         }

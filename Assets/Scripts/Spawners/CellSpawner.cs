@@ -14,12 +14,12 @@ namespace Spawners
         [SerializeField] private Transform cellParent;
         public void OnEnable()
         {
-            EventManager.OnCellSpawnRequested += SpawnCell;
+            EventManager.RequestCellSpawn += SpawnCell;
         }
 
         private void OnDisable()
         {
-            EventManager.OnCellSpawnRequested -= SpawnCell;
+            EventManager.RequestCellSpawn -= SpawnCell;
         }
 
  

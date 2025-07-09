@@ -9,9 +9,9 @@ namespace Factories.CellFactories
     {
         [SerializeField] private RedCell prefab;
 
-        public override BaseCell CreateCell(CellType cellType)
+        public override BaseCell CreateCell(CellType cellType,Transform parent = null)
         {
-            RedCell redCell = Instantiate(prefab);
+            RedCell redCell = Instantiate(prefab,parent);
             return redCell;
         }
     }

@@ -6,6 +6,7 @@ using Managers;
 using Misc;
 using Pieces.Behaviors;
 using Projectiles;
+using SoundRelated;
 using UnityEngine;
 using Utils;
 using Random = UnityEngine.Random;
@@ -149,6 +150,7 @@ namespace Pieces.SpecialPieces
             _cellDirtyTracker.Mark(_leftPath);
             _cellDirtyTracker.Mark(_rightPath);
             EventManager.OnPieceActivated?.Invoke(this);
+            SoundManager.Instance.PlaySound(SoundType.RocketLaunch,2f);
             LaunchProjectiles();
             return true;
         }

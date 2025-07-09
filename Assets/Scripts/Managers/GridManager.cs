@@ -45,7 +45,7 @@ namespace Managers
         {
             _grid = grid;
             CalculateGridOrigin();
-            Debug.Log(GridOrigin);
+            // Debug.Log(GridOrigin);
         }
 
         // Find the position of cell in (0,0) we cant use the cell directly because it might be null

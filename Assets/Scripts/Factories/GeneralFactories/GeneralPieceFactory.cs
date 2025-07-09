@@ -12,18 +12,27 @@ namespace Factories.GeneralFactories
     public class GeneralPieceFactory : MonoBehaviour
     {
         [SerializeField] private List<BasePieceFactory> pieceFactoryList;
+        [SerializeField] private Transform pieceParent;
 
         private void OnEnable()
         {
-            EventManager.OnPieceReturnToPool += ReturnToPool;
+            EventManager.ReturnPieceToPool += ReturnToPool;
         }
 
         private void OnDisable()
         {
-            EventManager.OnPieceReturnToPool -= ReturnToPool;
+            EventManager.ReturnPieceToPool -= ReturnToPool;
             foreach (var factory in pieceFactoryList)
             {
                 factory.ResetPool();
+            }
+        }
+
+        private void Awake()
+        {
+            foreach (var factory in pieceFactoryList)
+            {
+                factory.Initialize(pieceParent);
             }
         }
 

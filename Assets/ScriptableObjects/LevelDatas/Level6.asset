@@ -22,3 +22,4 @@ MonoBehaviour:
     goalCount: 7
   gridDataSo: {fileID: 11400000, guid: dbc962b3048bfc343871871a813a275f, type: 2}
   levelName: Level6
+  level: 6

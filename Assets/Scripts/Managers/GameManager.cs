@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Handlers;
+using ScriptableObjects;
 using UI;
 using UnityEngine;
 
@@ -12,8 +13,10 @@ namespace Managers
         [SerializeField] private MoveManager moveManager;
         [SerializeField] private GoalManager goalManager;
         [SerializeField] private ScoreManager scoreManager;
-        [SerializeField] private ScoreScreenUI scoreScreenUI;
+        [SerializeField] private LevelCompletedScreenUI levelCompletedScreenUI;
+        [SerializeField] private LevelFailedScreenUI levelFailedScreenUI;
         [SerializeField] private GridStabilizationChecker gridStabilizationChecker;
+        [SerializeField] private LevelDataSo currentLevelDataSo;
         private bool _isGameOver;
         private void Awake()
         {
@@ -61,7 +64,18 @@ namespace Managers
         private void OnGridStabilized()
         {
             gridStabilizationChecker.OnGridStabilized -= OnGridStabilized;
-            scoreScreenUI.Show(scoreManager.GetTotalScore(), goalManager.IsAllGoalsCompleted());
+            if (goalManager.IsAllGoalsCompleted())
+            {
+                if (currentLevelDataSo.level == PlayerPrefs.GetInt("MaxLevel"))
+                {
+                    PlayerPrefs.SetInt("MaxLevel", currentLevelDataSo.level+1);
+                }
+                levelCompletedScreenUI.Show(scoreManager.GetTotalScore());
+            }
+            else
+            {
+                levelFailedScreenUI.Show(scoreManager.GetTotalScore());
+            }
         }
     }
 }

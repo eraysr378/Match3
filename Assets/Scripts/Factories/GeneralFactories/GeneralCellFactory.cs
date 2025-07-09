@@ -7,6 +7,7 @@ namespace Factories.CellFactories
 {
     public class GeneralCellFactory :MonoBehaviour
     {
+        [SerializeField] private Transform cellParent;
         [SerializeField] private List<CellType> _cellTypeKeys;
         [SerializeField] private List<BaseCellFactory> _cellFactoryValues;
         private Dictionary<CellType, BaseCellFactory> _cellFactoriesByType;
@@ -32,7 +33,7 @@ namespace Factories.CellFactories
         {
             if (_cellFactoriesByType.TryGetValue(cellType, out var factory))
             {
-                return factory.CreateCell(cellType);
+                return factory.CreateCell(cellType,cellParent);
             }
             return null;
         }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Combinations;
 using Factories.BaseFactories;
@@ -11,18 +12,27 @@ namespace Factories.GeneralFactories
     public class GeneralParticleFactory : MonoBehaviour
     {
         [SerializeField] private List<BaseParticleFactory> particleFactoryList;
+        [SerializeField] private Transform particleParent;
 
         private void OnEnable()
         {
-            EventManager.OnParticleReturnToPool += ReturnToPool;
+            EventManager.ReturnParticleToPool += ReturnToPool;
         }
 
         private void OnDisable()
         {
-            EventManager.OnParticleReturnToPool -= ReturnToPool;
+            EventManager.ReturnParticleToPool -= ReturnToPool;
             foreach (var factory in particleFactoryList)
             {
                 factory.ResetPool();
+            }
+        }
+
+        private void Awake()
+        {
+            foreach (var factory in particleFactoryList)
+            {
+                factory.Initialize(particleParent);
             }
         }
 
